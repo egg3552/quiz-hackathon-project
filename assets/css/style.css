@@ -1,9 +1,6 @@
 /*Colour Palette
 
 */
-body{
-    
-}
 
 /* Fonts */
 @import url('');
@@ -18,5 +15,40 @@ body{
 /* Header */
 
 /* Main Content */
+
+/* Quiz Carousel Fixes */
+.carousel-item .form-check {
+    pointer-events: auto;
+    z-index: 10;
+    position: relative;
+}
+
+.carousel-item .form-check-input {
+    pointer-events: auto;
+    z-index: 20;
+}
+
+.carousel-item .form-check-label {
+    pointer-events: auto;
+    z-index: 20;
+    cursor: pointer;
+    display: block;
+    padding: 8px 12px;
+    margin-left: 8px;
+}
+
+.carousel-item .form-check-label:hover {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Prevent carousel from interfering with form elements */
+.carousel-inner {
+    pointer-events: none;
+}
+
+.carousel-item.active {
+    pointer-events: auto;
+}
 
 /* Footer */
