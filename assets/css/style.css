@@ -1,22 +1,261 @@
 /*Colour Palette
-
+Primary: #4f46e5 (Indigo)
+Secondary: #06b6d4 (Cyan)
+Success: #10b981 (Emerald)
+Background: #f8fafc (Slate-50)
+Text: #1e293b (Slate-800)
 */
 
 /* Fonts */
-@import url('');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 /* Global Styles */
-/* Variables 
+/* CSS Variables - reusable color values throughout the stylesheet */
 :root {
-  
+  --primary-color: #4f46e5;
+  --secondary-color: #06b6d4;
+  --success-color: #10b981;
+  --background-color: #f8fafc;
+  --text-color: #1e293b;
+  --text-light: #64748b;
+  --white: #ffffff;
+  /* Box shadows for depth effect */
+  --shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
-*/
+
+/* Reset default browser spacing and set consistent box model */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Include padding/border in element width */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  /* Linear gradient background from top-left to bottom-right */
+  background: linear-gradient(135deg, var(--background-color) 0%, #e2e8f0 100%);
+  color: var(--text-color);
+  line-height: 1.6; /* Improve text readability */
+}
+
+/* Landing Page Styles */
+.landing-page {
+  min-height: 100vh; /* Full viewport height */
+  /* Diagonal gradient from primary to secondary color */
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  position: relative; /* Allows positioning of child elements */
+  overflow: hidden; /* Hide any content that flows outside */
+  display: block; /* Show by default */
+}
+
+/* Decorative overlay pattern using CSS-generated SVG */
+.landing-page::before {
+  content: ''; /* Required for pseudo-elements */
+  position: absolute; /* Position relative to landing-page */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Inline SVG pattern for texture effect */
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3; /* Semi-transparent overlay */
+}
+
+.landing-content {
+  position: relative; /* Stack above the background pattern */
+  z-index: 2; /* Higher than background (z-index 1) */
+  color: var(--white);
+  animation: fadeInUp 1s ease-out; /* Smooth entrance animation */
+}
+
+.landing-content h1 {
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for readability */
+}
+
+.landing-content .lead {
+  font-size: 1.25rem;
+  opacity: 0.95; /* Slightly transparent for hierarchy */
+  font-weight: 400;
+  margin-bottom: 3rem;
+}
+
+/* Start Quiz Button */
+.btn-start-quiz {
+  background: var(--white);
+  color: var(--primary-color);
+  border: none;
+  border-radius: 50px; /* Fully rounded edges */
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease; /* Smooth animation for all properties */
+  box-shadow: var(--shadow);
+  text-transform: uppercase; /* ALL CAPS text */
+  letter-spacing: 0.5px; /* Space between letters */
+  position: relative; /* For pseudo-element positioning */
+  overflow: hidden; /* Hide shine effect overflow */
+  text-decoration: none; /* Remove link underline */
+  display: inline-block; /* Allow padding on inline element */
+}
+
+/* Button hover effects */
+.btn-start-quiz:hover {
+  transform: translateY(-2px); /* Lift button slightly */
+  box-shadow: var(--shadow-lg); /* Larger shadow for depth */
+  color: var(--primary-color);
+  background: var(--white);
+  text-decoration: none; /* Keep underline removed */
+}
+
+/* Button click effect */
+.btn-start-quiz:active {
+  transform: translateY(0); /* Return to original position */
+}
+
+/* Shine effect on hover */
+.btn-start-quiz::before {
+  content: ''; /* Required for pseudo-elements */
+  position: absolute; /* Position relative to button */
+  top: 0;
+  left: -100%; /* Start completely to the left */
+  width: 100%;
+  height: 100%;
+  /* White shine effect that moves across button */
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s; /* Animate the movement */
+}
+
+/* Move shine effect across button on hover */
+.btn-start-quiz:hover::before {
+  left: 100%; /* Move completely to the right */
+}
+
+/* Quiz Section */
+.quiz-section {
+  min-height: 100vh; /* Full viewport height */
+  padding: 2rem 0;
+  background: var(--background-color);
+  display: none; /* Hidden by default */
+  position: relative;
+}
+
+/* CSS-only navigation: Show quiz section when URL contains #quiz */
+.quiz-section:target {
+  display: block; /* Make visible when targeted */
+  animation: fadeInUp 0.6s ease-out; /* Smooth entrance */
+}
+
+/* Hide landing page when quiz is targeted - CSS sibling selector */
+.quiz-section:target ~ .landing-page,
+#quiz:target ~ #home {
+  display: none; /* Hide sibling elements */
+}
+
+/* Show landing page by default and when home is targeted */
+#home:target,
+.landing-page:not(:target) { /* :not() means "when NOT targeted" */
+  display: block;
+}
+
+/* Hide quiz section when home is targeted */
+#home:target ~ #quiz {
+  display: none; /* Hide quiz when home is active */
+}
+
+.quiz-container {
+  background: var(--white);
+  border-radius: 20px; /* Rounded corners */
+  padding: 3rem;
+  box-shadow: var(--shadow); /* Depth effect */
+  margin-top: 2rem;
+}
+
+.quiz-container h2 {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Button styling for back button */
+.btn-secondary {
+  border-radius: 50px; /* Rounded button */
+  font-weight: 600;
+  transition: all 0.3s ease; /* Smooth hover effects */
+  text-decoration: none; /* Remove link underline */
+  display: inline-block; /* Allow padding on inline element */
+}
+
+/* Back button hover effect */
+.btn-secondary:hover {
+  text-decoration: none; /* Keep underline removed */
+  transform: translateY(-1px); /* Slight lift effect */
+}
+
+/* Animations */
+/* Fade in from bottom with slight upward movement */
+@keyframes fadeInUp {
+  from {
+    opacity: 0; /* Start invisible */
+    transform: translateY(30px); /* Start 30px below final position */
+  }
+  to {
+    opacity: 1; /* End fully visible */
+    transform: translateY(0); /* End at normal position */
+  }
+}
+
+/* Gentle scaling animation for hover effects */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1); /* Normal size at start and end */
+  }
+  50% {
+    transform: scale(1.05); /* Slightly larger in middle */
+  }
+}
+
+/* Responsive Design - Adjust layout for different screen sizes */
+/* Medium screens and smaller (tablets) */
+@media (max-width: 768px) {
+  .landing-content h1 {
+    font-size: 2.5rem; /* Smaller heading on tablets */
+  }
+  
+  .landing-content .lead {
+    font-size: 1.1rem; /* Smaller subtitle text */
+  }
+  
+  .btn-start-quiz {
+    font-size: 1rem; /* Smaller button text */
+    padding: 0.75rem 2rem !important; /* !important overrides Bootstrap */
+  }
+  
+  .quiz-container {
+    padding: 2rem; /* Less padding on smaller screens */
+    margin-top: 1rem;
+  }
+}
+
+/* Small screens (phones) */
+@media (max-width: 576px) {
+  .landing-content h1 {
+    font-size: 2rem; /* Even smaller heading on phones */
+  }
+  
+  .landing-content {
+    padding: 0 1rem; /* Add side padding for phone screens */
+  }
+}
 
 /* Header */
 
 /* Main Content */
 
-/* Quiz Carousel Fixes */
+/* Footer */
+
+
+/* Quiz Carousel Fixes for quiz.html */
 .carousel-item .form-check {
     pointer-events: auto;
     z-index: 10;
@@ -51,4 +290,292 @@
     pointer-events: auto;
 }
 
-/* Footer */
+/* Quiz Page Styling - Match Landing Page Theme */
+.quiz-page-body {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Add pattern overlay like landing page */
+.quiz-page-body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Quiz Navigation Styling */
+.quiz-navbar {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.quiz-navbar .navbar-brand {
+    color: var(--white) !important;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.quiz-navbar .navbar-brand:hover {
+    color: var(--white) !important;
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.quiz-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.quiz-navbar .nav-link:hover {
+    color: var(--white) !important;
+    transform: translateY(-1px);
+}
+
+/* Quiz Header Styling */
+.quiz-header {
+    background: transparent;
+    color: var(--white);
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.quiz-header h1 {
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.quiz-header .lead {
+    opacity: 0.95;
+    font-size: 1.2rem;
+}
+
+/* Quiz Main Content */
+.quiz-main {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 0;
+}
+
+/* Quiz Card Styling */
+.quiz-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+/* Progress Bar Styling */
+.quiz-progress {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.quiz-progress .progress-bar {
+    background: linear-gradient(45deg, var(--success-color), #22c55e);
+    border-radius: 10px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Quiz Question Styling */
+.quiz-question-title {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.quiz-question-text {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+/* Form Check Styling */
+.quiz-form-check {
+    background: rgba(var(--primary-color), 0.02);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.quiz-form-check:hover {
+    background: rgba(var(--primary-color), 0.05);
+    border-color: rgba(var(--primary-color), 0.2);
+    transform: translateY(-1px);
+}
+
+.quiz-form-check-input:checked + .quiz-form-check-label {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.quiz-form-check:has(.quiz-form-check-input:checked) {
+    background: rgba(var(--primary-color), 0.1);
+    border-color: var(--primary-color);
+}
+
+.quiz-form-check-label {
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 0;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Carousel Navigation Buttons */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    opacity: 0.8;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-control-prev {
+    left: -25px;
+}
+
+.carousel-control-next {
+    right: -25px;
+}
+
+/* Quiz Action Buttons */
+.quiz-btn {
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.quiz-btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), #8b5cf6);
+    color: var(--white);
+}
+
+.quiz-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--white);
+}
+
+.quiz-btn-secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.quiz-btn-secondary:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.quiz-btn-info {
+    background: linear-gradient(45deg, var(--secondary-color), #0ea5e9);
+    color: var(--white);
+}
+
+.quiz-btn-info:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--white);
+}
+
+/* Results Section */
+.quiz-results {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 1rem;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+}
+
+.quiz-results h5 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.quiz-results ul {
+    list-style: none;
+    padding: 0;
+}
+
+.quiz-results li {
+    background: rgba(var(--success-color), 0.1);
+    border-left: 4px solid var(--success-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+/* Mobile Responsiveness for Quiz */
+@media (max-width: 768px) {
+    .quiz-card {
+        margin: 1rem;
+        border-radius: 15px;
+    }
+    
+    .quiz-header h1 {
+        font-size: 2rem;
+    }
+    
+    .quiz-header .lead {
+        font-size: 1rem;
+    }
+    
+    .quiz-btn {
+        padding: 0.5rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-control-prev {
+        left: -20px;
+    }
+    
+    .carousel-control-next {
+        right: -20px;
+    }
+}

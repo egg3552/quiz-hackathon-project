@@ -15,126 +15,136 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
-  <body>
+  <body class="quiz-page-body">
     <!-- Navigation Bar -->
-    <nav>
-      <a href="#">Home</a>
-      <a href="#instructions.html">Instructions</a>
-      <a href="#leaderboard.html">Leaderboard</a>
+    <nav class="navbar navbar-expand-lg quiz-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <i class="fas fa-home me-2"></i>Home
+        </a>
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="#instructions">Instructions</a>
+          <a class="nav-link" href="#leaderboard">Leaderboard</a>
+        </div>
+      </div>
     </nav>
     <!-- Header -->
-    <header class="container">
-      <h1 class="text-center">Code Quest</h1>
-      <p class="lead text-center">Test your coding knowledge!</p>
+    <header class="quiz-header">
+      <div class="container">
+        <h1 class="text-center">Code Quest</h1>
+        <p class="lead text-center">Test your coding knowledge!</p>
+      </div>
     </header>
 
     <!-- Main Content -->
-    <main>
-      <form id="quizForm">
-        <div class="card text-center">
-           <!-- Add a progress bar-->
-          <div class="progress container" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar text-bg-warning" style="width: 75%">75%</div>
-          </div>
+    <main class="quiz-main">
+      <div class="container">
+        <form id="quizForm">
+          <div class="quiz-card">
+            <div class="p-4">
+              <!-- Add a progress bar-->
+              <div class="quiz-progress progress" role="progressbar" aria-label="Quiz Progress" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width: 33%">Question 1 of 3</div>
+              </div>
 
-          <div id="quizCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false" data-bs-touch="false">
-            <div class="carousel-inner">
-              <!-- Question 1 -->
-              <div class="carousel-item active">
-                <div class="card-body text-start">
-                  <h4 class="card-title text-center">Question 1</h4>
-                  <p class="card-text text-center mb-4">What does HTML stand for?</p>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question1" id="q1a" value="a">
-                    <label class="form-check-label" for="q1a">
-                      A) Hyper Text Markup Language
-                    </label>
+              <div id="quizCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false" data-bs-touch="false">
+                <div class="carousel-inner">
+                  <!-- Question 1 -->
+                  <div class="carousel-item active">
+                    <div class="card-body text-start">
+                      <h4 class="quiz-question-title text-center">Question 1</h4>
+                      <p class="quiz-question-text text-center">What does HTML stand for?</p>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question1" id="q1a" value="a">
+                        <label class="form-check-label quiz-form-check-label" for="q1a">
+                          A) Hyper Text Markup Language
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question1" id="q1b" value="b">
+                        <label class="form-check-label quiz-form-check-label" for="q1b">
+                          B) Home Tool Markup Language
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question1" id="q1c" value="c">
+                        <label class="form-check-label quiz-form-check-label" for="q1c">
+                          C) Hyperlinks and Text Markup Language
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question1" id="q1d" value="d">
+                        <label class="form-check-label quiz-form-check-label" for="q1d">
+                          D) Hyper Tool Markup Language
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question1" id="q1b" value="b">
-                    <label class="form-check-label" for="q1b">
-                      B) Home Tool Markup Language
-                    </label>
+                  
+                  <!-- Question 2 -->
+                  <div class="carousel-item">
+                    <div class="card-body text-start">
+                      <h4 class="quiz-question-title text-center">Question 2</h4>
+                      <p class="quiz-question-text text-center">Which CSS property is used to change the text color?</p>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question2" id="q2a" value="a">
+                        <label class="form-check-label quiz-form-check-label" for="q2a">
+                          A) text-color
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question2" id="q2b" value="b">
+                        <label class="form-check-label quiz-form-check-label" for="q2b">
+                          B) color
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question2" id="q2c" value="c">
+                        <label class="form-check-label quiz-form-check-label" for="q2c">
+                          C) font-color
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question2" id="q2d" value="d">
+                        <label class="form-check-label quiz-form-check-label" for="q2d">
+                          D) text-style
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question1" id="q1c" value="c">
-                    <label class="form-check-label" for="q1c">
-                      C) Hyperlinks and Text Markup Language
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question1" id="q1d" value="d">
-                    <label class="form-check-label" for="q1d">
-                      D) Hyper Tool Markup Language
-                    </label>
+                  
+                  <!-- Question 3 -->
+                  <div class="carousel-item">
+                    <div class="card-body text-start">
+                      <h4 class="quiz-question-title text-center">Question 3</h4>
+                      <p class="quiz-question-text text-center">Which JavaScript method is used to select an element by its ID?</p>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question3" id="q3a" value="a">
+                        <label class="form-check-label quiz-form-check-label" for="q3a">
+                          A) getElementById()
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question3" id="q3b" value="b">
+                        <label class="form-check-label quiz-form-check-label" for="q3b">
+                          B) getElementByClass()
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question3" id="q3c" value="c">
+                        <label class="form-check-label quiz-form-check-label" for="q3c">
+                          C) selectElement()
+                        </label>
+                      </div>
+                      <div class="quiz-form-check">
+                        <input class="form-check-input quiz-form-check-input" type="radio" name="question3" id="q3d" value="d">
+                        <label class="form-check-label quiz-form-check-label" for="q3d">
+                          D) querySelector()
+                        </label>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <!-- Question 2 -->
-              <div class="carousel-item">
-                <div class="card-body text-start">
-                  <h4 class="card-title text-center">Question 2</h4>
-                  <p class="card-text text-center mb-4">Which CSS property is used to change the text color?</p>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question2" id="q2a" value="a">
-                    <label class="form-check-label" for="q2a">
-                      A) text-color
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question2" id="q2b" value="b">
-                    <label class="form-check-label" for="q2b">
-                      B) color
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question2" id="q2c" value="c">
-                    <label class="form-check-label" for="q2c">
-                      C) font-color
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question2" id="q2d" value="d">
-                    <label class="form-check-label" for="q2d">
-                      D) text-style
-                    </label>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Question 3 -->
-              <div class="carousel-item">
-                <div class="card-body text-start">
-                  <h4 class="card-title text-center">Question 3</h4>
-                  <p class="card-text text-center mb-4">Which JavaScript method is used to select an element by its ID?</p>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question3" id="q3a" value="a">
-                    <label class="form-check-label" for="q3a">
-                      A) getElementById()
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question3" id="q3b" value="b">
-                    <label class="form-check-label" for="q3b">
-                      B) getElementByClass()
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question3" id="q3c" value="c">
-                    <label class="form-check-label" for="q3c">
-                      C) selectElement()
-                    </label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="radio" name="question3" id="q3d" value="d">
-                    <label class="form-check-label" for="q3d">
-                      D) querySelector()
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
             
             <!-- Carousel Navigation -->
             <button class="carousel-control-prev" type="button" data-bs-target="#quizCarousel" data-bs-slide="prev">
