@@ -5,6 +5,9 @@ Success: #10b981 (Emerald)
 Background: #f8fafc (Slate-50)
 Text: #1e293b (Slate-800)
 */
+body{
+    
+}
 
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
