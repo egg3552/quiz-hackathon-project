@@ -23,6 +23,7 @@ const questions = [
 ];
 
 //Global Variables
+const optionLetters = ["A) ", "B) ", "C) ", "D) "];
 let currentQuestion = 1; //Keeps track of which question number the user is on.
 let questionNumbers = []; //Keeps track of which questions are available from the questions array.
 
@@ -78,7 +79,22 @@ function createOptions() {
 /**
  * Uses the questionNumbers array to generate a random question from the questions array.
  */
-function displayQuestion(questionNumbers) {}
+function displayQuestion(questionNumbers) {
+  const rand = Math.floor(Math.random() * questionNumbers.length); //Generates a random number between 0 and one less than the number of questions left for the user to complete; to be used as an index number.
+  const currentQuestion = questions[questionNumbers[rand]]; //Retrieves the corresponding question object from the questions array.
+  questionNumbers.splice(rand, 1); //removes this index value from the questionNumbers array, so not to allow the question to appear again.
+  document.getElementById(`question-${currentQuestion}-text`).innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
+  const questionContainer = document.getElementById(`question-${currentQuestion}`); 
+  const questionOptions = questionContainer.getElementsByTagName("label");
+  //For all options available within the currently selected questions object, set the corresponding option on the page to be a letter and then the option (e.g. "A) Option 1, B) Option 2 ...").
+  for (let i = 0; i < currentQuestion.options.length; i++) {
+    questionOptions[i].innerText = optionLetters[i] + currentQuestion.options[i];
+  }
+  //Give all options on the page an event handler to allow for further testing on adding new questions.
+  for (let i = 0; i < currentQuestion.options.length; i++) {
+    questionOptions[i].addEventListener("click", nextQuestion);
+  }
+}
 
 /**
  * Currently used for debugging.
