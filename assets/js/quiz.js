@@ -81,7 +81,7 @@ function createOptions() {
  */
 function displayQuestion(questionNumbers) {
   const rand = Math.floor(Math.random() * questionNumbers.length); //Generates a random number between 0 and one less than the number of questions left for the user to complete; to be used as an index number.
-  const currentQuestion = questions[rand]; //Retrieves the corresponding question object from the questions array.
+  const currentQuestion = questions[questionNumbers[rand]]; //Retrieves the corresponding question object from the questions array.
   questionNumbers.splice(rand, 1); //removes this index value from the questionNumbers array, so not to allow the question to appear again.
   document.getElementById(`question-${currentQuestionNumber}-text`).innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
   const questionContainer = document.getElementById(`question-${currentQuestionNumber}`); 
