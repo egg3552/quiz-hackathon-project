@@ -1,3 +1,4 @@
+// Questions added as an object array
 const questions = [
   {
     question: "What does HTML stand for?",
@@ -15,3 +16,9 @@ const questions = [
     answer: "getElementById()"
   },
 ];
+
+//Global Variables
+let container = document.getElementById("quizCarousel");
+let userOptions = container.getElementsByTagName("label");
+let questionNumber = 1;
+let questionNumbers = [];
