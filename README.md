@@ -36,7 +36,12 @@
 | Varied Difficulties          | As a user, I would like to have the option to play the quiz at different difficulties to give me a step-up once I am comfortable with the questions. | - Have an easy/medium/hard mode available.<br>- Each mode should have a different difficulty to the questions included.<br>- Optional: No. of hints available should reduce on harder difficulties, if hints implemented.                                                                                                                                            | - Include difficulty options for the user on the homepage.<br>- The set of questions which the user is required to answer changes dependent upon the selected difficulty.<br>- Optional: reduce the number of hints available to the user on harder difficulties, if hints implemented.                                                                                                                                                     | could-have    |
 
 ### Wireframes
-Attach wireframes in this section
+
+![Mobile Wireframes](assets/images/wireframes/mobile-wireframe.png) 
+![Tablet Wireframes](assets/images/wireframes/tablet-wireframe.png) 
+![Desktop Wireframes](assets/images/wireframes/desktop-wireframe.png)
+
+
 ### Typography
 Explain font you've used for your project
 ### Colour Scheme
