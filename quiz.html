@@ -1,168 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <title></title>
-    <!-- Styles -->
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="[/apple-touch-icon.png/]">
-    <link rel="icon" type="image/png" sizes="32x32" href="[/favicon-32x32.png/]">
-    <link rel="icon" type="image/png" sizes="16x16" href="[/favicon-16x16.png/]">
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-  </head>
-  <body class="quiz-page-body">
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg quiz-navbar">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">
-          <i class="fas fa-home me-2"></i>Home
-        </a>
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="#instructions">Instructions</a>
-          <a class="nav-link" href="#leaderboard">Leaderboard</a>
-        </div>
-      </div>
-    </nav>
-    <!-- Header -->
-    <header class="quiz-header">
-      <div class="container">
-        <h1 class="text-center">Code Quest</h1>
-        <p class="lead text-center">Test your coding knowledge!</p>
-      </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="quiz-main">
-      <div class="container">
-        <form id="quizForm">
-          <div class="quiz-card">
-            <div class="p-4">
-              <!-- Add a progress bar-->
-              <div class="quiz-progress progress" role="progressbar" aria-label="Quiz Progress" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar" style="width: 33%">Question 1 of 3</div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <title></title>
+  <!-- Styles -->
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="[/apple-touch-icon.png/]">
+  <link rel="icon" type="image/png" sizes="32x32" href="[/favicon-32x32.png/]">
+  <link rel="icon" type="image/png" sizes="16x16" href="[/favicon-16x16.png/]">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="quiz-page-body">
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg quiz-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-home me-2"></i>Home
+      </a>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="#instructions">Instructions</a>
+        <a class="nav-link" href="#leaderboard">Leaderboard</a>
+      </div>
+    </div>
+  </nav>
+  <!-- Header -->
+  <header class="quiz-header">
+    <div class="container">
+      <h1 class="text-center">Code Quest</h1>
+      <p class="lead text-center">Test your coding knowledge!</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="quiz-main">
+    <div class="container">
+      <form id="quizForm">
+        <div class="quiz-card">
+          <div class="p-4">
+            <!-- Add a progress bar-->
+            <div class="quiz-progress progress" role="progressbar" aria-label="Quiz Progress" aria-valuenow="33"
+              aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar" style="width: 33%">Question 1 of 3</div>
+            </div>
+
+            <div id="quizCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false"
+              data-bs-touch="false">
+              <div class="carousel-inner">
               </div>
 
-              <div id="quizCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false" data-bs-touch="false">
-                <div class="carousel-inner">
-                  <!-- Question 1 -->
-                  <div class="carousel-item active">
-                    <div class="card-body text-start">
-                      <h4 class="quiz-question-title text-center">Question 1</h4>
-                      <p class="quiz-question-text text-center">What does HTML stand for?</p>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question1" id="q1a" value="a">
-                        <label class="form-check-label quiz-form-check-label" for="q1a">
-                          A) Hyper Text Markup Language
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question1" id="q1b" value="b">
-                        <label class="form-check-label quiz-form-check-label" for="q1b">
-                          B) Home Tool Markup Language
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question1" id="q1c" value="c">
-                        <label class="form-check-label quiz-form-check-label" for="q1c">
-                          C) Hyperlinks and Text Markup Language
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question1" id="q1d" value="d">
-                        <label class="form-check-label quiz-form-check-label" for="q1d">
-                          D) Hyper Tool Markup Language
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Question 2 -->
-                  <div class="carousel-item">
-                    <div class="card-body text-start">
-                      <h4 class="quiz-question-title text-center">Question 2</h4>
-                      <p class="quiz-question-text text-center">Which CSS property is used to change the text color?</p>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question2" id="q2a" value="a">
-                        <label class="form-check-label quiz-form-check-label" for="q2a">
-                          A) text-color
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question2" id="q2b" value="b">
-                        <label class="form-check-label quiz-form-check-label" for="q2b">
-                          B) color
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question2" id="q2c" value="c">
-                        <label class="form-check-label quiz-form-check-label" for="q2c">
-                          C) font-color
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question2" id="q2d" value="d">
-                        <label class="form-check-label quiz-form-check-label" for="q2d">
-                          D) text-style
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Question 3 -->
-                  <div class="carousel-item">
-                    <div class="card-body text-start">
-                      <h4 class="quiz-question-title text-center">Question 3</h4>
-                      <p class="quiz-question-text text-center">Which JavaScript method is used to select an element by its ID?</p>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question3" id="q3a" value="a">
-                        <label class="form-check-label quiz-form-check-label" for="q3a">
-                          A) getElementById()
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question3" id="q3b" value="b">
-                        <label class="form-check-label quiz-form-check-label" for="q3b">
-                          B) getElementByClass()
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question3" id="q3c" value="c">
-                        <label class="form-check-label quiz-form-check-label" for="q3c">
-                          C) selectElement()
-                        </label>
-                      </div>
-                      <div class="quiz-form-check">
-                        <input class="form-check-input quiz-form-check-input" type="radio" name="question3" id="q3d" value="d">
-                        <label class="form-check-label quiz-form-check-label" for="q3d">
-                          D) querySelector()
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            
-            <!-- Carousel Navigation -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#quizCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#quizCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+              <!-- Carousel Navigation -->
+              <button class="carousel-control-prev" type="button" data-bs-target="#quizCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#quizCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-3">
+              <button type="submit" class="btn btn-primary">Submit Answer</button>
+            </div>
           </div>
 
-          <!-- Submit Button -->
-          <div class="mt-3">
-            <button type="submit" class="btn btn-primary">Submit Answer</button>
-          </div>
-          </div>
-          
           <!-- This is a collapse button which will explain the results of the answer after the user has submitted-->
           <p>
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
@@ -172,35 +82,37 @@
           </p>
           <div class="collapse" id="collapseExample">
             <div class="card card-body">
-              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user
+              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the
+              user
               activates the relevant trigger.
             </div>
           </div>
-          
+
           <!-- Reset button for the-->
           <button type="reset" class="btn btn-primary">Reset Quiz</button>
-          
-          
-          
-          
-          </form>
-          
-          
-          <!-- A page with instructions or perhaps a modal pop-up-->
-          <div id="#instructions">
-          
-          </div>
-          </main>
- 
-    <!-- Footer -->
-    <footer></footer>
 
-    <!-- Scripts -->
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
-    <!-- Custom JS -->
-    <script src="assets/js/script.js"></script>
-  </body>
+
+      </form>
+
+
+      <!-- A page with instructions or perhaps a modal pop-up-->
+      <div id="#instructions">
+
+      </div>
+  </main>
+
+  <!-- Footer -->
+  <footer></footer>
+
+  <!-- Scripts -->
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
+  <!-- Custom JS -->
+  <script src="assets/js/script.js"></script>
+</body>
+
 </html>
