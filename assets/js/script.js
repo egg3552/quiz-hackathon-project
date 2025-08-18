@@ -22,3 +22,8 @@ let container = document.getElementById("quizCarousel");
 let userOptions = container.getElementsByTagName("label");
 let questionNumber = 1;
 let questionNumbers = [];
+
+//Wait until page has loaded before firing functions
+document.addEventListener("DOMContentLoaded", () => {
+  startQuiz();
+});
