@@ -24,7 +24,12 @@
 ### User Stories
 Write your user stories in this section
 ### Wireframes
-Attach wireframes in this section
+
+![Mobile Wireframes](assets/images/wireframes/mobile-wireframe.png) 
+![Tablet Wireframes](assets/images/wireframes/tablet-wireframe.png) 
+![Desktop Wireframes](assets/images/wireframes/desktop-wireframe.png)
+
+
 ### Typography
 Explain font you've used for your project
 ### Colour Scheme
