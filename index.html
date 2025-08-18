@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <title></title>
+    <meta name="description" content="Test your knowledge with our interactive quiz application">
+    <title>Quiz App - Test Your Knowledge</title>
     <!-- Styles -->
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="[/apple-touch-icon.png/]">
@@ -16,6 +16,53 @@
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
+    <!-- Landing Page - First screen users see -->
+    <div class="landing-page" id="home">
+      <!-- Bootstrap container for responsive layout -->
+      <div class="container">
+        <!-- Bootstrap grid: center content vertically and horizontally -->
+        <div class="row justify-content-center align-items-center min-vh-100">
+          <!-- Responsive columns: medium screens 8/12, large screens 6/12 width -->
+          <div class="col-md-8 col-lg-6 text-center">
+            <div class="landing-content">
+              <!-- Main heading with Bootstrap display and font-weight classes -->
+              <h1 class="display-4 fw-bold mb-4">Welcome to Quiz Master</h1>
+              <!-- Subtitle with Bootstrap lead class for larger text -->
+              <p class="lead mb-5">Test your knowledge and challenge yourself with our interactive quiz. Are you ready to discover what you know?</p>
+              <!-- Navigation link styled as button - href="#quiz" jumps to quiz section -->
+              <a href="#quiz" class="btn btn-start-quiz btn-lg px-5 py-3">
+                <!-- Font Awesome play icon with margin-end spacing -->
+                <i class="fas fa-play me-2"></i>Start Quiz
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz Section - Hidden by default, shown when URL contains #quiz -->
+    <div class="quiz-section" id="quiz">
+      <div class="container">
+        <!-- Center content vertically and horizontally -->
+        <div class="row justify-content-center align-items-center min-vh-100">
+          <!-- Medium screens take 8/12 width -->
+          <div class="col-md-8">
+            <div class="quiz-container">
+              <h2 class="text-center mb-4">Quiz Time!</h2>
+              <p class="text-center mb-4">Quiz content will be loaded here...</p>
+              <div class="text-center">
+                <!-- Navigation link back to home - href="#home" jumps to landing page -->
+                <a href="#home" class="btn btn-secondary">
+                  <!-- Font Awesome arrow icon for "back" indication -->
+                  <i class="fas fa-arrow-left me-2"></i>Back to Home
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Navigation Bar -->
     <nav></nav>
     <!-- Header -->
