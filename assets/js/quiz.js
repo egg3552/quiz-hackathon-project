@@ -100,4 +100,14 @@ function displayQuestion(questionNumbers) {
  * Currently used for debugging.
  * Generates more questions when called.
  */
-function nextQuestion() {}
+function nextQuestion() {
+  console.log(currentQuestion, questionNumbers);
+  if (questionNumbers.length !== 0) {
+    document.getElementById(`question-${currentQuestion}`).classList.remove("active");
+    currentQuestion++;
+    createOptions();
+    displayQuestion(questionNumbers);
+  } else {
+    console.log("No more questions");
+  }  
+}
