@@ -545,6 +545,17 @@ body {
     border-radius: 8px;
 }
 
+/* Disable labels once answer has been chosen */
+.disabled-label {
+  pointer-events: none;
+  opacity: 0.5;
+  
+}
+.disabled-label:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* Mobile Responsiveness for Quiz */
 @media (max-width: 768px) {
     .quiz-card {
