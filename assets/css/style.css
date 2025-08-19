@@ -557,6 +557,20 @@ body {
   box-shadow: none !important;
 }
 
+/* Adds colors to correct/incorrect answers */
+.correct-answer > label{
+  color: green !important;
+}
+.correct-answer {
+  border: 2px solid green !important;
+}
+.incorrect-answer > label {
+  color: red !important;
+}
+.incorrect-answer {
+  border: 2px solid red !important;
+}
+
 /* Mobile Responsiveness for Quiz */
 @media (max-width: 768px) {
     .quiz-card {
