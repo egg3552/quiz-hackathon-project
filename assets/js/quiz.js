@@ -121,15 +121,10 @@ function disableOptions(e) {
   const radioButtons = questionContainer.getElementsByTagName("input");
   const labels = questionContainer.getElementsByTagName("label");
   const questionIndex = questions.findIndex(obj => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText);
-  console.log(questionIndex);
-  // Gets the label that was clicked and check the corresponding button.
   const label = e.target;
-  const forId = label.getAttribute('for'); //Finds the for attribute for the label.
-  if (forId) {
-    const radio = document.getElementById(forId); //Finds the corresponding radio button
-    radio.checked = true; //Marks corresponding radio as checked.
-  }
-  // Disables all radios except the checked one
+  const forId = label.getAttribute('for');
+  const radio = document.getElementById(forId);
+  radio.checked = true;
   for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].value = questions[questionIndex].options[i];
     if (radioButtons[i].id === forId) {
@@ -138,10 +133,7 @@ function disableOptions(e) {
       radioButtons[i].disabled = true;
     }
   }
-  // Removes all label event listeners and block focus except for the selected label
-  //AI helped with this block.
   for (let lbl of labels) {
-    // Clone node to remove all event listeners
     const newLbl = lbl.cloneNode(true);
     if (lbl.getAttribute('for') === forId) {
       newLbl.classList.remove('disabled-label');
@@ -153,51 +145,48 @@ function disableOptions(e) {
     }
     lbl.parentNode.replaceChild(newLbl, lbl);
   }
-  checkAnswer();
+  const currentQuestion = questions[questionIndex];
+  checkAnswer(currentQuestion, radio.value);
 }
 
 /**
  * Checks the user's answer with the correct answer and increments the score if correct.
  */
-function checkAnswer() {
-  const currentQuestion = questions[questionNumbers[rand]];
-  questionOptions[i].addEventListener("click", function() {
-      nextQuestion(currentQuestion, this.innerText);
-    });
-}
-
-/**
- * Processes the user's answer and generates more questions when called.
- */
-function nextQuestion(questionObject, selectedAnswer) {
-  // Check if the answer is correct and update score
+function checkAnswer(questionObject, selectedAnswer) {
   if (selectedAnswer === questionObject.answer) {
     currentScore++;
   }
-  
-  // Store the user's answer
   userAnswers.push({
     question: questionObject.question,
     selectedAnswer: selectedAnswer,
     correctAnswer: questionObject.answer,
     isCorrect: selectedAnswer === questionObject.answer
   });
-  
-  // Update displays
   updateScoreDisplay();
   updateProgressBar();
-  
+  showNextQuestion();
+}
+
+/**
+ * Shows the next question in the quiz
+ */
+function showNextQuestion() {
   console.log(currentQuestionNumber, questionNumbers, `Score: ${currentScore}`);
-  
-  if (questionNumbers.length !== 0) {
-    document.getElementById(`question-${currentQuestionNumber}`).classList.remove("active");
+  if (Array.isArray(questionNumbers) && questionNumbers.length !== 0) {
+    const currentQ = document.getElementById(`question-${currentQuestionNumber}`);
+    if (currentQ) currentQ.classList.remove("active");
     currentQuestionNumber++;
-    createOptions();
-    displayQuestion(questionNumbers);
+    if (questionNumbers.length !== 0) {
+      createOptions();
+      displayQuestion(questionNumbers);
+    } else {
+      console.log("Quiz completed! Final score:", currentScore);
+      // Quiz is finished - could add completion logic here
+    }
   } else {
     console.log("Quiz completed! Final score:", currentScore);
     // Quiz is finished - could add completion logic here
-  }  
+  }
 }
 
 /**
