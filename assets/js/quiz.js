@@ -9,20 +9,19 @@ const questions = [
       "Hyper Tool Markup Language",
     ],
     answer: "Hyper Text Markup Language",
-    explanation:
-      "It's the standard language used to create and structure content on the web. “HyperText” refers to the clickable links that connect web pages, and “Markup Language” means it uses tags to define elements like headings, paragraphs, images, and links. It's not a programming language - it's a structural one.",
+    explanation: "test",
   },
   {
     question: "Which CSS property is used to change the text color?",
     options: ["text-color", "color", "font-color", "text-style"],
     answer: "color",
-    explanation: "The color property specifically targets the foreground text color of an element.",
+    explanation: "test",
   },
   {
     question: "Which JavaScript method is used to select an element by its ID?",
     options: ["getElementById()", "getElementsByClassName()", "selectElement()", "querySelector()"],
     answer: "getElementById()",
-    explanation: "This method retrieves the first element in the DOM with the specified id attribute. It's fast, direct, and commonly used when you know the exact ID of the element you want to manipulate.",
+    explanation: "test",
   },
   {
     question: "What is the purpose of the <meta> tag in HTML?",
@@ -33,7 +32,7 @@ const questions = [
       "Provides metadata about the HTML document",
     ],
     answer: "Provides metadata about the HTML document",
-    explanation: "It's used for things like setting character encoding, defining viewport settings for responsive design, and offering descriptions for SEO. Though invisible to users, it's essential for performance, accessibility, and discoverability.",
+    explanation: "test",
   },
 ];
 
@@ -44,7 +43,7 @@ let questionNumbers = []; //Keeps track of which questions are available from th
 let currentScore = 0; //Keeps track of the user's current score
 let userAnswers = []; //Stores user's answers for scoring
 let totalQuestions = 0; //Total number of questions in the quiz
-let username = ""; //Stores the username from localStorage
+let username = ''; //Stores the username from localStorage
 
 // --- Small helper utilities to make the main flow easier to read ---
 function disableNextControl() {
@@ -78,11 +77,11 @@ function advanceCarousel() {
 //Wait until page has loaded before firing functions
 document.addEventListener("DOMContentLoaded", () => {
   // Get username from localStorage
-  username = localStorage.getItem("quizUsername") || "Guest";
-
+  username = localStorage.getItem('quizUsername') || 'Guest';
+  
   // Display username in header if element exists
   displayUsername();
-
+  
   startQuiz();
 
   // Add event listener for reset button
@@ -122,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
  * Displays the username in the quiz header
  */
 function displayUsername() {
-  const headerElement = document.querySelector(".quiz-header h1");
-  if (headerElement && username && username !== "Guest") {
+  const headerElement = document.querySelector('.quiz-header h1');
+  if (headerElement && username && username !== 'Guest') {
     headerElement.textContent = `Code Quest - Welcome ${username}!`;
   }
 }
@@ -222,26 +221,28 @@ function displayQuestion(questionNumbers) {
   // Attach a single click listener to the question container (event delegation).
   // This avoids adding/removing many individual listeners and prevents the need
   // to clone/replace nodes when disabling options.
-  questionContainer.addEventListener("click", function (evt) {
-    const label = evt.target.closest("label.quiz-form-check-label");
-    if (!label) return; // clicked outside a label
-    // Ignore clicks on labels that have been disabled
+  questionContainer.addEventListener("click", function (e) {
+    // Check if the click was on a label or its parent .quiz-form-check (labelContainer)
+    let labelContainer = e.target.closest(".quiz-form-check");
+    if (!labelContainer) return;
+    let label = labelContainer.querySelector("label.quiz-form-check-label");
+    if (!label) return;
+    // Only proceed if the label is not disabled
     if (label.classList.contains("disabled-label")) return;
-    // Forward a synthetic event-like object to reuse existing logic
     enableExplainResults();
     disableOptions({ target: label });
   });
 }
 //Fisher-Yates shuffle to ensure each time a question is loaded, the options are displayed in a different order.
-function shuffleArray(unshuffled) {
-  let shuffled = unshuffled.map((item) => item); //To copy values from one array to another, use .map().
-  for (i = unshuffled.length - 1; i > 0; i--) {
-    j = Math.floor(Math.random() * (unshuffled.length - 1));
-    shuffled.splice(j, 1, unshuffled[i]);
-    shuffled.splice(i, 1, unshuffled[j]);
-    unshuffled = shuffled.map((item) => item);
-  }
-  return shuffled;
+function shuffleArray(unshuffled){
+    let shuffled = unshuffled.map(item => item); //To copy values from one array to another, use .map().
+    for(i=unshuffled.length-1; i > 0; i--){
+        j = Math.floor(Math.random()*(unshuffled.length-1));
+        shuffled.splice(j, 1, unshuffled[i]);  
+        shuffled.splice(i, 1, unshuffled[j]);   
+        unshuffled = shuffled.map(item => item);
+    }
+    return shuffled;
 }
 
 /**
@@ -264,6 +265,8 @@ function enableExplainResults() {
  */
 function disableOptions(e) {
   const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
+  // If this question has already been answered, ignore further clicks.
+  if (questionContainer && questionContainer.dataset.answered === 'true') return;
   const radioButtons = questionContainer.getElementsByTagName("input");
   const labels = questionContainer.getElementsByTagName("label");
   // Since the questions are chose at random in a previous function, the current question index can be found by comparing the
@@ -279,7 +282,8 @@ function disableOptions(e) {
   for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].value = labels[i].innerText.slice(3);
     if (radioButtons[i].id === forId) {
-      radioButtons[i].disabled = false;
+  // disable the selected radio so it can't be re-clicked to re-score
+  radioButtons[i].disabled = true;
     } else {
       radioButtons[i].disabled = true;
     }
@@ -297,7 +301,9 @@ function disableOptions(e) {
     }
   }
   const currentQuestion = questions[questionIndex];
-  // Pass the clicked label (which is the live DOM node) to checkAnswer.
+  // Mark this slide answered to prevent double-click scoring, then pass
+  // the clicked label (live DOM node) to checkAnswer.
+  if (questionContainer) questionContainer.dataset.answered = 'true';
   checkAnswer(currentQuestion, radio.value, label);
 }
 
@@ -369,9 +375,9 @@ function resultsButton() {
     score: currentScore,
     totalQuestions: totalQuestions,
     percentage: Math.round((currentScore / totalQuestions) * 100),
-    userAnswers: userAnswers,
+    userAnswers: userAnswers
   };
-  localStorage.setItem("quizResults", JSON.stringify(quizResults));
+  localStorage.setItem('quizResults', JSON.stringify(quizResults));
 
   // Create a results slide whose content is vertically and horizontally centered.
   // Use flex utilities and a minimum height so there's generous spacing above and below.
@@ -380,9 +386,7 @@ function resultsButton() {
   <div id="question-${currentQuestionNumber}" class="carousel-item">
     <div class="card-body d-flex flex-column justify-content-center align-items-center py-5" style="min-height:55vh;">
       <h3 class="text-center mb-4 text-primary">Quiz Complete!</h3>
-      <p class="text-center mb-4">Great job ${username}! You scored ${currentScore}/${totalQuestions} (${Math.round(
-    (currentScore / totalQuestions) * 100
-  )}%)</p>
+      <p class="text-center mb-4">Great job ${username}! You scored ${currentScore}/${totalQuestions} (${Math.round((currentScore / totalQuestions) * 100)}%)</p>
       <a id="see-results-btn" class="btn btn-primary btn-lg" href='results.html'>See Detailed Results!</a>
     </div>
   </div>
