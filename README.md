@@ -43,7 +43,8 @@
 
 
 ### Typography
-Explain font you've used for your project
+We decided to go for a futuristic aesthetic for the font as the topic of our quiz is coding related. Tektur was the selected font.
+
 ### Colour Scheme
 Screenshoot of the colour scheme for your project
 
