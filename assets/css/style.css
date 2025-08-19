@@ -179,7 +179,7 @@ body {
 
 /* Button styling for back button */
 .btn-secondary {
-  border-radius: 50px; /* Rounded button */
+  border-radius: 8px; /* Rectangular with rounded edges */
   font-weight: 600;
   transition: all 0.3s ease; /* Smooth hover effects */
   text-decoration: none; /* Remove link underline */
@@ -427,6 +427,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
     overflow: hidden; /* Contain child elements */
     margin-bottom: 2rem; /* Space below card */
+    margin: 0 60px 2rem 60px; /* Horizontal margins to create space for navigation arrows */
 }
 
 /* Progress Bar Styling */
@@ -456,23 +457,31 @@ body {
     font-size: 1.1rem; /* Slightly larger text */
     font-weight: 500; /* Medium weight */
     margin-bottom: 2rem; /* Space below question */
+    background: rgba(255, 255, 255, 0.8); /* Light background for question area */
+    padding: 1.5rem; /* Padding around question text */
+    border-radius: 12px; /* Rounded corners */
+    border: 1px solid rgba(79, 70, 229, 0.1); /* Subtle border */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Soft shadow */
+    backdrop-filter: blur(5px); /* Light blur effect */
 }
 
 /* Form Check Styling - Quiz answer options */
 .quiz-form-check {
-    background: rgba(var(--primary-color), 0.02); /* Very light primary background */
-    border: 2px solid transparent; /* Invisible border by default */
+    background: rgba(255, 255, 255, 0.9); /* Light white background */
+    border: 2px solid rgba(79, 70, 229, 0.2); /* Visible primary color border */
     border-radius: 12px; /* Rounded corners */
     padding: 1rem; /* Internal spacing */
     margin-bottom: 1rem; /* Space between options */
     transition: all 0.3s ease; /* Smooth hover animation */
     cursor: pointer; /* Show clickable cursor */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Subtle shadow for depth */
 }
 
 .quiz-form-check:hover {
-    background: rgba(var(--primary-color), 0.05); /* Slightly darker on hover */
-    border-color: rgba(var(--primary-color), 0.2); /* Show border on hover */
-    transform: translateY(-1px); /* Subtle lift effect */
+    background: rgba(255, 255, 255, 1); /* Full white on hover */
+    border-color: rgba(79, 70, 229, 0.4); /* Stronger border on hover */
+    transform: translateY(-2px); /* More pronounced lift effect */
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15); /* Enhanced shadow on hover */
 }
 
 .quiz-form-check-input:checked + .quiz-form-check-label {
@@ -481,8 +490,10 @@ body {
 }
 
 .quiz-form-check:has(.quiz-form-check-input:checked) {
-    background: rgba(var(--primary-color), 0.1); /* Highlighted background when selected */
+    background: rgba(79, 70, 229, 0.08); /* Light primary background when selected */
     border-color: var(--primary-color); /* Primary border when selected */
+    border-width: 3px; /* Thicker border when selected */
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.2); /* Stronger shadow when selected */
 }
 
 .quiz-form-check-label {
@@ -499,7 +510,7 @@ body {
     width: 50px; /* Fixed button size */
     height: 50px; /* Fixed button size */
     background: var(--primary-color); /* Primary color background */
-    border-radius: 50%; /* Circular buttons */
+    border-radius: 8px; /* Square buttons with rounded corners */
     opacity: 0.8; /* Semi-transparent by default */
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Perfect vertical centering */
@@ -510,14 +521,15 @@ body {
 .carousel-control-next:hover {
     opacity: 1; /* Full opacity on hover */
     transform: translateY(-50%) scale(1.1); /* Scale up on hover */
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); /* Add shadow on hover for square buttons */
 }
 
 .carousel-control-prev {
-    left: -25px; /* Position left of carousel */
+    left: -25px; /* Position closer since content area is smaller */
 }
 
 .carousel-control-next {
-    right: -25px; /* Position right of carousel */
+    right: -25px; /* Position closer since content area is smaller */
 }
 
 /* Quiz Action Buttons - Base styling for all quiz buttons */
@@ -686,6 +698,21 @@ body {
   border: 2px solid red !important;
 }
 
+/* Custom Score Badge Styling - Matches gradient background */
+.score-badge .badge {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important; /* Blue gradient to match background */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); /* Blue glow effect */
+    transition: all 0.3s ease; /* Smooth transitions */
+    backdrop-filter: blur(10px); /* Glass effect */
+}
+
+.score-badge .badge:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important; /* Slightly darker on hover */
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); /* Enhanced glow on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+}
+
 /* Mobile Responsiveness for Quiz */
 @media (max-width: 768px) {
     .quiz-card {
@@ -713,10 +740,14 @@ body {
     }
     
     .carousel-control-prev {
-        left: -20px; /* Closer to carousel on mobile */
+        left: -20px; /* Position closer on mobile */
     }
     
     .carousel-control-next {
-        right: -20px; /* Closer to carousel on mobile */
+        right: -20px; /* Position closer on mobile */
+    }
+    
+    .quiz-card {
+        margin: 0 40px 2rem 40px; /* Smaller margins on mobile for navigation arrows */
     }
 }
