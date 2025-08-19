@@ -33,30 +33,30 @@ let totalQuestions = 0; //Total number of questions in the quiz
 //Wait until page has loaded before firing functions
 document.addEventListener("DOMContentLoaded", () => {
   startQuiz();
-  
+
   // Add event listener for reset button
   const resetButton = document.querySelector('button[type="reset"]');
   if (resetButton) {
-    resetButton.addEventListener('click', resetQuiz);
+    resetButton.addEventListener("click", resetQuiz);
   }
-  
-  const nextIcon = document.querySelector('.carousel-control-next-icon');
+
+  const nextIcon = document.querySelector(".carousel-control-next-icon");
   if (nextIcon) {
-    nextIcon.addEventListener('click', function handleNext() {
+    nextIcon.addEventListener("click", function handleNext() {
       // Only allow advancing if the current question has been answered
       const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
       const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : [];
-      const answered = Array.from(radioButtons).some(rb => rb.checked);
+      const answered = Array.from(radioButtons).some((rb) => rb.checked);
       if (answered) {
         showNextQuestion();
         // Optionally disable the next icon again until next answer
-        nextIcon.classList.add('disabled-label');
-        nextIcon.style.pointerEvents = 'none';
+        nextIcon.classList.add("disabled-label");
+        nextIcon.style.pointerEvents = "none";
       }
     });
     // Initially disable the next icon
-    nextIcon.classList.add('disabled-label');
-    nextIcon.style.pointerEvents = 'none';
+    nextIcon.classList.add("disabled-label");
+    nextIcon.style.pointerEvents = "none";
   }
 });
 
@@ -70,11 +70,11 @@ function startQuiz() {
   }
   // Set total questions count
   totalQuestions = questions.length;
-  
+
   // Initialize displays
   updateScoreDisplay();
   updateProgressBar();
-  
+
   createOptions();
   displayQuestion(questionNumbers);
 }
@@ -119,7 +119,7 @@ function displayQuestion(questionNumbers) {
   const currentQuestion = questions[questionNumbers[rand]]; //Retrieves the corresponding question object from the questions array.
   questionNumbers.splice(rand, 1); //removes this index value from the questionNumbers array, so not to allow the question to appear again.
   document.getElementById(`question-${currentQuestionNumber}-text`).innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
-  const questionContainer = document.getElementById(`question-${currentQuestionNumber}`); 
+  const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
   const questionOptions = questionContainer.getElementsByTagName("label");
   //For all options available within the currently selected questions object, set the corresponding option on the page to be a letter and then the option (e.g. "A) Option 1, B) Option 2 ...").
   for (let i = 0; i < currentQuestion.options.length; i++) {
@@ -133,17 +133,22 @@ function displayQuestion(questionNumbers) {
 
 /**
  * Disables options once a user has chosen an answer so they can no longer interact with the question.
- * @param {*} e 
+ * @param {*} e
  */
 function disableOptions(e) {
   const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
   const radioButtons = questionContainer.getElementsByTagName("input");
   const labels = questionContainer.getElementsByTagName("label");
-  const questionIndex = questions.findIndex(obj => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText);
+  // Since the questions are chose at random in a previous function, the current question index can be found by comparing the
+  // question on the page with the questions array objects.
+  const questionIndex = questions.findIndex(
+    (obj) => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText
+  );
   const label = e.target;
-  const forId = label.getAttribute('for');
-  const radio = document.getElementById(forId);
-  radio.checked = true;
+  const forId = label.getAttribute("for"); //Finds the for attribute for the label which the user has clicked.
+  const radio = document.getElementById(forId); //Finds the corresponding radio input.
+  radio.checked = true; //Marks the radio button as checked.
+  // Disable all other radio buttons.
   for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].value = questions[questionIndex].options[i];
     if (radioButtons[i].id === forId) {
@@ -152,14 +157,15 @@ function disableOptions(e) {
       radioButtons[i].disabled = true;
     }
   }
+  // Disable label interactivity.
   for (let lbl of labels) {
     const newLbl = lbl.cloneNode(true);
-    if (lbl.getAttribute('for') === forId) {
-      newLbl.classList.remove('disabled-label');
-      newLbl.removeAttribute('tabindex');
+    if (lbl.getAttribute("for") === forId) {
+      newLbl.classList.remove("disabled-label");
+      newLbl.removeAttribute("tabindex");
     } else {
-      newLbl.classList.add('disabled-label');
-      newLbl.setAttribute('tabindex', '-1');
+      newLbl.classList.add("disabled-label");
+      newLbl.setAttribute("tabindex", "-1");
       newLbl.blur && newLbl.blur();
     }
     lbl.parentNode.replaceChild(newLbl, lbl);
@@ -176,36 +182,48 @@ function checkAnswer(questionObject, selectedAnswer) {
     question: questionObject.question,
     selectedAnswer: selectedAnswer,
     correctAnswer: questionObject.answer,
-    isCorrect: selectedAnswer === questionObject.answer
+    isCorrect: selectedAnswer === questionObject.answer,
   });
   updateScoreDisplay();
   updateProgressBar();
   // Do NOT call showNextQuestion here; wait for user to click next icon
   // Instead, enable the next icon if it was disabled
-  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  const nextIcon = document.querySelector(".carousel-control-next-icon");
   if (nextIcon) {
-    nextIcon.classList.remove('disabled-label');
-    nextIcon.style.pointerEvents = 'auto';
+    nextIcon.classList.remove("disabled-label");
+    nextIcon.style.pointerEvents = "auto";
   }
 }
 
 /**
  * Shows the next question in the quiz
  */
+/**
+ * Advances the quiz to the next question when the user clicks the next icon.
+ * Handles hiding the current question, incrementing the question counter,
+ * rendering the next question, or finishing the quiz if there are no more questions.
+ */
 function showNextQuestion() {
+  // Log current state for debugging
   console.log(currentQuestionNumber, questionNumbers, `Score: ${currentScore}`);
+  // Check if there are still questions left to show
   if (Array.isArray(questionNumbers) && questionNumbers.length !== 0) {
+    // Hide the current question by removing the 'active' class
     const currentQ = document.getElementById(`question-${currentQuestionNumber}`);
     if (currentQ) currentQ.classList.remove("active");
+    // Move to the next question
     currentQuestionNumber++;
+    // If there are still questions left, render the next one
     if (questionNumbers.length !== 0) {
-      createOptions();
-      displayQuestion(questionNumbers);
+      createOptions(); // Create the answer options for the next question
+      displayQuestion(questionNumbers); // Display the next question
     } else {
+      // No more questions left: quiz is finished
       console.log("Quiz completed! Final score:", currentScore);
       // Quiz is finished - could add completion logic here
     }
   } else {
+    // No questions left: quiz is finished
     console.log("Quiz completed! Final score:", currentScore);
     // Quiz is finished - could add completion logic here
   }
@@ -215,9 +233,9 @@ function showNextQuestion() {
  * Updates the score badge display
  */
 function updateScoreDisplay() {
-  const scoreElement = document.getElementById('currentScore');
-  const totalElement = document.getElementById('totalQuestions');
-  
+  const scoreElement = document.getElementById("currentScore");
+  const totalElement = document.getElementById("totalQuestions");
+
   if (scoreElement) {
     scoreElement.textContent = currentScore;
   }
@@ -230,21 +248,21 @@ function updateScoreDisplay() {
  * Updates the progress bar based on questions answered
  */
 function updateProgressBar() {
-  const progressBar = document.querySelector('#quizProgress .progress-bar');
-  const progressContainer = document.getElementById('quizProgress');
-  
+  const progressBar = document.querySelector("#quizProgress .progress-bar");
+  const progressContainer = document.getElementById("quizProgress");
+
   if (progressBar && progressContainer) {
     // Calculate progress percentage based on questions answered
     const questionsAnswered = userAnswers.length;
     const progressPercentage = (questionsAnswered / totalQuestions) * 100;
-    
+
     // Update progress bar
     progressBar.style.width = `${progressPercentage}%`;
-    progressContainer.setAttribute('aria-valuenow', progressPercentage);
-    
+    progressContainer.setAttribute("aria-valuenow", progressPercentage);
+
     // Add smooth transition if not already present
     if (!progressBar.style.transition) {
-      progressBar.style.transition = 'width 0.5s ease-in-out';
+      progressBar.style.transition = "width 0.5s ease-in-out";
     }
   }
 }
@@ -257,37 +275,37 @@ function resetQuiz(event) {
   if (event) {
     event.preventDefault();
   }
-  
+
   // Reset all global variables
   currentQuestionNumber = 1;
   questionNumbers = [];
   currentScore = 0;
   userAnswers = [];
   totalQuestions = 0;
-  
+
   // Clear the carousel
-  const carouselInner = document.querySelector('.carousel-inner');
+  const carouselInner = document.querySelector(".carousel-inner");
   if (carouselInner) {
-    carouselInner.innerHTML = '';
+    carouselInner.innerHTML = "";
   }
-  
+
   // Clear any form selections
-  const quizForm = document.getElementById('quizForm');
+  const quizForm = document.getElementById("quizForm");
   if (quizForm) {
     quizForm.reset();
   }
-  
+
   // Hide results section if visible
-  const resultsSection = document.getElementById('collapseExample');
-  if (resultsSection && resultsSection.classList.contains('show')) {
+  const resultsSection = document.getElementById("collapseExample");
+  if (resultsSection && resultsSection.classList.contains("show")) {
     const collapseInstance = bootstrap.Collapse.getInstance(resultsSection);
     if (collapseInstance) {
       collapseInstance.hide();
     }
   }
-  
+
   // Restart the quiz
   startQuiz();
-  
-  console.log('Quiz has been reset');
+
+  console.log("Quiz has been reset");
 }
