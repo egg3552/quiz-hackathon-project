@@ -11,9 +11,56 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const results = JSON.parse(quizResultsData);
     
+    // Save score to leaderboard if not already saved
+    if (!results.savedToLeaderboard) {
+        saveToLeaderboard(results);
+        
+        // Mark as saved to prevent duplicate entries
+        results.savedToLeaderboard = true;
+        localStorage.setItem('quizResults', JSON.stringify(results));
+    }
+    
     // Update the results display
     updateResultsDisplay(results);
 });
+
+/**
+ * Saves the quiz results to the leaderboard
+ */
+function saveToLeaderboard(results) {
+    const scores = getLeaderboardScores();
+    const newScore = {
+        username: results.username || 'Anonymous',
+        score: results.score,
+        totalQuestions: results.totalQuestions,
+        percentage: results.percentage,
+        date: new Date().toLocaleDateString(),
+        timestamp: Date.now()
+    };
+    
+    scores.push(newScore);
+    
+    // Sort by percentage (highest first), then by timestamp (newest first)
+    scores.sort((a, b) => {
+        if (b.percentage !== a.percentage) {
+            return b.percentage - a.percentage;
+        }
+        return b.timestamp - a.timestamp;
+    });
+    
+    // Keep only top 10 scores
+    const topScores = scores.slice(0, 10);
+    
+    localStorage.setItem('quizLeaderboard', JSON.stringify(topScores));
+}
+
+/**
+ * Gets leaderboard scores from localStorage
+ */
+function getLeaderboardScores() {
+    const scores = localStorage.getItem('quizLeaderboard');
+    return scores ? JSON.parse(scores) : [];
+}
 
 function updateResultsDisplay(results) {
     const titleElement = document.getElementById('results-title');
