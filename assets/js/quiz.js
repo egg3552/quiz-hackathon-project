@@ -34,6 +34,7 @@ let questionNumbers = []; //Keeps track of which questions are available from th
 let currentScore = 0; //Keeps track of the user's current score
 let userAnswers = []; //Stores user's answers for scoring
 let totalQuestions = 0; //Total number of questions in the quiz
+let username = ''; //Stores the username from localStorage
 
 // --- Small helper utilities to make the main flow easier to read ---
 function disableNextControl() {
@@ -66,6 +67,12 @@ function advanceCarousel() {
 
 //Wait until page has loaded before firing functions
 document.addEventListener("DOMContentLoaded", () => {
+  // Get username from localStorage
+  username = localStorage.getItem('quizUsername') || 'Guest';
+  
+  // Display username in header if element exists
+  displayUsername();
+  
   startQuiz();
 
   // Add event listener for reset button
@@ -120,6 +127,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+/**
+ * Displays the username in the quiz header
+ */
+function displayUsername() {
+  const headerElement = document.querySelector('.quiz-header h1');
+  if (headerElement && username && username !== 'Guest') {
+    headerElement.textContent = `Code Quest - Welcome ${username}!`;
+  }
+}
 
 /**
  * Initialises the first question for the quiz; creating an array to keep track of which questions have already been used.
@@ -315,18 +332,29 @@ function showNextQuestion() {
 }
 
 function resultsButton() {
+  // Store quiz results in localStorage for results page
+  const quizResults = {
+    username: username,
+    score: currentScore,
+    totalQuestions: totalQuestions,
+    percentage: Math.round((currentScore / totalQuestions) * 100),
+    userAnswers: userAnswers
+  };
+  localStorage.setItem('quizResults', JSON.stringify(quizResults));
+
   // Create a results slide whose content is vertically and horizontally centered.
   // Use flex utilities and a minimum height so there's generous spacing above and below.
   let options = `
   <!-- Results ${currentQuestionNumber} -->
   <div id="question-${currentQuestionNumber}" class="carousel-item">
     <div class="card-body d-flex flex-column justify-content-center align-items-center py-5" style="min-height:55vh;">
-      <a id="see-results-btn" class="btn btn-primary btn-lg" href='results.html'>See Results!</a>
+      <h3 class="text-center mb-4 text-primary">Quiz Complete!</h3>
+      <p class="text-center mb-4">Great job ${username}! You scored ${currentScore}/${totalQuestions} (${Math.round((currentScore / totalQuestions) * 100)}%)</p>
+      <a id="see-results-btn" class="btn btn-primary btn-lg" href='results.html'>See Detailed Results!</a>
     </div>
   </div>
   `;
   document.getElementsByClassName("carousel-inner")[0].innerHTML += options;
-  // Optionally attach an id-based handler later if needed
 }
 
 /**
@@ -402,6 +430,19 @@ function resetQuiz(event) {
     if (collapseInstance) {
       collapseInstance.hide();
     }
+  }
+
+  // Show the results explained button again
+  const resultsExplainedBtn = document.querySelector('button[data-bs-target="#collapseExample"]');
+  if (resultsExplainedBtn) {
+    resultsExplainedBtn.style.display = '';
+  }
+
+  // Reset carousel to first slide
+  const carouselEl = document.getElementById('quizCarousel');
+  if (carouselEl && typeof bootstrap !== 'undefined') {
+    const carousel = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl);
+    carousel.to(0);
   }
 
   // Restart the quiz
