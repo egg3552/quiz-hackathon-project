@@ -9,19 +9,19 @@ const questions = [
       "Hyper Tool Markup Language",
     ],
     answer: "Hyper Text Markup Language",
-    explanation: "test",
+    explanation: "It's the standard language used to create and structure content on the web. “HyperText” refers to the clickable links that connect web pages, and “Markup Language” means it uses tags to define elements like headings, paragraphs, images, and links. It's not a programming language - it's a structural one.",
   },
   {
     question: "Which CSS property is used to change the text color?",
     options: ["text-color", "color", "font-color", "text-style"],
     answer: "color",
-    explanation: "test",
+    explanation: "The color property specifically targets the foreground text color of an element.",
   },
   {
     question: "Which JavaScript method is used to select an element by its ID?",
     options: ["getElementById()", "getElementsByClassName()", "selectElement()", "querySelector()"],
     answer: "getElementById()",
-    explanation: "test",
+    explanation: "This method retrieves the first element in the DOM with the specified id attribute. It's fast, direct, and commonly used when you know the exact ID of the element you want to manipulate.",
   },
   {
     question: "What is the purpose of the <meta> tag in HTML?",
@@ -32,7 +32,7 @@ const questions = [
       "Provides metadata about the HTML document",
     ],
     answer: "Provides metadata about the HTML document",
-    explanation: "test",
+    explanation: "It's used for things like setting character encoding, defining viewport settings for responsive design, and offering descriptions for SEO. Though invisible to users, it's essential for performance, accessibility, and discoverability.",
   },
 ];
 
@@ -212,24 +212,42 @@ function displayQuestion(questionNumbers) {
   document.getElementById(`question-${currentQuestionNumber}-text`).innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
   const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
   const questionOptions = questionContainer.getElementsByTagName("label");
+  // Shuffle options before displaying
+  let shuffledOptions = shuffleArray(currentQuestion.options);
   //For all options available within the currently selected questions object, set the corresponding option on the page to be a letter and then the option (e.g. "A) Option 1, B) Option 2 ...").
   for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].innerText = optionLetters[i] + currentQuestion.options[i];
+    questionOptions[i].innerText = optionLetters[i] + shuffledOptions[i];
   }
   // Attach a single click listener to the question container (event delegation).
   // This avoids adding/removing many individual listeners and prevents the need
   // to clone/replace nodes when disabling options.
-  questionContainer.addEventListener("click", function (evt) {
-    const label = evt.target.closest("label.quiz-form-check-label");
-    if (!label) return; // clicked outside a label
-    // Ignore clicks on labels that have been disabled
+  questionContainer.addEventListener("click", function (e) {
+    // Check if the click was on a label or its parent .quiz-form-check (labelContainer)
+    let labelContainer = e.target.closest(".quiz-form-check");
+    if (!labelContainer) return;
+    let label = labelContainer.querySelector("label.quiz-form-check-label");
+    if (!label) return;
+    // Only proceed if the label is not disabled
     if (label.classList.contains("disabled-label")) return;
-    // Forward a synthetic event-like object to reuse existing logic
     enableExplainResults();
     disableOptions({ target: label });
   });
 }
+//Fisher-Yates shuffle to ensure each time a question is loaded, the options are displayed in a different order.
+function shuffleArray(unshuffled){
+    let shuffled = unshuffled.map(item => item); //To copy values from one array to another, use .map().
+    for(i=unshuffled.length-1; i > 0; i--){
+        j = Math.floor(Math.random()*(unshuffled.length-1));
+        shuffled.splice(j, 1, unshuffled[i]);  
+        shuffled.splice(i, 1, unshuffled[j]);   
+        unshuffled = shuffled.map(item => item);
+    }
+    return shuffled;
+}
 
+/**
+ * Enables the "Explain Results" button and populates the explanation text.
+ */
 function enableExplainResults() {
   const explainBtn = document.querySelector(`button[data-bs-target='#results${currentQuestionNumber}']`);
   const explainText = document.getElementById(`explanation-${currentQuestionNumber}`).children;
@@ -239,11 +257,6 @@ function enableExplainResults() {
   explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`;
   explainText[1].innerText = questions[questionIndex].explanation;
   explainBtn.disabled = false;
-  explainBtn.onclick = explainResults;
-}
-
-function explainResults(){
-
 }
 
 /**
@@ -252,6 +265,8 @@ function explainResults(){
  */
 function disableOptions(e) {
   const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
+  // If this question has already been answered, ignore further clicks.
+  if (questionContainer && questionContainer.dataset.answered === 'true') return;
   const radioButtons = questionContainer.getElementsByTagName("input");
   const labels = questionContainer.getElementsByTagName("label");
   // Since the questions are chose at random in a previous function, the current question index can be found by comparing the
@@ -265,9 +280,10 @@ function disableOptions(e) {
   radio.checked = true; //Marks the radio button as checked.
   // Disable all other radio buttons.
   for (let i = 0; i < radioButtons.length; i++) {
-    radioButtons[i].value = questions[questionIndex].options[i];
+    radioButtons[i].value = labels[i].innerText.slice(3);
     if (radioButtons[i].id === forId) {
-      radioButtons[i].disabled = false;
+  // disable the selected radio so it can't be re-clicked to re-score
+  radioButtons[i].disabled = true;
     } else {
       radioButtons[i].disabled = true;
     }
@@ -285,11 +301,14 @@ function disableOptions(e) {
     }
   }
   const currentQuestion = questions[questionIndex];
-  // Pass the clicked label (which is the live DOM node) to checkAnswer.
+  // Mark this slide answered to prevent double-click scoring, then pass
+  // the clicked label (live DOM node) to checkAnswer.
+  if (questionContainer) questionContainer.dataset.answered = 'true';
   checkAnswer(currentQuestion, radio.value, label);
 }
 
 function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
+  console.log(questionObject.answer, selectedAnswer);
   if (selectedAnswer === questionObject.answer) {
     currentScore++;
     console.log(selectedLabel);

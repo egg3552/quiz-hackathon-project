@@ -607,6 +607,72 @@ body {
     border-radius: 8px; /* Rounded corners */
 }
 
+/* Leaderboard Styling */
+.rank-badge {
+    font-size: 1.2rem; /* Larger emoji size */
+    margin-right: 0.5rem; /* Space between badge and number */
+}
+
+.rank-number {
+    font-weight: 600; /* Semi-bold rank numbers */
+    color: var(--primary-color); /* Primary color for rank */
+}
+
+.score-badge {
+    background: rgba(var(--primary-color), 0.1); /* Light primary background */
+    color: var(--primary-color); /* Primary color text */
+    padding: 0.25rem 0.75rem; /* Compact padding */
+    border-radius: 12px; /* Rounded badge */
+    font-weight: 600; /* Semi-bold */
+    font-size: 0.9rem; /* Slightly smaller text */
+}
+
+.percentage-badge {
+    color: white !important; /* White text for all percentage badges */
+    padding: 0.25rem 0.75rem; /* Compact padding */
+    border-radius: 12px; /* Rounded badge */
+    font-weight: 600; /* Semi-bold */
+    font-size: 0.9rem; /* Slightly smaller text */
+}
+
+/* Leaderboard table hover effects */
+.table-hover tbody tr:hover {
+    background-color: rgba(var(--primary-color), 0.05) !important; /* Light primary on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+    transition: all 0.2s ease; /* Smooth animation */
+}
+
+/* Trophy and medal styling for top 3 */
+.table-warning {
+    background-color: rgba(255, 193, 7, 0.2) !important; /* Gold background */
+}
+
+.table-secondary {
+    background-color: rgba(108, 117, 125, 0.2) !important; /* Silver background */
+}
+
+.table-info {
+    background-color: rgba(13, 202, 240, 0.2) !important; /* Bronze background */
+}
+
+/* Responsive leaderboard table */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.875rem; /* Smaller text on mobile */
+    }
+    
+    .rank-badge {
+        font-size: 1rem; /* Smaller emoji on mobile */
+    }
+    
+    .score-badge, .percentage-badge {
+        padding: 0.125rem 0.5rem; /* Smaller padding on mobile */
+        font-size: 0.8rem; /* Smaller text on mobile */
+    }
+}
+
+/* Mobile Responsiveness for Quiz - Tablet and phone optimizations */
+
 /* Disable labels once answer has been chosen */
 .disabled-label {
   pointer-events: none;
