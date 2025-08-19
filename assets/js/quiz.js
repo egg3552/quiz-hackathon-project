@@ -71,19 +71,19 @@ function createOptions() {
       <h4 class="quiz-question-title text-center">Question ${currentQuestionNumber}</h4>
       <p id="question-${currentQuestionNumber}-text" class="quiz-question-text text-center"></p>
       <div class="quiz-form-check">
-        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}a" style="display: none;">
+        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}a" style="opacity: 0;">
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}a"></label>
       </div>
       <div class="quiz-form-check">
-        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}b" style="display: none;">
+        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}b" style="opacity: 0;">
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}b"></label>
       </div>
       <div class="quiz-form-check">
-        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}c" style="display: none;">
+        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}c" style="opacity: 0;">
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}c"></label>
       </div>
       <div class="quiz-form-check">
-        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}d" style="display: none;">
+        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}d" style="opacity: 0;">
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}d"></label>
       </div>
     </div>
@@ -104,14 +104,66 @@ function displayQuestion(questionNumbers) {
   const questionOptions = questionContainer.getElementsByTagName("label");
   //For all options available within the currently selected questions object, set the corresponding option on the page to be a letter and then the option (e.g. "A) Option 1, B) Option 2 ...").
   for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].innerText = currentQuestion.options[i];
+    questionOptions[i].innerText = optionLetters[i] + currentQuestion.options[i];
   }
   //Give all options on the page an event handler to allow for further testing on adding new questions.
   for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].addEventListener("click", function() {
+    questionOptions[i].addEventListener("click", disableOptions);
+  }
+}
+
+/**
+ * Disables options once a user has chosen an answer so they can no longer interact with the question.
+ * @param {*} e 
+ */
+function disableOptions(e) {
+  const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
+  const radioButtons = questionContainer.getElementsByTagName("input");
+  const labels = questionContainer.getElementsByTagName("label");
+  const questionIndex = questions.findIndex(obj => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText);
+  console.log(questionIndex);
+  // Gets the label that was clicked and check the corresponding button.
+  const label = e.target;
+  const forId = label.getAttribute('for'); //Finds the for attribute for the label.
+  if (forId) {
+    const radio = document.getElementById(forId); //Finds the corresponding radio button
+    radio.checked = true; //Marks corresponding radio as checked.
+  }
+  // Disables all radios except the checked one
+  for (let i = 0; i < radioButtons.length; i++) {
+    radioButtons[i].value = questions[questionIndex].options[i];
+    if (radioButtons[i].id === forId) {
+      radioButtons[i].disabled = false;
+    } else {
+      radioButtons[i].disabled = true;
+    }
+  }
+  // Removes all label event listeners and block focus except for the selected label
+  //AI helped with this block.
+  for (let lbl of labels) {
+    // Clone node to remove all event listeners
+    const newLbl = lbl.cloneNode(true);
+    if (lbl.getAttribute('for') === forId) {
+      newLbl.classList.remove('disabled-label');
+      newLbl.removeAttribute('tabindex');
+    } else {
+      newLbl.classList.add('disabled-label');
+      newLbl.setAttribute('tabindex', '-1');
+      newLbl.blur && newLbl.blur();
+    }
+    lbl.parentNode.replaceChild(newLbl, lbl);
+  }
+  checkAnswer();
+}
+
+/**
+ * Checks the user's answer with the correct answer and increments the score if correct.
+ */
+function checkAnswer() {
+  const currentQuestion = questions[questionNumbers[rand]];
+  questionOptions[i].addEventListener("click", function() {
       nextQuestion(currentQuestion, this.innerText);
     });
-  }
 }
 
 /**
