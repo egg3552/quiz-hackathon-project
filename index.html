@@ -1,85 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Test your knowledge with our interactive quiz application">
-    <title>Quiz App - Test Your Knowledge</title>
-    <!-- Styles -->
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="[/apple-touch-icon.png/]">
-    <link rel="icon" type="image/png" sizes="32x32" href="[/favicon-32x32.png/]">
-    <link rel="icon" type="image/png" sizes="16x16" href="[/favicon-16x16.png/]">
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-  </head>
-  <body>
-    <!-- Landing Page - First screen users see -->
-    <div class="landing-page" id="home">
-      <!-- Bootstrap container for responsive layout -->
-      <div class="container">
-        <!-- Bootstrap grid: center content vertically and horizontally -->
-        <div class="row justify-content-center align-items-center min-vh-100">
-          <!-- Responsive columns: medium screens 8/12, large screens 6/12 width -->
-          <div class="col-md-8 col-lg-6 text-center">
-            <div class="landing-content">
-              <!-- Main heading with Bootstrap display and font-weight classes -->
-              <h1 class="display-4 fw-bold mb-4">Welcome to Code Quest</h1>
-              <!-- Subtitle with Bootstrap lead class for larger text -->
-              <p class="lead mb-5">Test your knowledge and challenge yourself with our interactive quiz. Are you ready to discover what you know?</p>
-              <!-- Navigation link styled as button - links to working quiz page -->
-              <a href="quiz.html" class="btn btn-start-quiz btn-lg px-5 py-3">
-                <!-- Font Awesome play icon with margin-end spacing -->
-                <i class="fas fa-play me-2"></i>Start Quiz
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Test your knowledge with our interactive quiz application">
+  <title>Quiz App - Test Your Knowledge</title>
+  <!-- Styles -->
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="[/apple-touch-icon.png/]">
+  <link rel="icon" type="image/png" sizes="32x32" href="[/favicon-32x32.png/]">
+  <link rel="icon" type="image/png" sizes="16x16" href="[/favicon-16x16.png/]">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+  <!-- Landing Page - First screen users see -->
+  <div class="landing-page" id="home">
+    <!-- Bootstrap container for responsive layout -->
+    <div class="container">
+      <!-- Bootstrap grid: center content vertically and horizontally -->
+      <div class="row justify-content-center align-items-center min-vh-100">
+        <!-- Responsive columns: medium screens 8/12, large screens 6/12 width -->
+        <div class="col-md-8 col-lg-6 text-center">
+          <div class="landing-content">
+            <!-- Main heading with Bootstrap display and font-weight classes -->
+            <h1 class="display-4 fw-bold mb-4">Welcome to Code Quest</h1>
+            <!-- Subtitle with Bootstrap lead class for larger text -->
+            <p class="lead mb-5">Test your knowledge and challenge yourself with our interactive quiz. Are you ready to
+              discover what you know?</p>
+            <form class="form-inline">
+              <!--boostrap Username button-->
+              <div class="form-group mb-2">
+                <label for="staticEmail2" class="sr-only">Email</label>
+              </div>
+              <div class="form-group mx-sm-3 mb-2">
+                <label for="inputPassword2" class="sr-only">username</label>
+                <input type="username" class="form-control" id="inputPassword2" placeholder="Username">
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">submit</button>
+            </form>
+            <!-- Navigation link styled as button - links to working quiz page -->
+            <a href="quiz.html" class="btn btn-start-quiz btn-lg px-5 py-3">
+              <!-- Font Awesome play icon with margin-end spacing -->
+              <i class="fas fa-play me-2"></i>Start Quiz
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Quiz Section - Hidden by default, shown when URL contains #quiz -->
+  <div class="quiz-section" id="quiz">
+    <div class="container">
+      <!-- Center content vertically and horizontally -->
+      <div class="row justify-content-center align-items-center min-vh-100">
+        <!-- Medium screens take 8/12 width -->
+        <div class="col-md-8">
+          <div class="quiz-container">
+            <h2 class="text-center mb-4">Quiz Time!</h2>
+            <p class="text-center mb-4">Quiz content will be loaded here...</p>
+            <div class="text-center">
+              <!-- Navigation link back to home - href="#home" jumps to landing page -->
+              <a href="#home" class="btn btn-secondary">
+                <!-- Font Awesome arrow icon for "back" indication -->
+                <i class="fas fa-arrow-left me-2"></i>Back to Home
               </a>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Quiz Section - Hidden by default, shown when URL contains #quiz -->
-    <div class="quiz-section" id="quiz">
-      <div class="container">
-        <!-- Center content vertically and horizontally -->
-        <div class="row justify-content-center align-items-center min-vh-100">
-          <!-- Medium screens take 8/12 width -->
-          <div class="col-md-8">
-            <div class="quiz-container">
-              <h2 class="text-center mb-4">Quiz Time!</h2>
-              <p class="text-center mb-4">Quiz content will be loaded here...</p>
-              <div class="text-center">
-                <!-- Navigation link back to home - href="#home" jumps to landing page -->
-                <a href="#home" class="btn btn-secondary">
-                  <!-- Font Awesome arrow icon for "back" indication -->
-                  <i class="fas fa-arrow-left me-2"></i>Back to Home
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- Navigation Bar -->
+  <nav></nav>
+  <!-- Header -->
+  <header></header>
 
-    <!-- Navigation Bar -->
-    <nav></nav>
-    <!-- Header -->
-    <header></header>
+  <!-- Main Content -->
+  <main></main>
 
-    <!-- Main Content -->
-    <main></main>
- 
-    <!-- Footer -->
-    <footer></footer>
+  <!-- Footer -->
+  <footer></footer>
 
-    <!-- Scripts -->
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
-    <!-- Custom JS -->
-    <script src="assets/js/script.js"></script>
-  </body>
+  <!-- Scripts -->
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+  </script>
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
+  <!-- Custom JS -->
+  <script src="assets/js/script.js"></script>
+</body>
+
 </html>

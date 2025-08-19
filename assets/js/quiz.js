@@ -372,3 +372,4 @@ function resetQuiz(event) {
 
   console.log("Quiz has been reset");
 }
+
