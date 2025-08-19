@@ -212,9 +212,11 @@ function displayQuestion(questionNumbers) {
   document.getElementById(`question-${currentQuestionNumber}-text`).innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
   const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
   const questionOptions = questionContainer.getElementsByTagName("label");
+  // Shuffle options before displaying
+  let shuffledOptions = shuffleArray(currentQuestion.options);
   //For all options available within the currently selected questions object, set the corresponding option on the page to be a letter and then the option (e.g. "A) Option 1, B) Option 2 ...").
   for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].innerText = optionLetters[i] + currentQuestion.options[i];
+    questionOptions[i].innerText = optionLetters[i] + shuffledOptions[i];
   }
   // Attach a single click listener to the question container (event delegation).
   // This avoids adding/removing many individual listeners and prevents the need
@@ -229,7 +231,21 @@ function displayQuestion(questionNumbers) {
     disableOptions({ target: label });
   });
 }
+//Fisher-Yates shuffle to ensure each time a question is loaded, the options are displayed in a different order.
+function shuffleArray(unshuffled){
+    let shuffled = unshuffled.map(item => item); //To copy values from one array to another, use .map().
+    for(i=unshuffled.length-1; i > 0; i--){
+        j = Math.floor(Math.random()*(unshuffled.length-1));
+        shuffled.splice(j, 1, unshuffled[i]);  
+        shuffled.splice(i, 1, unshuffled[j]);   
+        unshuffled = shuffled.map(item => item);
+    }
+    return shuffled;
+}
 
+/**
+ * Enables the "Explain Results" button and populates the explanation text.
+ */
 function enableExplainResults() {
   const explainBtn = document.querySelector(`button[data-bs-target='#results${currentQuestionNumber}']`);
   const explainText = document.getElementById(`explanation-${currentQuestionNumber}`).children;
@@ -239,11 +255,6 @@ function enableExplainResults() {
   explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`;
   explainText[1].innerText = questions[questionIndex].explanation;
   explainBtn.disabled = false;
-  explainBtn.onclick = explainResults;
-}
-
-function explainResults(){
-
 }
 
 /**
@@ -265,7 +276,7 @@ function disableOptions(e) {
   radio.checked = true; //Marks the radio button as checked.
   // Disable all other radio buttons.
   for (let i = 0; i < radioButtons.length; i++) {
-    radioButtons[i].value = questions[questionIndex].options[i];
+    radioButtons[i].value = labels[i].innerText.slice(3);
     if (radioButtons[i].id === forId) {
       radioButtons[i].disabled = false;
     } else {
@@ -290,6 +301,7 @@ function disableOptions(e) {
 }
 
 function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
+  console.log(questionObject.answer, selectedAnswer);
   if (selectedAnswer === questionObject.answer) {
     currentScore++;
     console.log(selectedLabel);
