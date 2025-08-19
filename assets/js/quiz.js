@@ -230,6 +230,9 @@ function displayQuestion(questionNumbers) {
   });
 }
 
+/**
+ * Enables the "Explain Results" button and populates the explanation text.
+ */
 function enableExplainResults() {
   const explainBtn = document.querySelector(`button[data-bs-target='#results${currentQuestionNumber}']`);
   const explainText = document.getElementById(`explanation-${currentQuestionNumber}`).children;
@@ -239,11 +242,6 @@ function enableExplainResults() {
   explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`;
   explainText[1].innerText = questions[questionIndex].explanation;
   explainBtn.disabled = false;
-  explainBtn.onclick = explainResults;
-}
-
-function explainResults(){
-
 }
 
 /**
