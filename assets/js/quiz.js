@@ -99,6 +99,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initially disable the next icon
     disableNextControl();
   }
+
+  // Hide the 'Results Explained' button when we land on the results slide,
+  // and show it again when navigating back to earlier quiz slides.
+  const resultsExplainedBtn = document.querySelector('button[data-bs-target="#collapseExample"]');
+  const carouselEl = document.getElementById('quizCarousel');
+  if (carouselEl && resultsExplainedBtn) {
+    carouselEl.addEventListener('slid.bs.carousel', function () {
+      const active = document.querySelector('.carousel-item.active');
+      if (!active) {
+        resultsExplainedBtn.style.display = '';
+        return;
+      }
+      // If the active slide contains the results button we created, hide the explained button
+      if (active.querySelector('#see-results-btn')) {
+        resultsExplainedBtn.style.display = 'none';
+      } else {
+        resultsExplainedBtn.style.display = '';
+      }
+    });
+  }
 });
 
 /**
@@ -283,13 +303,30 @@ function showNextQuestion() {
     } else {
       // No more questions left: quiz is finished
       console.log("Quiz completed! Final score:", currentScore);
-      // Quiz is finished - could add completion logic here
+      resultsButton();
+      advanceCarousel();
     }
   } else {
     // No questions left: quiz is finished
     console.log("Quiz completed! Final score:", currentScore);
-    // Quiz is finished - could add completion logic here
+    resultsButton();
+    advanceCarousel();
   }
+}
+
+function resultsButton() {
+  // Create a results slide whose content is vertically and horizontally centered.
+  // Use flex utilities and a minimum height so there's generous spacing above and below.
+  let options = `
+  <!-- Results ${currentQuestionNumber} -->
+  <div id="question-${currentQuestionNumber}" class="carousel-item">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center py-5" style="min-height:55vh;">
+      <a id="see-results-btn" class="btn btn-primary btn-lg" href='results.html'>See Results!</a>
+    </div>
+  </div>
+  `;
+  document.getElementsByClassName("carousel-inner")[0].innerHTML += options;
+  // Optionally attach an id-based handler later if needed
 }
 
 /**
