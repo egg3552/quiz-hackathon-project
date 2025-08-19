@@ -1,35 +1,35 @@
 // Results page functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Get quiz results from localStorage
-    const quizResultsData = localStorage.getItem('quizResults');
+    const quizResultsData = localStorage.getItem('quizResults'); // Retrieve stored quiz results
     
-    if (!quizResultsData) {
+    if (!quizResultsData) { // Check if results exist
         // No results found, redirect to home
-        window.location.href = 'index.html';
-        return;
+        window.location.href = 'index.html'; // Redirect if no results found
+        return; // Exit function
     }
     
-    const results = JSON.parse(quizResultsData);
+    const results = JSON.parse(quizResultsData); // Parse JSON results data
     
     // Save score to leaderboard if not already saved
-    if (!results.savedToLeaderboard) {
-        saveToLeaderboard(results);
+    if (!results.savedToLeaderboard) { // Check if not already saved to prevent duplicates
+        saveToLeaderboard(results); // Add score to leaderboard
         
         // Mark as saved to prevent duplicate entries
-        results.savedToLeaderboard = true;
-        localStorage.setItem('quizResults', JSON.stringify(results));
+        results.savedToLeaderboard = true; // Flag as saved
+        localStorage.setItem('quizResults', JSON.stringify(results)); // Update stored results
     }
     
     // Update the results display
-    updateResultsDisplay(results);
+    updateResultsDisplay(results); // Show results on page
 });
 
 /**
  * Saves the quiz results to the leaderboard
  */
 function saveToLeaderboard(results) {
-    const scores = getLeaderboardScores();
-    const newScore = {
+    const scores = getLeaderboardScores(); // Get existing leaderboard scores
+    const newScore = { // Create new score entry
         username: results.username || 'Anonymous',
         score: results.score,
         totalQuestions: results.totalQuestions,
@@ -38,77 +38,77 @@ function saveToLeaderboard(results) {
         timestamp: Date.now()
     };
     
-    scores.push(newScore);
+    scores.push(newScore); // Add new score to array
     
     // Sort by percentage (highest first), then by timestamp (newest first)
-    scores.sort((a, b) => {
+    scores.sort((a, b) => { // Sort scores by performance
         if (b.percentage !== a.percentage) {
-            return b.percentage - a.percentage;
+            return b.percentage - a.percentage; // Primary sort by percentage
         }
-        return b.timestamp - a.timestamp;
+        return b.timestamp - a.timestamp; // Secondary sort by time
     });
     
     // Keep only top 10 scores
-    const topScores = scores.slice(0, 10);
+    const topScores = scores.slice(0, 10); // Limit to top 10 entries
     
-    localStorage.setItem('quizLeaderboard', JSON.stringify(topScores));
+    localStorage.setItem('quizLeaderboard', JSON.stringify(topScores)); // Save updated leaderboard
 }
 
 /**
  * Gets leaderboard scores from localStorage
  */
 function getLeaderboardScores() {
-    const scores = localStorage.getItem('quizLeaderboard');
-    return scores ? JSON.parse(scores) : [];
+    const scores = localStorage.getItem('quizLeaderboard'); // Retrieve stored leaderboard
+    return scores ? JSON.parse(scores) : []; // Return parsed scores or empty array
 }
 
 function updateResultsDisplay(results) {
-    const titleElement = document.getElementById('results-title');
-    const scoreBadge = document.getElementById('score-badge');
-    const messageElement = document.getElementById('results-message');
+    const titleElement = document.getElementById('results-title'); // Find title element
+    const scoreBadge = document.getElementById('score-badge'); // Find score badge element
+    const messageElement = document.getElementById('results-message'); // Find message element
     
     // Update title with username
-    if (titleElement) {
-        titleElement.textContent = results.username ? 
+    if (titleElement) { // Check if title element exists
+        titleElement.textContent = results.username ? // Set personalized or generic title
             `Great job, ${results.username}!` : 
             'Your Results';
     }
     
     // Update score badge
-    if (scoreBadge) {
-        scoreBadge.innerHTML = `
+    if (scoreBadge) { // Check if score badge exists
+        scoreBadge.innerHTML = ` // Set score display HTML
             <i class="fas fa-star me-2"></i>Score: ${results.score}/${results.totalQuestions} (${results.percentage}%)
         `;
         
         // Add different colors based on performance
-        scoreBadge.className = 'badge fs-3 px-4 py-3 mb-3 ' + getScoreBadgeClass(results.percentage);
+        scoreBadge.className = 'badge fs-3 px-4 py-3 mb-3 ' + getScoreBadgeClass(results.percentage); // Apply performance-based styling
     }
     
     // Update message based on performance
-    if (messageElement) {
-        messageElement.textContent = getPerformanceMessage(results.percentage, results.username);
+    if (messageElement) { // Check if message element exists
+        messageElement.textContent = getPerformanceMessage(results.percentage, results.username); // Set performance message
     }
 }
 
 function getScoreBadgeClass(percentage) {
-    if (percentage >= 90) return 'bg-success';
-    if (percentage >= 70) return 'bg-primary';
-    if (percentage >= 50) return 'bg-warning';
-    return 'bg-danger';
+    if (percentage >= 90) return 'bg-success'; // Green for excellent scores
+    if (percentage >= 70) return 'bg-primary'; // Blue for good scores
+    if (percentage >= 50) return 'bg-warning'; // Yellow for average scores
+    return 'bg-danger'; // Red for poor scores
 }
 
 function getPerformanceMessage(percentage, username) {
-    const name = username || 'You';
+    const name = username || 'You'; // Use username or default to 'You'
     
-    if (percentage === 100) {
+    if (percentage === 100) { // Perfect score message
         return `Perfect score! ${name} got every question right! 🎉`;
-    } else if (percentage >= 90) {
+    } else if (percentage >= 90) { // Excellent score message
         return `Excellent work! ${name} really know${username ? 's' : ''} your stuff! 🌟`;
-    } else if (percentage >= 70) {
+    } else if (percentage >= 70) { // Good score message
         return `Good job! ${name} did well, but there's room for improvement. 👍`;
-    } else if (percentage >= 50) {
+    } else if (percentage >= 50) { // Average score message
         return `Not bad! ${name} got more than half right. Keep practicing! 📚`;
-    } else {
+    } else { // Poor score message
         return `${name} might want to review the material and try again. Don't give up! 💪`;
     }
 }

@@ -47,73 +47,73 @@ let username = ''; //Stores the username from localStorage
 
 // --- Small helper utilities to make the main flow easier to read ---
 function disableNextControl() {
-  const nextIcon = document.querySelector(".carousel-control-next-icon");
-  if (!nextIcon) return;
-  nextIcon.classList.add("disabled-label");
-  nextIcon.style.pointerEvents = "none";
+  const nextIcon = document.querySelector(".carousel-control-next-icon"); // Find the next navigation button
+  if (!nextIcon) return; // Exit if button doesn't exist
+  nextIcon.classList.add("disabled-label"); // Add disabled styling
+  nextIcon.style.pointerEvents = "none"; // Prevent clicking
 }
 
 function enableNextControl() {
-  const nextIcon = document.querySelector(".carousel-control-next-icon");
-  if (!nextIcon) return;
-  nextIcon.classList.remove("disabled-label");
-  nextIcon.style.pointerEvents = "auto";
+  const nextIcon = document.querySelector(".carousel-control-next-icon"); // Find the next navigation button
+  if (!nextIcon) return; // Exit if button doesn't exist
+  nextIcon.classList.remove("disabled-label"); // Remove disabled styling
+  nextIcon.style.pointerEvents = "auto"; // Allow clicking
 }
 
 function getActiveSlideNumber() {
-  const active = document.querySelector(".carousel-item.active");
-  if (!active) return null;
-  const span = active.querySelector("[data-qnum]");
-  return span ? parseInt(span.getAttribute("data-qnum"), 10) : null;
+  const active = document.querySelector(".carousel-item.active"); // Find currently visible slide
+  if (!active) return null; // Return null if no active slide found
+  const span = active.querySelector("[data-qnum]"); // Find element with question number
+  return span ? parseInt(span.getAttribute("data-qnum"), 10) : null; // Extract and return question number
 }
 
 function advanceCarousel() {
-  const carouselEl = document.getElementById("quizCarousel");
-  if (!carouselEl || typeof bootstrap === "undefined") return;
-  const inst = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl);
-  inst.next();
+  const carouselEl = document.getElementById("quizCarousel"); // Get carousel element
+  if (!carouselEl || typeof bootstrap === "undefined") return; // Exit if carousel or Bootstrap not available
+  const inst = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl); // Get or create carousel instance
+  inst.next(); // Move to next slide
 }
 
 //Wait until page has loaded before firing functions
 document.addEventListener("DOMContentLoaded", () => {
   // Get username from localStorage
-  username = localStorage.getItem('quizUsername') || 'Guest';
+  username = localStorage.getItem('quizUsername') || 'Guest'; // Retrieve stored username or default to 'Guest'
   
   // Display username in header if element exists
-  displayUsername();
+  displayUsername(); // Update header with personalized greeting
   
-  startQuiz();
+  startQuiz(); // Initialize and begin the quiz
 
   // Add event listener for reset button
-  const resetButton = document.querySelector('button[type="reset"]');
+  const resetButton = document.querySelector('button[type="reset"]'); // Find reset button
   if (resetButton) {
-    resetButton.addEventListener("click", resetQuiz);
+    resetButton.addEventListener("click", resetQuiz); // Attach reset functionality
   }
 
-  const nextIcon = document.querySelector(".carousel-control-next-icon");
+  const nextIcon = document.querySelector(".carousel-control-next-icon"); // Find next navigation button
   // Problems caused by bootstrap's built-in method of changing active class on carousel.
   // Fixed using AI help.
   if (nextIcon) {
-    nextIcon.addEventListener("click", function handleNext(evt) {
+    nextIcon.addEventListener("click", function handleNext(evt) { // Add click handler for navigation
       // Only allow advancing if the current question has been answered
-      const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
-      const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : [];
-      const answered = Array.from(radioButtons).some((rb) => rb.checked);
+      const questionContainer = document.getElementById(`question-${currentQuestionNumber}`); // Get current question container
+      const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : []; // Get all radio inputs
+      const answered = Array.from(radioButtons).some((rb) => rb.checked); // Check if any option is selected
       if (!answered) return; // do nothing if not answered
 
-      const slideNum = getActiveSlideNumber();
+      const slideNum = getActiveSlideNumber(); // Get current slide number
       if (slideNum === currentQuestionNumber) {
         // Prevent Bootstrap from doing a duplicate advance; we will create
         // the next slide and advance programmatically.
-        evt.preventDefault();
-        evt.stopPropagation();
-        showNextQuestion();
-        disableNextControl();
+        evt.preventDefault(); // Stop default Bootstrap behavior
+        evt.stopPropagation(); // Prevent event bubbling
+        showNextQuestion(); // Handle question advancement manually
+        disableNextControl(); // Disable navigation until next question is answered
       }
       // otherwise let Bootstrap proceed normally
     });
     // Initially disable the next icon
-    disableNextControl();
+    disableNextControl(); // Start with navigation disabled
   }
 });
 
@@ -121,9 +121,9 @@ document.addEventListener("DOMContentLoaded", () => {
  * Displays the username in the quiz header
  */
 function displayUsername() {
-  const headerElement = document.querySelector('.quiz-header h1');
-  if (headerElement && username && username !== 'Guest') {
-    headerElement.textContent = `Code Quest - Welcome ${username}!`;
+  const headerElement = document.querySelector('.quiz-header h1'); // Find main header element
+  if (headerElement && username && username !== 'Guest') { // Check if header exists and username is valid
+    headerElement.textContent = `Code Quest - Welcome ${username}!`; // Update header with personalized greeting
   }
 }
 
@@ -132,18 +132,18 @@ function displayUsername() {
  */
 function startQuiz() {
   //Creates an array of indexes matching up to the number of questions available in the questions array.
-  for (let i = 0; i < questions.length; i++) {
-    questionNumbers.push(i);
+  for (let i = 0; i < questions.length; i++) { // Loop through all available questions
+    questionNumbers.push(i); // Add each question index to tracking array
   }
   // Set total questions count
-  totalQuestions = questions.length;
+  totalQuestions = questions.length; // Store total for progress calculations
 
   // Initialize displays
-  updateScoreDisplay();
-  updateProgressBar();
+  updateScoreDisplay(); // Set initial score display
+  updateProgressBar(); // Set initial progress bar
 
-  createOptions();
-  displayQuestion(questionNumbers);
+  createOptions(); // Generate HTML for first question
+  displayQuestion(questionNumbers); // Load and display first question
 }
 
 /**
@@ -151,7 +151,7 @@ function startQuiz() {
  */
 function createOptions() {
   // If this slide already exists (for example when moving back and then forward), don't recreate it
-  if (document.getElementById(`question-${currentQuestionNumber}`)) return;
+  if (document.getElementById(`question-${currentQuestionNumber}`)) return; // Exit if question already exists
 
   let options = `
   <!-- Question ${currentQuestionNumber} -->
@@ -192,13 +192,13 @@ function createOptions() {
       </div>
     </div>
   `;
-  document.getElementsByClassName("carousel-inner")[0].innerHTML += options;
+  document.getElementsByClassName("carousel-inner")[0].innerHTML += options; // Add new question HTML to carousel
   // Only the very first question should be active immediately. All other questions
   // are created as inactive so Bootstrap's carousel can animate to them when the
   // user clicks the next control.
-  if (currentQuestionNumber === 1) {
-    const first = document.getElementById(`question-${currentQuestionNumber}`);
-    if (first) first.classList.add("active");
+  if (currentQuestionNumber === 1) { // Check if this is the first question
+    const first = document.getElementById(`question-${currentQuestionNumber}`); // Get first question element
+    if (first) first.classList.add("active"); // Make first question visible
   }
 }
 
@@ -210,53 +210,53 @@ function displayQuestion(questionNumbers) {
   const currentQuestion = questions[questionNumbers[rand]]; //Retrieves the corresponding question object from the questions array.
   questionNumbers.splice(rand, 1); //removes this index value from the questionNumbers array, so not to allow the question to appear again.
   document.getElementById(`question-${currentQuestionNumber}-text`).innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
-  const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
-  const questionOptions = questionContainer.getElementsByTagName("label");
+  const questionContainer = document.getElementById(`question-${currentQuestionNumber}`); // Get current question container
+  const questionOptions = questionContainer.getElementsByTagName("label"); // Get all option labels
   // Shuffle options before displaying
-  let shuffledOptions = shuffleArray(currentQuestion.options);
+  let shuffledOptions = shuffleArray(currentQuestion.options); // Randomize option order
   //For all options available within the currently selected questions object, set the corresponding option on the page to be a letter and then the option (e.g. "A) Option 1, B) Option 2 ...").
-  for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].innerText = optionLetters[i] + shuffledOptions[i];
+  for (let i = 0; i < currentQuestion.options.length; i++) { // Loop through all options
+    questionOptions[i].innerText = optionLetters[i] + shuffledOptions[i]; // Set option text with letter prefix
   }
   // Attach a single click listener to the question container (event delegation).
   // This avoids adding/removing many individual listeners and prevents the need
   // to clone/replace nodes when disabling options.
-  questionContainer.addEventListener("click", function (e) {
+  questionContainer.addEventListener("click", function (e) { // Add click handler to question container
     // Check if the click was on a label or its parent .quiz-form-check (labelContainer)
-    let labelContainer = e.target.closest(".quiz-form-check");
-    if (!labelContainer) return;
-    let label = labelContainer.querySelector("label.quiz-form-check-label");
-    if (!label) return;
+    let labelContainer = e.target.closest(".quiz-form-check"); // Find clicked option container
+    if (!labelContainer) return; // Exit if click wasn't on an option
+    let label = labelContainer.querySelector("label.quiz-form-check-label"); // Get the option label
+    if (!label) return; // Exit if label not found
     // Only proceed if the label is not disabled
-    if (label.classList.contains("disabled-label")) return;
-    enableExplainResults();
-    disableOptions({ target: label });
+    if (label.classList.contains("disabled-label")) return; // Exit if option is disabled
+    enableExplainResults(); // Enable the explanation button
+    disableOptions({ target: label }); // Process the answer selection
   });
 }
 //Fisher-Yates shuffle to ensure each time a question is loaded, the options are displayed in a different order.
 function shuffleArray(unshuffled){
     let shuffled = unshuffled.map(item => item); //To copy values from one array to another, use .map().
-    for(i=unshuffled.length-1; i > 0; i--){
-        j = Math.floor(Math.random()*(unshuffled.length-1));
-        shuffled.splice(j, 1, unshuffled[i]);  
-        shuffled.splice(i, 1, unshuffled[j]);   
-        unshuffled = shuffled.map(item => item);
+    for(i=unshuffled.length-1; i > 0; i--){ // Loop backwards through array
+        j = Math.floor(Math.random()*(unshuffled.length-1)); // Generate random index
+        shuffled.splice(j, 1, unshuffled[i]); // Replace element at random index
+        shuffled.splice(i, 1, unshuffled[j]); // Replace element at current index
+        unshuffled = shuffled.map(item => item); // Update source array for next iteration
     }
-    return shuffled;
+    return shuffled; // Return randomized array
 }
 
 /**
  * Enables the "Explain Results" button and populates the explanation text.
  */
 function enableExplainResults() {
-  const explainBtn = document.querySelector(`button[data-bs-target='#results${currentQuestionNumber}']`);
-  const explainText = document.getElementById(`explanation-${currentQuestionNumber}`).children;
-  const questionIndex = questions.findIndex(
+  const explainBtn = document.querySelector(`button[data-bs-target='#results${currentQuestionNumber}']`); // Find explanation button
+  const explainText = document.getElementById(`explanation-${currentQuestionNumber}`).children; // Get explanation text elements
+  const questionIndex = questions.findIndex( // Find question in original array
     (obj) => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText
   );
-  explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`;
-  explainText[1].innerText = questions[questionIndex].explanation;
-  explainBtn.disabled = false;
+  explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`; // Set correct answer text
+  explainText[1].innerText = questions[questionIndex].explanation; // Set explanation text
+  explainBtn.disabled = false; // Enable the explanation button
 }
 
 /**
@@ -264,72 +264,72 @@ function enableExplainResults() {
  * @param {*} e
  */
 function disableOptions(e) {
-  const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
+  const questionContainer = document.getElementById(`question-${currentQuestionNumber}`); // Get current question container
   // If this question has already been answered, ignore further clicks.
-  if (questionContainer && questionContainer.dataset.answered === 'true') return;
-  const radioButtons = questionContainer.getElementsByTagName("input");
-  const labels = questionContainer.getElementsByTagName("label");
+  if (questionContainer && questionContainer.dataset.answered === 'true') return; // Exit if already answered
+  const radioButtons = questionContainer.getElementsByTagName("input"); // Get all radio buttons
+  const labels = questionContainer.getElementsByTagName("label"); // Get all labels
   // Since the questions are chose at random in a previous function, the current question index can be found by comparing the
   // question on the page with the questions array objects.
-  const questionIndex = questions.findIndex(
+  const questionIndex = questions.findIndex( // Find question in original array
     (obj) => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText
   );
-  const label = e.target;
+  const label = e.target; // Get clicked label
   const forId = label.getAttribute("for"); //Finds the for attribute for the label which the user has clicked.
   const radio = document.getElementById(forId); //Finds the corresponding radio input.
   radio.checked = true; //Marks the radio button as checked.
   // Disable all other radio buttons.
-  for (let i = 0; i < radioButtons.length; i++) {
-    radioButtons[i].value = labels[i].innerText.slice(3);
+  for (let i = 0; i < radioButtons.length; i++) { // Loop through all radio buttons
+    radioButtons[i].value = labels[i].innerText.slice(3); // Set value to option text (without letter prefix)
     if (radioButtons[i].id === forId) {
   // disable the selected radio so it can't be re-clicked to re-score
-  radioButtons[i].disabled = true;
+  radioButtons[i].disabled = true; // Disable selected radio button
     } else {
-      radioButtons[i].disabled = true;
+      radioButtons[i].disabled = true; // Disable all other radio buttons
     }
   }
   // Disable label interactivity by toggling classes on the existing labels.
   // Using classes (and tabindex) prevents clicks while keeping the same DOM nodes
   // so we can directly modify them (no need to clone/replace nodes).
-  for (let lbl of labels) {
-    if (lbl.getAttribute("for") === forId) {
-      lbl.classList.remove("disabled-label");
-      lbl.removeAttribute("tabindex");
+  for (let lbl of labels) { // Loop through all labels
+    if (lbl.getAttribute("for") === forId) { // Check if this is the selected label
+      lbl.classList.remove("disabled-label"); // Keep selected label enabled visually
+      lbl.removeAttribute("tabindex"); // Remove tab navigation restriction
     } else {
-      lbl.classList.add("disabled-label");
-      lbl.setAttribute("tabindex", "-1");
+      lbl.classList.add("disabled-label"); // Disable other labels visually
+      lbl.setAttribute("tabindex", "-1"); // Remove from tab navigation
     }
   }
-  const currentQuestion = questions[questionIndex];
+  const currentQuestion = questions[questionIndex]; // Get question object
   // Mark this slide answered to prevent double-click scoring, then pass
   // the clicked label (live DOM node) to checkAnswer.
-  if (questionContainer) questionContainer.dataset.answered = 'true';
-  checkAnswer(currentQuestion, radio.value, label);
+  if (questionContainer) questionContainer.dataset.answered = 'true'; // Mark question as answered
+  checkAnswer(currentQuestion, radio.value, label); // Process the answer
 }
 
 function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
-  console.log(questionObject.answer, selectedAnswer);
-  if (selectedAnswer === questionObject.answer) {
-    currentScore++;
-    console.log(selectedLabel);
-    selectedLabel.parentElement.classList.add("correct-answer");
+  console.log(questionObject.answer, selectedAnswer); // Log correct and selected answers for debugging
+  if (selectedAnswer === questionObject.answer) { // Check if answer is correct
+    currentScore++; // Increment score for correct answer
+    console.log(selectedLabel); // Log selected label for debugging
+    selectedLabel.parentElement.classList.add("correct-answer"); // Add correct answer styling
   } else {
-    selectedLabel.parentElement.classList.add("incorrect-answer");
+    selectedLabel.parentElement.classList.add("incorrect-answer"); // Add incorrect answer styling
   }
-  userAnswers.push({
+  userAnswers.push({ // Store answer details for results page
     question: questionObject.question,
     selectedAnswer: selectedAnswer,
     correctAnswer: questionObject.answer,
     isCorrect: selectedAnswer === questionObject.answer,
   });
-  updateScoreDisplay();
-  updateProgressBar();
+  updateScoreDisplay(); // Refresh score display
+  updateProgressBar(); // Update progress indicator
   // Do NOT call showNextQuestion here; wait for user to click next icon
   // Instead, enable the next icon if it was disabled
-  const nextIcon = document.querySelector(".carousel-control-next-icon");
+  const nextIcon = document.querySelector(".carousel-control-next-icon"); // Find next navigation button
   if (nextIcon) {
-    nextIcon.classList.remove("disabled-label");
-    nextIcon.style.pointerEvents = "auto";
+    nextIcon.classList.remove("disabled-label"); // Remove disabled styling
+    nextIcon.style.pointerEvents = "auto"; // Allow clicking
   }
 }
 
@@ -343,41 +343,41 @@ function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
  */
 function showNextQuestion() {
   // Log current state for debugging
-  console.log(currentQuestionNumber, questionNumbers, `Score: ${currentScore}`);
+  console.log(currentQuestionNumber, questionNumbers, `Score: ${currentScore}`); // Display current quiz state
   // Check if there are still questions left to show
-  if (Array.isArray(questionNumbers) && questionNumbers.length !== 0) {
+  if (Array.isArray(questionNumbers) && questionNumbers.length !== 0) { // Verify questions remain
     // Move to the next question
-    currentQuestionNumber++;
+    currentQuestionNumber++; // Increment question counter
     // If there are still questions left, render the next one and advance
-    if (questionNumbers.length !== 0) {
+    if (questionNumbers.length !== 0) { // Check if more questions exist
       createOptions(); // Create the answer options for the next question
       displayQuestion(questionNumbers); // Fill in option text
       // Advance carousel to the newly created slide
-      advanceCarousel();
+      advanceCarousel(); // Move to next slide
     } else {
       // No more questions left: quiz is finished
-      console.log("Quiz completed! Final score:", currentScore);
-      resultsButton();
-      advanceCarousel();
+      console.log("Quiz completed! Final score:", currentScore); // Log completion
+      resultsButton(); // Create results slide
+      advanceCarousel(); // Move to results slide
     }
   } else {
     // No questions left: quiz is finished
-    console.log("Quiz completed! Final score:", currentScore);
-    resultsButton();
-    advanceCarousel();
+    console.log("Quiz completed! Final score:", currentScore); // Log completion
+    resultsButton(); // Create results slide
+    advanceCarousel(); // Move to results slide
   }
 }
 
 function resultsButton() {
   // Store quiz results in localStorage for results page
-  const quizResults = {
+  const quizResults = { // Create results object
     username: username,
     score: currentScore,
     totalQuestions: totalQuestions,
     percentage: Math.round((currentScore / totalQuestions) * 100),
     userAnswers: userAnswers
   };
-  localStorage.setItem('quizResults', JSON.stringify(quizResults));
+  localStorage.setItem('quizResults', JSON.stringify(quizResults)); // Save results to browser storage
 
   // Create a results slide whose content is vertically and horizontally centered.
   // Use flex utilities and a minimum height so there's generous spacing above and below.
@@ -391,21 +391,21 @@ function resultsButton() {
     </div>
   </div>
   `;
-  document.getElementsByClassName("carousel-inner")[0].innerHTML += options;
+  document.getElementsByClassName("carousel-inner")[0].innerHTML += options; // Add results slide to carousel
 }
 
 /**
  * Updates the score badge display
  */
 function updateScoreDisplay() {
-  const scoreElement = document.getElementById("currentScore");
-  const totalElement = document.getElementById("totalQuestions");
+  const scoreElement = document.getElementById("currentScore"); // Find score display element
+  const totalElement = document.getElementById("totalQuestions"); // Find total questions display element
 
   if (scoreElement) {
-    scoreElement.textContent = currentScore;
+    scoreElement.textContent = currentScore; // Update current score
   }
   if (totalElement) {
-    totalElement.textContent = totalQuestions;
+    totalElement.textContent = totalQuestions; // Update total questions
   }
 }
 
@@ -413,21 +413,21 @@ function updateScoreDisplay() {
  * Updates the progress bar based on questions answered
  */
 function updateProgressBar() {
-  const progressBar = document.querySelector("#quizProgress .progress-bar");
-  const progressContainer = document.getElementById("quizProgress");
+  const progressBar = document.querySelector("#quizProgress .progress-bar"); // Find progress bar element
+  const progressContainer = document.getElementById("quizProgress"); // Find progress container
 
   if (progressBar && progressContainer) {
     // Calculate progress percentage based on questions answered
-    const questionsAnswered = userAnswers.length;
-    const progressPercentage = (questionsAnswered / totalQuestions) * 100;
+    const questionsAnswered = userAnswers.length; // Count answered questions
+    const progressPercentage = (questionsAnswered / totalQuestions) * 100; // Calculate percentage
 
     // Update progress bar
-    progressBar.style.width = `${progressPercentage}%`;
-    progressContainer.setAttribute("aria-valuenow", progressPercentage);
+    progressBar.style.width = `${progressPercentage}%`; // Set visual width
+    progressContainer.setAttribute("aria-valuenow", progressPercentage); // Update accessibility attribute
 
     // Add smooth transition if not already present
     if (!progressBar.style.transition) {
-      progressBar.style.transition = "width 0.5s ease-in-out";
+      progressBar.style.transition = "width 0.5s ease-in-out"; // Add smooth animation
     }
   }
 }
@@ -438,30 +438,30 @@ function updateProgressBar() {
 function resetQuiz(event) {
   // Prevent form submission
   if (event) {
-    event.preventDefault();
+    event.preventDefault(); // Stop default form behavior
   }
 
   // Reset all global variables
-  currentQuestionNumber = 1;
-  questionNumbers = [];
-  currentScore = 0;
-  userAnswers = [];
-  totalQuestions = 0;
+  currentQuestionNumber = 1; // Reset to first question
+  questionNumbers = []; // Clear question tracking array
+  currentScore = 0; // Reset score to zero
+  userAnswers = []; // Clear answer history
+  totalQuestions = 0; // Reset question count
 
   // Clear the carousel
-  const carouselInner = document.querySelector(".carousel-inner");
+  const carouselInner = document.querySelector(".carousel-inner"); // Find carousel container
   if (carouselInner) {
-    carouselInner.innerHTML = "";
+    carouselInner.innerHTML = ""; // Remove all slides
   }
 
   // Clear any form selections
-  const quizForm = document.getElementById("quizForm");
+  const quizForm = document.getElementById("quizForm"); // Find quiz form
   if (quizForm) {
-    quizForm.reset();
+    quizForm.reset(); // Reset form inputs
   }
 
   // Restart the quiz
-  startQuiz();
+  startQuiz(); // Initialize new quiz session
 
-  console.log("Quiz has been reset");
+  console.log("Quiz has been reset"); // Log reset action
 }
