@@ -47,14 +47,23 @@
       <form id="quizForm">
         <div class="quiz-card">
           <div class="p-4">
-            <!-- Add a progress bar-->
-            <div class="quiz-progress progress" role="progressbar" aria-label="Quiz Progress" aria-valuenow="33"
-              aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-bar" style="width: 33%">Question 1 of 3</div>
+            <!-- Progress and Score Section -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="flex-grow-1 me-3">
+                <div id="quizProgress" class="quiz-progress progress" role="progressbar" aria-label="Quiz Progress" aria-valuenow="0"
+                  aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="score-badge">
+                <span class="badge bg-primary fs-6 px-3 py-2">
+                  <i class="fas fa-star me-1"></i>Score: <span id="currentScore">0</span>/<span id="totalQuestions">3</span>
+                </span>
+              </div>
             </div>
 
             <div id="quizCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false"
-              data-bs-touch="false">
+              data-bs-touch="false" data-bs-wrap="false">
               <div class="carousel-inner">
               </div>
 
@@ -71,12 +80,6 @@
 
           <!-- Button Group - Properly aligned buttons -->
           <div class="mt-4 d-flex flex-column gap-3">
-            <!-- Submit Button -->
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary btn-lg px-4 py-2">
-                <i class="fas fa-check me-2"></i>Submit Answer
-              </button>
-            </div>
             
             <!-- Results Explained Button -->
             <div class="text-center">
@@ -102,15 +105,13 @@
               <p class="text-center">Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.</p>
             </div>
           </div>
-          
-          
-          
-          
+
           </form>
           
           
           <!-- A page with instructions or perhaps a modal pop-up-->
           <div id="#instructions">
+
           
           </div>
           </main>
