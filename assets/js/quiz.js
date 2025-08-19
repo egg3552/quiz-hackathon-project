@@ -125,10 +125,17 @@ function displayQuestion(questionNumbers) {
   for (let i = 0; i < currentQuestion.options.length; i++) {
     questionOptions[i].innerText = optionLetters[i] + currentQuestion.options[i];
   }
-  //Give all options on the page an event handler to allow for further testing on adding new questions.
-  for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].addEventListener("click", disableOptions);
-  }
+  // Attach a single click listener to the question container (event delegation).
+  // This avoids adding/removing many individual listeners and prevents the need
+  // to clone/replace nodes when disabling options.
+  questionContainer.addEventListener('click', function (evt) {
+    const label = evt.target.closest('label.quiz-form-check-label');
+    if (!label) return; // clicked outside a label
+    // Ignore clicks on labels that have been disabled
+    if (label.classList.contains('disabled-label')) return;
+    // Forward a synthetic event-like object to reuse existing logic
+    disableOptions({ target: label });
+  });
 }
 
 /**
@@ -157,26 +164,31 @@ function disableOptions(e) {
       radioButtons[i].disabled = true;
     }
   }
-  // Disable label interactivity.
+  // Disable label interactivity by toggling classes on the existing labels.
+  // Using classes (and tabindex) prevents clicks while keeping the same DOM nodes
+  // so we can directly modify them (no need to clone/replace nodes).
   for (let lbl of labels) {
-    const newLbl = lbl.cloneNode(true);
     if (lbl.getAttribute("for") === forId) {
-      newLbl.classList.remove("disabled-label");
-      newLbl.removeAttribute("tabindex");
+      lbl.classList.remove("disabled-label");
+      lbl.removeAttribute("tabindex");
     } else {
-      newLbl.classList.add("disabled-label");
-      newLbl.setAttribute("tabindex", "-1");
-      newLbl.blur && newLbl.blur();
+      lbl.classList.add("disabled-label");
+      lbl.setAttribute("tabindex", "-1");
     }
-    lbl.parentNode.replaceChild(newLbl, lbl);
   }
   const currentQuestion = questions[questionIndex];
-  checkAnswer(currentQuestion, radio.value);
+  // Pass the clicked label (which is the live DOM node) to checkAnswer.
+  checkAnswer(currentQuestion, radio.value, label);
 }
 
-function checkAnswer(questionObject, selectedAnswer) {
+function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
   if (selectedAnswer === questionObject.answer) {
     currentScore++;
+    console.log(selectedLabel);
+    selectedLabel.parentElement.classList.add("correct-answer");
+    
+  } else {
+    selectedLabel.parentElement.classList.add("incorrect-answer");
   }
   userAnswers.push({
     question: questionObject.question,
