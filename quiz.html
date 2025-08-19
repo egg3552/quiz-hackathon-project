@@ -73,23 +73,54 @@
             </div>
           </div>
 
-          <!-- This is a collapse button which will explain the results of the answer after the user has submitted-->
-          <p>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-              aria-expanded="false" aria-controls="collapseExample">
-              Results Explained
-            </button>
-          </p>
-          <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the
-              user
-              activates the relevant trigger.
+          <!-- Button Group - Properly aligned buttons -->
+          <div class="mt-4 d-flex flex-column gap-3">
+            <!-- Submit Button -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary btn-lg px-4 py-2">
+                <i class="fas fa-check me-2"></i>Submit Answer
+              </button>
+            </div>
+            
+            <!-- Results Explained Button -->
+            <div class="text-center">
+              <button class="btn btn-secondary btn-lg px-4 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+                <i class="fas fa-info-circle me-2"></i>Results Explained
+              </button>
+            </div>
+            
+            <!-- Reset Button -->
+            <div class="text-center">
+              <button type="reset" class="btn btn-outline-primary btn-lg px-4 py-2">
+                <i class="fas fa-redo me-2"></i>Reset Quiz
+              </button>
             </div>
           </div>
-
-          <!-- Reset button for the-->
-          <button type="reset" class="btn btn-primary">Reset Quiz</button>
+          </div>
+          
+          <!-- Collapsible Results Section -->
+          <div class="collapse mt-3" id="collapseExample">
+            <div class="card card-body">
+              <h5 class="text-center mb-3">Answer Explanation</h5>
+              <p class="text-center">Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.</p>
+            </div>
+          </div>
+          
+          
+          
+          
+          </form>
+          
+          
+          <!-- A page with instructions or perhaps a modal pop-up-->
+          <div id="#instructions">
+          
+          </div>
+          </main>
+ 
+    <!-- Footer -->
+    <footer></footer>
 
 
       </form>
