@@ -276,7 +276,7 @@ function disableOptions(e) {
   radio.checked = true; //Marks the radio button as checked.
   // Disable all other radio buttons.
   for (let i = 0; i < radioButtons.length; i++) {
-    radioButtons[i].value = questions[questionIndex].options[i];
+    radioButtons[i].value = labels[i].innerText.slice(3);
     if (radioButtons[i].id === forId) {
       radioButtons[i].disabled = false;
     } else {
@@ -301,6 +301,7 @@ function disableOptions(e) {
 }
 
 function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
+  console.log(questionObject.answer, selectedAnswer);
   if (selectedAnswer === questionObject.answer) {
     currentScore++;
     console.log(selectedLabel);
