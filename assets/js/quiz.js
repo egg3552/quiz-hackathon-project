@@ -84,6 +84,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const radioButtons = questionContainer ? questionContainer.getElementsByTagName('input') : [];
       const answered = Array.from(radioButtons).some((rb) => rb.checked);
       if (!answered) return; // do nothing if not answered
+      // If the collapsible results/explained panel is open, hide it so
+      // previous question info isn't visible when we change slides.
+      const collapseEl = document.getElementById('collapseExample');
+      if (collapseEl) {
+        if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
+          const inst = bootstrap.Collapse.getInstance(collapseEl) || new bootstrap.Collapse(collapseEl, { toggle: false });
+          inst.hide();
+        } else {
+          // Fallback: remove the Bootstrap 'show' class and update any toggle button ARIA state
+          collapseEl.classList.remove('show');
+          const toggleBtn = document.querySelector('[data-bs-target="#collapseExample"]');
+          if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      }
 
       const slideNum = getActiveSlideNumber();
       if (slideNum === currentQuestionNumber) {
