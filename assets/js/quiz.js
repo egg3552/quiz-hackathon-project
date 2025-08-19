@@ -9,16 +9,19 @@ const questions = [
       "Hyper Tool Markup Language",
     ],
     answer: "Hyper Text Markup Language",
+    explanation: "test",
   },
   {
     question: "Which CSS property is used to change the text color?",
     options: ["text-color", "color", "font-color", "text-style"],
     answer: "color",
+    explanation: "test",
   },
   {
     question: "Which JavaScript method is used to select an element by its ID?",
     options: ["getElementById()", "getElementsByClassName()", "selectElement()", "querySelector()"],
     answer: "getElementById()",
+    explanation: "test",
   },
   {
     question: "What is the purpose of the <meta> tag in HTML?",
@@ -29,6 +32,7 @@ const questions = [
       "Provides metadata about the HTML document",
     ],
     answer: "Provides metadata about the HTML document",
+    explanation: "test",
   },
 ];
 
@@ -158,13 +162,13 @@ function createOptions() {
     <!-- Results Explained Button -->
       <div class="text-center">
         <button class="btn btn-secondary btn-lg px-4 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#results${currentQuestionNumber}"
-          aria-expanded="false" aria-controls="results${currentQuestionNumber}">
+          aria-expanded="false" aria-controls="results${currentQuestionNumber}" disabled>
           <i class="fas fa-info-circle me-2"></i>Results Explained
         </button>
       </div>
     <!-- Collapsible Results Section -->
       <div class="collapse mt-3" id="results${currentQuestionNumber}">
-        <div class="card card-body">
+        <div id="explanation-${currentQuestionNumber}" class="card card-body">
           <h5 class="text-center mb-3">Answer Explanation</h5>
           <p class="text-center">Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.</p>
         </div>
@@ -204,8 +208,25 @@ function displayQuestion(questionNumbers) {
     // Ignore clicks on labels that have been disabled
     if (label.classList.contains("disabled-label")) return;
     // Forward a synthetic event-like object to reuse existing logic
+    enableExplainResults();
     disableOptions({ target: label });
   });
+}
+
+function enableExplainResults() {
+  const explainBtn = document.querySelector(`button[data-bs-target='#results${currentQuestionNumber}']`);
+  const explainText = document.getElementById(`explanation-${currentQuestionNumber}`).children;
+  const questionIndex = questions.findIndex(
+    (obj) => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText
+  );
+  explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`;
+  explainText[1].innerText = questions[questionIndex].explanation;
+  explainBtn.disabled = false;
+  explainBtn.onclick = explainResults;
+}
+
+function explainResults(){
+
 }
 
 /**
@@ -324,14 +345,6 @@ function resultsButton() {
   `;
   document.getElementsByClassName("carousel-inner")[0].innerHTML += options;
   // Optionally attach an id-based handler later if needed
-}
-
-function explainResults(e) {
-  const currentQuestion = document.getElementById(`question-${currentQuestionNumber}`);
-  const userOptions = currentQuestion.getElementsByTagName("input");
-  for (let option in userOptions) {
-    option.checked === true ? (e.target.style.display = "inline-block") : null;
-  }
 }
 
 /**
