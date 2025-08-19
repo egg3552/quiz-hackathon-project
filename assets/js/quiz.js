@@ -26,10 +26,19 @@ const questions = [
 const optionLetters = ["A) ", "B) ", "C) ", "D) "];
 let currentQuestionNumber = 1; //Keeps track of which question number the user is on.
 let questionNumbers = []; //Keeps track of which questions are available from the questions array.
+let currentScore = 0; //Keeps track of the user's current score
+let userAnswers = []; //Stores user's answers for scoring
+let totalQuestions = 0; //Total number of questions in the quiz
 
 //Wait until page has loaded before firing functions
 document.addEventListener("DOMContentLoaded", () => {
   startQuiz();
+  
+  // Add event listener for reset button
+  const resetButton = document.querySelector('button[type="reset"]');
+  if (resetButton) {
+    resetButton.addEventListener('click', resetQuiz);
+  }
 });
 
 /**
@@ -40,6 +49,13 @@ function startQuiz() {
   for (let i = 0; i < questions.length; i++) {
     questionNumbers.push(i);
   }
+  // Set total questions count
+  totalQuestions = questions.length;
+  
+  // Initialize displays
+  updateScoreDisplay();
+  updateProgressBar();
+  
   createOptions();
   displayQuestion(questionNumbers);
 }
@@ -92,22 +108,123 @@ function displayQuestion(questionNumbers) {
   }
   //Give all options on the page an event handler to allow for further testing on adding new questions.
   for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].addEventListener("click", nextQuestion);
+    questionOptions[i].addEventListener("click", function() {
+      nextQuestion(currentQuestion, this.innerText);
+    });
   }
 }
 
 /**
- * Currently used for debugging.
- * Generates more questions when called.
+ * Processes the user's answer and generates more questions when called.
  */
-function nextQuestion() {
-  console.log(currentQuestionNumber, questionNumbers);
+function nextQuestion(questionObject, selectedAnswer) {
+  // Check if the answer is correct and update score
+  if (selectedAnswer === questionObject.answer) {
+    currentScore++;
+  }
+  
+  // Store the user's answer
+  userAnswers.push({
+    question: questionObject.question,
+    selectedAnswer: selectedAnswer,
+    correctAnswer: questionObject.answer,
+    isCorrect: selectedAnswer === questionObject.answer
+  });
+  
+  // Update displays
+  updateScoreDisplay();
+  updateProgressBar();
+  
+  console.log(currentQuestionNumber, questionNumbers, `Score: ${currentScore}`);
+  
   if (questionNumbers.length !== 0) {
     document.getElementById(`question-${currentQuestionNumber}`).classList.remove("active");
     currentQuestionNumber++;
     createOptions();
     displayQuestion(questionNumbers);
   } else {
-    console.log("No more questions");
+    console.log("Quiz completed! Final score:", currentScore);
+    // Quiz is finished - could add completion logic here
   }  
+}
+
+/**
+ * Updates the score badge display
+ */
+function updateScoreDisplay() {
+  const scoreElement = document.getElementById('currentScore');
+  const totalElement = document.getElementById('totalQuestions');
+  
+  if (scoreElement) {
+    scoreElement.textContent = currentScore;
+  }
+  if (totalElement) {
+    totalElement.textContent = totalQuestions;
+  }
+}
+
+/**
+ * Updates the progress bar based on questions answered
+ */
+function updateProgressBar() {
+  const progressBar = document.querySelector('#quizProgress .progress-bar');
+  const progressContainer = document.getElementById('quizProgress');
+  
+  if (progressBar && progressContainer) {
+    // Calculate progress percentage based on questions answered
+    const questionsAnswered = userAnswers.length;
+    const progressPercentage = (questionsAnswered / totalQuestions) * 100;
+    
+    // Update progress bar
+    progressBar.style.width = `${progressPercentage}%`;
+    progressContainer.setAttribute('aria-valuenow', progressPercentage);
+    
+    // Add smooth transition if not already present
+    if (!progressBar.style.transition) {
+      progressBar.style.transition = 'width 0.5s ease-in-out';
+    }
+  }
+}
+
+/**
+ * Resets the quiz to its initial state
+ */
+function resetQuiz(event) {
+  // Prevent form submission
+  if (event) {
+    event.preventDefault();
+  }
+  
+  // Reset all global variables
+  currentQuestionNumber = 1;
+  questionNumbers = [];
+  currentScore = 0;
+  userAnswers = [];
+  totalQuestions = 0;
+  
+  // Clear the carousel
+  const carouselInner = document.querySelector('.carousel-inner');
+  if (carouselInner) {
+    carouselInner.innerHTML = '';
+  }
+  
+  // Clear any form selections
+  const quizForm = document.getElementById('quizForm');
+  if (quizForm) {
+    quizForm.reset();
+  }
+  
+  // Hide results section if visible
+  const resultsSection = document.getElementById('collapseExample');
+  if (resultsSection && resultsSection.classList.contains('show')) {
+    const collapseInstance = bootstrap.Collapse.getInstance(resultsSection);
+    if (collapseInstance) {
+      collapseInstance.hide();
+    }
+  }
+  
+  // Restart the quiz
+  startQuiz();
+  
+  console.log('Quiz has been reset');
 }
