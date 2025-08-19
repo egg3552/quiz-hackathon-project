@@ -284,6 +284,14 @@ body {
 /* Prevent carousel from interfering with form elements */
 .carousel-inner {
     pointer-events: none; /* Disable carousel touch/click events */
+    padding: 0 60px; /* Add horizontal padding to make room for navigation buttons */
+    position: relative; /* Ensure proper positioning */
+}
+
+/* Quiz carousel container */
+#quizCarousel {
+    position: relative; /* Ensure proper positioning for navigation buttons */
+    margin: 1rem 0; /* Add vertical spacing */
 }
 
 .carousel-item.active {
@@ -507,29 +515,31 @@ body {
 /* Carousel Navigation Buttons */
 .carousel-control-prev,
 .carousel-control-next {
-    width: 50px; /* Fixed button size */
-    height: 50px; /* Fixed button size */
+    width: 45px; /* Slightly smaller button size */
+    height: 45px; /* Slightly smaller button size */
     background: var(--primary-color); /* Primary color background */
     border-radius: 8px; /* Square buttons with rounded corners */
     opacity: 0.8; /* Semi-transparent by default */
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Perfect vertical centering */
     transition: all 0.3s ease; /* Smooth hover animation */
+    z-index: 10; /* Ensure buttons stay above content */
+    border: 2px solid var(--white); /* White border for better visibility */
 }
 
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
     opacity: 1; /* Full opacity on hover */
-    transform: translateY(-50%) scale(1.1); /* Scale up on hover */
+    transform: translateY(-50%) scale(1.05); /* Smaller scale to avoid overlap */
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); /* Add shadow on hover for square buttons */
 }
 
 .carousel-control-prev {
-    left: -25px; /* Position closer since content area is smaller */
+    left: 10px; /* Position inside container to avoid overlap */
 }
 
 .carousel-control-next {
-    right: -25px; /* Position closer since content area is smaller */
+    right: 10px; /* Position inside container to avoid overlap */
 }
 
 /* Quiz Action Buttons - Base styling for all quiz buttons */
@@ -735,16 +745,20 @@ body {
     
     .carousel-control-prev,
     .carousel-control-next {
-        width: 40px; /* Smaller navigation buttons */
-        height: 40px; /* Smaller navigation buttons */
+        width: 35px; /* Smaller navigation buttons on mobile */
+        height: 35px; /* Smaller navigation buttons on mobile */
     }
     
     .carousel-control-prev {
-        left: -20px; /* Position closer on mobile */
+        left: 5px; /* Position closer to edge on mobile but still inside */
     }
     
     .carousel-control-next {
-        right: -20px; /* Position closer on mobile */
+        right: 5px; /* Position closer to edge on mobile but still inside */
+    }
+    
+    .carousel-inner {
+        padding: 0 45px; /* Reduce padding on mobile to fit smaller screens */
     }
     
     .quiz-card {
