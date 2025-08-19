@@ -39,6 +39,19 @@
         </div>
       </div>
     </div>
+    <!-- Landing -->
+<section id="landing" class="landing">
+  <h1>Welcome to Code Quest</h1>
+
+  <form id="name-form" autocomplete="off">
+    <label for="username" class="sr-only">Choose a username</label>
+    <input id="username" name="username" type="text" minlength="2" maxlength="20"
+           placeholder="Enter a username…" required />
+    <p id="name-error" role="alert" aria-live="polite"></p>
+
+    <button id="start-btn" type="submit">Start Quiz</button>
+  </form>
+</section>
 
     <!-- Quiz Section - Hidden by default, shown when URL contains #quiz -->
     <div class="quiz-section" id="quiz">
