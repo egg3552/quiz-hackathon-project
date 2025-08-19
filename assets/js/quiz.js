@@ -30,6 +30,35 @@ let currentScore = 0; //Keeps track of the user's current score
 let userAnswers = []; //Stores user's answers for scoring
 let totalQuestions = 0; //Total number of questions in the quiz
 
+// --- Small helper utilities to make the main flow easier to read ---
+function disableNextControl() {
+  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  if (!nextIcon) return;
+  nextIcon.classList.add('disabled-label');
+  nextIcon.style.pointerEvents = 'none';
+}
+
+function enableNextControl() {
+  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  if (!nextIcon) return;
+  nextIcon.classList.remove('disabled-label');
+  nextIcon.style.pointerEvents = 'auto';
+}
+
+function getActiveSlideNumber() {
+  const active = document.querySelector('.carousel-item.active');
+  if (!active) return null;
+  const span = active.querySelector('[data-qnum]');
+  return span ? parseInt(span.getAttribute('data-qnum'), 10) : null;
+}
+
+function advanceCarousel() {
+  const carouselEl = document.getElementById('quizCarousel');
+  if (!carouselEl || typeof bootstrap === 'undefined') return;
+  const inst = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl);
+  inst.next();
+}
+
 //Wait until page has loaded before firing functions
 document.addEventListener("DOMContentLoaded", () => {
   startQuiz();
@@ -41,22 +70,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const nextIcon = document.querySelector(".carousel-control-next-icon");
+  // Problems caused by bootstrap's built-in method of changing active class on carousel.
+  // Fixed using AI help.
   if (nextIcon) {
-    nextIcon.addEventListener("click", function handleNext() {
+    nextIcon.addEventListener('click', function handleNext(evt) {
       // Only allow advancing if the current question has been answered
       const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
-      const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : [];
+      const radioButtons = questionContainer ? questionContainer.getElementsByTagName('input') : [];
       const answered = Array.from(radioButtons).some((rb) => rb.checked);
-      if (answered) {
+      if (!answered) return; // do nothing if not answered
+
+      const slideNum = getActiveSlideNumber();
+      if (slideNum === currentQuestionNumber) {
+        // Prevent Bootstrap from doing a duplicate advance; we will create
+        // the next slide and advance programmatically.
+        evt.preventDefault();
+        evt.stopPropagation();
         showNextQuestion();
-        // Optionally disable the next icon again until next answer
-        nextIcon.classList.add("disabled-label");
-        nextIcon.style.pointerEvents = "none";
+        disableNextControl();
       }
+      // otherwise let Bootstrap proceed normally
     });
     // Initially disable the next icon
-    nextIcon.classList.add("disabled-label");
-    nextIcon.style.pointerEvents = "none";
+    disableNextControl();
   }
 });
 
@@ -83,11 +119,14 @@ function startQuiz() {
  * Generates the HTML needed for displaying a question within the quiz carousel.
  */
 function createOptions() {
+  // If this slide already exists (for example when moving back and then forward), don't recreate it
+  if (document.getElementById(`question-${currentQuestionNumber}`)) return;
+
   let options = `
   <!-- Question ${currentQuestionNumber} -->
-  <div id="question-${currentQuestionNumber}" class="carousel-item active">
+  <div id="question-${currentQuestionNumber}" class="carousel-item">
     <div class="card-body text-start">
-      <h4 class="quiz-question-title text-center">Question ${currentQuestionNumber}</h4>
+      <h4 class="quiz-question-title text-center">Question <span data-qnum="${currentQuestionNumber}">${currentQuestionNumber}</span></h4>
       <p id="question-${currentQuestionNumber}-text" class="quiz-question-text text-center"></p>
       <div class="quiz-form-check">
         <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}a" style="opacity: 0;">
@@ -109,6 +148,14 @@ function createOptions() {
   </div>
   `;
   document.getElementsByClassName("carousel-inner")[0].innerHTML += options;
+  // Only the very first question should be active immediately. All other questions
+  // are created as inactive so Bootstrap's carousel can animate to them when the
+  // user clicks the next control.
+  if (currentQuestionNumber === 1) {
+    const first = document.getElementById(`question-${currentQuestionNumber}`);
+    if (first) first.classList.add("active");
+  }
+  
 }
 
 /**
@@ -220,15 +267,14 @@ function showNextQuestion() {
   console.log(currentQuestionNumber, questionNumbers, `Score: ${currentScore}`);
   // Check if there are still questions left to show
   if (Array.isArray(questionNumbers) && questionNumbers.length !== 0) {
-    // Hide the current question by removing the 'active' class
-    const currentQ = document.getElementById(`question-${currentQuestionNumber}`);
-    if (currentQ) currentQ.classList.remove("active");
     // Move to the next question
     currentQuestionNumber++;
-    // If there are still questions left, render the next one
+    // If there are still questions left, render the next one and advance
     if (questionNumbers.length !== 0) {
       createOptions(); // Create the answer options for the next question
-      displayQuestion(questionNumbers); // Display the next question
+      displayQuestion(questionNumbers); // Fill in option text
+      // Advance carousel to the newly created slide
+      advanceCarousel();
     } else {
       // No more questions left: quiz is finished
       console.log("Quiz completed! Final score:", currentScore);
