@@ -343,6 +343,55 @@ body {
     transform: translateY(-1px); /* Subtle lift effect */
 }
 
+/* Responsive Navbar Toggler - Burger Menu */
+.quiz-navbar .navbar-toggler {
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Semi-transparent white border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 0.5rem 0.75rem; /* Comfortable padding */
+    transition: all 0.3s ease; /* Smooth hover animation */
+}
+
+.quiz-navbar .navbar-toggler:hover {
+    border-color: var(--white); /* Solid white border on hover */
+    background: rgba(255, 255, 255, 0.1); /* Light background on hover */
+}
+
+.quiz-navbar .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.3); /* Focus outline */
+    border-color: var(--white); /* White border when focused */
+}
+
+/* Custom Burger Icon Styling */
+.quiz-navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 1.5em; /* Slightly larger icon */
+    height: 1.5em; /* Slightly larger icon */
+}
+
+/* Mobile Navigation Styling */
+@media (max-width: 991.98px) {
+    .quiz-navbar .navbar-collapse {
+        background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+        backdrop-filter: blur(10px); /* Glass effect */
+        border-radius: 12px; /* Rounded corners */
+        margin-top: 1rem; /* Space from navbar */
+        padding: 1rem; /* Internal spacing */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+    }
+    
+    .quiz-navbar .nav-link {
+        padding: 0.75rem 1rem; /* More padding for touch targets */
+        border-radius: 8px; /* Rounded link backgrounds */
+        margin-bottom: 0.5rem; /* Space between links */
+        transition: all 0.3s ease; /* Smooth hover animation */
+    }
+    
+    .quiz-navbar .nav-link:hover {
+        background: rgba(255, 255, 255, 0.2); /* Background on hover */
+        transform: translateX(5px); /* Slide effect on mobile */
+    }
+}
+
 /* Quiz Header Styling */
 .quiz-header {
     background: transparent; /* No background - shows gradient */
