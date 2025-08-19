@@ -22,7 +22,12 @@ const questions = [
   },
   {
     question: "What is the purpose of the <meta> tag in HTML?",
-    options: ["Adds styling rules to the page", "Embeds external JavaScript files", "Displays content directly to the user", "Provides metadata about the HTML document"],
+    options: [
+      "Adds styling rules to the page",
+      "Embeds external JavaScript files",
+      "Displays content directly to the user",
+      "Provides metadata about the HTML document",
+    ],
     answer: "Provides metadata about the HTML document",
   },
 ];
@@ -37,29 +42,29 @@ let totalQuestions = 0; //Total number of questions in the quiz
 
 // --- Small helper utilities to make the main flow easier to read ---
 function disableNextControl() {
-  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  const nextIcon = document.querySelector(".carousel-control-next-icon");
   if (!nextIcon) return;
-  nextIcon.classList.add('disabled-label');
-  nextIcon.style.pointerEvents = 'none';
+  nextIcon.classList.add("disabled-label");
+  nextIcon.style.pointerEvents = "none";
 }
 
 function enableNextControl() {
-  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  const nextIcon = document.querySelector(".carousel-control-next-icon");
   if (!nextIcon) return;
-  nextIcon.classList.remove('disabled-label');
-  nextIcon.style.pointerEvents = 'auto';
+  nextIcon.classList.remove("disabled-label");
+  nextIcon.style.pointerEvents = "auto";
 }
 
 function getActiveSlideNumber() {
-  const active = document.querySelector('.carousel-item.active');
+  const active = document.querySelector(".carousel-item.active");
   if (!active) return null;
-  const span = active.querySelector('[data-qnum]');
-  return span ? parseInt(span.getAttribute('data-qnum'), 10) : null;
+  const span = active.querySelector("[data-qnum]");
+  return span ? parseInt(span.getAttribute("data-qnum"), 10) : null;
 }
 
 function advanceCarousel() {
-  const carouselEl = document.getElementById('quizCarousel');
-  if (!carouselEl || typeof bootstrap === 'undefined') return;
+  const carouselEl = document.getElementById("quizCarousel");
+  if (!carouselEl || typeof bootstrap === "undefined") return;
   const inst = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl);
   inst.next();
 }
@@ -78,26 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Problems caused by bootstrap's built-in method of changing active class on carousel.
   // Fixed using AI help.
   if (nextIcon) {
-    nextIcon.addEventListener('click', function handleNext(evt) {
+    nextIcon.addEventListener("click", function handleNext(evt) {
       // Only allow advancing if the current question has been answered
       const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
-      const radioButtons = questionContainer ? questionContainer.getElementsByTagName('input') : [];
+      const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : [];
       const answered = Array.from(radioButtons).some((rb) => rb.checked);
       if (!answered) return; // do nothing if not answered
-      // If the collapsible results/explained panel is open, hide it so
-      // previous question info isn't visible when we change slides.
-      const collapseEl = document.getElementById('collapseExample');
-      if (collapseEl) {
-        if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
-          const inst = bootstrap.Collapse.getInstance(collapseEl) || new bootstrap.Collapse(collapseEl, { toggle: false });
-          inst.hide();
-        } else {
-          // Fallback: remove the Bootstrap 'show' class and update any toggle button ARIA state
-          collapseEl.classList.remove('show');
-          const toggleBtn = document.querySelector('[data-bs-target="#collapseExample"]');
-          if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
-        }
-      }
 
       const slideNum = getActiveSlideNumber();
       if (slideNum === currentQuestionNumber) {
@@ -112,26 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     // Initially disable the next icon
     disableNextControl();
-  }
-
-  // Hide the 'Results Explained' button when we land on the results slide,
-  // and show it again when navigating back to earlier quiz slides.
-  const resultsExplainedBtn = document.querySelector('button[data-bs-target="#collapseExample"]');
-  const carouselEl = document.getElementById('quizCarousel');
-  if (carouselEl && resultsExplainedBtn) {
-    carouselEl.addEventListener('slid.bs.carousel', function () {
-      const active = document.querySelector('.carousel-item.active');
-      if (!active) {
-        resultsExplainedBtn.style.display = '';
-        return;
-      }
-      // If the active slide contains the results button we created, hide the explained button
-      if (active.querySelector('#see-results-btn')) {
-        resultsExplainedBtn.style.display = 'none';
-      } else {
-        resultsExplainedBtn.style.display = '';
-      }
-    });
   }
 });
 
@@ -184,7 +155,21 @@ function createOptions() {
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}d"></label>
       </div>
     </div>
-  </div>
+    <!-- Results Explained Button -->
+      <div class="text-center">
+        <button class="btn btn-secondary btn-lg px-4 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#results${currentQuestionNumber}"
+          aria-expanded="false" aria-controls="results${currentQuestionNumber}">
+          <i class="fas fa-info-circle me-2"></i>Results Explained
+        </button>
+      </div>
+    <!-- Collapsible Results Section -->
+      <div class="collapse mt-3" id="results${currentQuestionNumber}">
+        <div class="card card-body">
+          <h5 class="text-center mb-3">Answer Explanation</h5>
+          <p class="text-center">Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.</p>
+        </div>
+      </div>
+    </div>
   `;
   document.getElementsByClassName("carousel-inner")[0].innerHTML += options;
   // Only the very first question should be active immediately. All other questions
@@ -194,7 +179,6 @@ function createOptions() {
     const first = document.getElementById(`question-${currentQuestionNumber}`);
     if (first) first.classList.add("active");
   }
-  
 }
 
 /**
@@ -214,11 +198,11 @@ function displayQuestion(questionNumbers) {
   // Attach a single click listener to the question container (event delegation).
   // This avoids adding/removing many individual listeners and prevents the need
   // to clone/replace nodes when disabling options.
-  questionContainer.addEventListener('click', function (evt) {
-    const label = evt.target.closest('label.quiz-form-check-label');
+  questionContainer.addEventListener("click", function (evt) {
+    const label = evt.target.closest("label.quiz-form-check-label");
     if (!label) return; // clicked outside a label
     // Ignore clicks on labels that have been disabled
-    if (label.classList.contains('disabled-label')) return;
+    if (label.classList.contains("disabled-label")) return;
     // Forward a synthetic event-like object to reuse existing logic
     disableOptions({ target: label });
   });
@@ -272,7 +256,6 @@ function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
     currentScore++;
     console.log(selectedLabel);
     selectedLabel.parentElement.classList.add("correct-answer");
-    
   } else {
     selectedLabel.parentElement.classList.add("incorrect-answer");
   }
@@ -343,6 +326,14 @@ function resultsButton() {
   // Optionally attach an id-based handler later if needed
 }
 
+function explainResults(e) {
+  const currentQuestion = document.getElementById(`question-${currentQuestionNumber}`);
+  const userOptions = currentQuestion.getElementsByTagName("input");
+  for (let option in userOptions) {
+    option.checked === true ? (e.target.style.display = "inline-block") : null;
+  }
+}
+
 /**
  * Updates the score badge display
  */
@@ -409,18 +400,8 @@ function resetQuiz(event) {
     quizForm.reset();
   }
 
-  // Hide results section if visible
-  const resultsSection = document.getElementById("collapseExample");
-  if (resultsSection && resultsSection.classList.contains("show")) {
-    const collapseInstance = bootstrap.Collapse.getInstance(resultsSection);
-    if (collapseInstance) {
-      collapseInstance.hide();
-    }
-  }
-
   // Restart the quiz
   startQuiz();
 
   console.log("Quiz has been reset");
 }
-
