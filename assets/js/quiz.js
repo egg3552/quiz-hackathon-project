@@ -20,6 +20,11 @@ const questions = [
     options: ["getElementById()", "getElementsByClassName()", "selectElement()", "querySelector()"],
     answer: "getElementById()",
   },
+  {
+    question: "What is the purpose of the <meta> tag in HTML?",
+    options: ["Adds styling rules to the page", "Embeds external JavaScript files", "Displays content directly to the user", "Provides metadata about the HTML document"],
+    answer: "Provides metadata about the HTML document",
+  },
 ];
 
 //Global Variables
