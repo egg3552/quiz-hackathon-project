@@ -9,21 +9,31 @@ const questions = [
       "Hyper Tool Markup Language",
     ],
     answer: "Hyper Text Markup Language",
+    explanation:
+      "It's the standard language used to create and structure content on the web. “HyperText” refers to the clickable links that connect web pages, and “Markup Language” means it uses tags to define elements like headings, paragraphs, images, and links. It's not a programming language - it's a structural one.",
   },
   {
     question: "Which CSS property is used to change the text color?",
     options: ["text-color", "color", "font-color", "text-style"],
     answer: "color",
+    explanation: "The color property specifically targets the foreground text color of an element.",
   },
   {
     question: "Which JavaScript method is used to select an element by its ID?",
     options: ["getElementById()", "getElementsByClassName()", "selectElement()", "querySelector()"],
     answer: "getElementById()",
+    explanation: "This method retrieves the first element in the DOM with the specified id attribute. It's fast, direct, and commonly used when you know the exact ID of the element you want to manipulate.",
   },
   {
     question: "What is the purpose of the <meta> tag in HTML?",
-    options: ["Adds styling rules to the page", "Embeds external JavaScript files", "Displays content directly to the user", "Provides metadata about the HTML document"],
+    options: [
+      "Adds styling rules to the page",
+      "Embeds external JavaScript files",
+      "Displays content directly to the user",
+      "Provides metadata about the HTML document",
+    ],
     answer: "Provides metadata about the HTML document",
+    explanation: "It's used for things like setting character encoding, defining viewport settings for responsive design, and offering descriptions for SEO. Though invisible to users, it's essential for performance, accessibility, and discoverability.",
   },
 ];
 
@@ -34,33 +44,33 @@ let questionNumbers = []; //Keeps track of which questions are available from th
 let currentScore = 0; //Keeps track of the user's current score
 let userAnswers = []; //Stores user's answers for scoring
 let totalQuestions = 0; //Total number of questions in the quiz
-let username = ''; //Stores the username from localStorage
+let username = ""; //Stores the username from localStorage
 
 // --- Small helper utilities to make the main flow easier to read ---
 function disableNextControl() {
-  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  const nextIcon = document.querySelector(".carousel-control-next-icon");
   if (!nextIcon) return;
-  nextIcon.classList.add('disabled-label');
-  nextIcon.style.pointerEvents = 'none';
+  nextIcon.classList.add("disabled-label");
+  nextIcon.style.pointerEvents = "none";
 }
 
 function enableNextControl() {
-  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  const nextIcon = document.querySelector(".carousel-control-next-icon");
   if (!nextIcon) return;
-  nextIcon.classList.remove('disabled-label');
-  nextIcon.style.pointerEvents = 'auto';
+  nextIcon.classList.remove("disabled-label");
+  nextIcon.style.pointerEvents = "auto";
 }
 
 function getActiveSlideNumber() {
-  const active = document.querySelector('.carousel-item.active');
+  const active = document.querySelector(".carousel-item.active");
   if (!active) return null;
-  const span = active.querySelector('[data-qnum]');
-  return span ? parseInt(span.getAttribute('data-qnum'), 10) : null;
+  const span = active.querySelector("[data-qnum]");
+  return span ? parseInt(span.getAttribute("data-qnum"), 10) : null;
 }
 
 function advanceCarousel() {
-  const carouselEl = document.getElementById('quizCarousel');
-  if (!carouselEl || typeof bootstrap === 'undefined') return;
+  const carouselEl = document.getElementById("quizCarousel");
+  if (!carouselEl || typeof bootstrap === "undefined") return;
   const inst = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl);
   inst.next();
 }
@@ -68,11 +78,11 @@ function advanceCarousel() {
 //Wait until page has loaded before firing functions
 document.addEventListener("DOMContentLoaded", () => {
   // Get username from localStorage
-  username = localStorage.getItem('quizUsername') || 'Guest';
-  
+  username = localStorage.getItem("quizUsername") || "Guest";
+
   // Display username in header if element exists
   displayUsername();
-  
+
   startQuiz();
 
   // Add event listener for reset button
@@ -85,10 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Problems caused by bootstrap's built-in method of changing active class on carousel.
   // Fixed using AI help.
   if (nextIcon) {
-    nextIcon.addEventListener('click', function handleNext(evt) {
+    nextIcon.addEventListener("click", function handleNext(evt) {
       // Only allow advancing if the current question has been answered
       const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
-      const radioButtons = questionContainer ? questionContainer.getElementsByTagName('input') : [];
+      const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : [];
       const answered = Array.from(radioButtons).some((rb) => rb.checked);
       if (!answered) return; // do nothing if not answered
 
@@ -106,34 +116,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initially disable the next icon
     disableNextControl();
   }
-
-  // Hide the 'Results Explained' button when we land on the results slide,
-  // and show it again when navigating back to earlier quiz slides.
-  const resultsExplainedBtn = document.querySelector('button[data-bs-target="#collapseExample"]');
-  const carouselEl = document.getElementById('quizCarousel');
-  if (carouselEl && resultsExplainedBtn) {
-    carouselEl.addEventListener('slid.bs.carousel', function () {
-      const active = document.querySelector('.carousel-item.active');
-      if (!active) {
-        resultsExplainedBtn.style.display = '';
-        return;
-      }
-      // If the active slide contains the results button we created, hide the explained button
-      if (active.querySelector('#see-results-btn')) {
-        resultsExplainedBtn.style.display = 'none';
-      } else {
-        resultsExplainedBtn.style.display = '';
-      }
-    });
-  }
 });
 
 /**
  * Displays the username in the quiz header
  */
 function displayUsername() {
-  const headerElement = document.querySelector('.quiz-header h1');
-  if (headerElement && username && username !== 'Guest') {
+  const headerElement = document.querySelector(".quiz-header h1");
+  if (headerElement && username && username !== "Guest") {
     headerElement.textContent = `Code Quest - Welcome ${username}!`;
   }
 }
@@ -187,7 +177,21 @@ function createOptions() {
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}d"></label>
       </div>
     </div>
-  </div>
+    <!-- Results Explained Button -->
+      <div class="text-center">
+        <button class="btn btn-secondary btn-lg px-4 py-2" type="button" data-bs-toggle="collapse" data-bs-target="#results${currentQuestionNumber}"
+          aria-expanded="false" aria-controls="results${currentQuestionNumber}" disabled>
+          <i class="fas fa-info-circle me-2"></i>Results Explained
+        </button>
+      </div>
+    <!-- Collapsible Results Section -->
+      <div class="collapse mt-3" id="results${currentQuestionNumber}">
+        <div id="explanation-${currentQuestionNumber}" class="card card-body">
+          <h5 class="text-center mb-3">Answer Explanation</h5>
+          <p class="text-center">Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.</p>
+        </div>
+      </div>
+    </div>
   `;
   document.getElementsByClassName("carousel-inner")[0].innerHTML += options;
   // Only the very first question should be active immediately. All other questions
@@ -197,7 +201,6 @@ function createOptions() {
     const first = document.getElementById(`question-${currentQuestionNumber}`);
     if (first) first.classList.add("active");
   }
-  
 }
 
 /**
@@ -210,21 +213,49 @@ function displayQuestion(questionNumbers) {
   document.getElementById(`question-${currentQuestionNumber}-text`).innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
   const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
   const questionOptions = questionContainer.getElementsByTagName("label");
+  // Shuffle options before displaying
+  let shuffledOptions = shuffleArray(currentQuestion.options);
   //For all options available within the currently selected questions object, set the corresponding option on the page to be a letter and then the option (e.g. "A) Option 1, B) Option 2 ...").
   for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].innerText = optionLetters[i] + currentQuestion.options[i];
+    questionOptions[i].innerText = optionLetters[i] + shuffledOptions[i];
   }
   // Attach a single click listener to the question container (event delegation).
   // This avoids adding/removing many individual listeners and prevents the need
   // to clone/replace nodes when disabling options.
-  questionContainer.addEventListener('click', function (evt) {
-    const label = evt.target.closest('label.quiz-form-check-label');
+  questionContainer.addEventListener("click", function (evt) {
+    const label = evt.target.closest("label.quiz-form-check-label");
     if (!label) return; // clicked outside a label
     // Ignore clicks on labels that have been disabled
-    if (label.classList.contains('disabled-label')) return;
+    if (label.classList.contains("disabled-label")) return;
     // Forward a synthetic event-like object to reuse existing logic
+    enableExplainResults();
     disableOptions({ target: label });
   });
+}
+//Fisher-Yates shuffle to ensure each time a question is loaded, the options are displayed in a different order.
+function shuffleArray(unshuffled) {
+  let shuffled = unshuffled.map((item) => item); //To copy values from one array to another, use .map().
+  for (i = unshuffled.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (unshuffled.length - 1));
+    shuffled.splice(j, 1, unshuffled[i]);
+    shuffled.splice(i, 1, unshuffled[j]);
+    unshuffled = shuffled.map((item) => item);
+  }
+  return shuffled;
+}
+
+/**
+ * Enables the "Explain Results" button and populates the explanation text.
+ */
+function enableExplainResults() {
+  const explainBtn = document.querySelector(`button[data-bs-target='#results${currentQuestionNumber}']`);
+  const explainText = document.getElementById(`explanation-${currentQuestionNumber}`).children;
+  const questionIndex = questions.findIndex(
+    (obj) => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText
+  );
+  explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`;
+  explainText[1].innerText = questions[questionIndex].explanation;
+  explainBtn.disabled = false;
 }
 
 /**
@@ -246,7 +277,7 @@ function disableOptions(e) {
   radio.checked = true; //Marks the radio button as checked.
   // Disable all other radio buttons.
   for (let i = 0; i < radioButtons.length; i++) {
-    radioButtons[i].value = questions[questionIndex].options[i];
+    radioButtons[i].value = labels[i].innerText.slice(3);
     if (radioButtons[i].id === forId) {
       radioButtons[i].disabled = false;
     } else {
@@ -271,11 +302,11 @@ function disableOptions(e) {
 }
 
 function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
+  console.log(questionObject.answer, selectedAnswer);
   if (selectedAnswer === questionObject.answer) {
     currentScore++;
     console.log(selectedLabel);
     selectedLabel.parentElement.classList.add("correct-answer");
-    
   } else {
     selectedLabel.parentElement.classList.add("incorrect-answer");
   }
@@ -338,9 +369,9 @@ function resultsButton() {
     score: currentScore,
     totalQuestions: totalQuestions,
     percentage: Math.round((currentScore / totalQuestions) * 100),
-    userAnswers: userAnswers
+    userAnswers: userAnswers,
   };
-  localStorage.setItem('quizResults', JSON.stringify(quizResults));
+  localStorage.setItem("quizResults", JSON.stringify(quizResults));
 
   // Create a results slide whose content is vertically and horizontally centered.
   // Use flex utilities and a minimum height so there's generous spacing above and below.
@@ -349,7 +380,9 @@ function resultsButton() {
   <div id="question-${currentQuestionNumber}" class="carousel-item">
     <div class="card-body d-flex flex-column justify-content-center align-items-center py-5" style="min-height:55vh;">
       <h3 class="text-center mb-4 text-primary">Quiz Complete!</h3>
-      <p class="text-center mb-4">Great job ${username}! You scored ${currentScore}/${totalQuestions} (${Math.round((currentScore / totalQuestions) * 100)}%)</p>
+      <p class="text-center mb-4">Great job ${username}! You scored ${currentScore}/${totalQuestions} (${Math.round(
+    (currentScore / totalQuestions) * 100
+  )}%)</p>
       <a id="see-results-btn" class="btn btn-primary btn-lg" href='results.html'>See Detailed Results!</a>
     </div>
   </div>
@@ -423,31 +456,8 @@ function resetQuiz(event) {
     quizForm.reset();
   }
 
-  // Hide results section if visible
-  const resultsSection = document.getElementById("collapseExample");
-  if (resultsSection && resultsSection.classList.contains("show")) {
-    const collapseInstance = bootstrap.Collapse.getInstance(resultsSection);
-    if (collapseInstance) {
-      collapseInstance.hide();
-    }
-  }
-
-  // Show the results explained button again
-  const resultsExplainedBtn = document.querySelector('button[data-bs-target="#collapseExample"]');
-  if (resultsExplainedBtn) {
-    resultsExplainedBtn.style.display = '';
-  }
-
-  // Reset carousel to first slide
-  const carouselEl = document.getElementById('quizCarousel');
-  if (carouselEl && typeof bootstrap !== 'undefined') {
-    const carousel = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl);
-    carousel.to(0);
-  }
-
   // Restart the quiz
   startQuiz();
 
   console.log("Quiz has been reset");
 }
-
