@@ -632,6 +632,21 @@ body {
   border: 2px solid red !important;
 }
 
+/* Custom Score Badge Styling - Matches gradient background */
+.score-badge .badge {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important; /* Blue gradient to match background */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); /* Blue glow effect */
+    transition: all 0.3s ease; /* Smooth transitions */
+    backdrop-filter: blur(10px); /* Glass effect */
+}
+
+.score-badge .badge:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important; /* Slightly darker on hover */
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); /* Enhanced glow on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+}
+
 /* Mobile Responsiveness for Quiz */
 @media (max-width: 768px) {
     .quiz-card {
@@ -669,19 +684,4 @@ body {
     .quiz-card {
         margin: 0 40px 2rem 40px; /* Smaller margins on mobile for navigation arrows */
     }
-}
-
-/* Custom Score Badge Styling - Matches gradient background */
-.score-badge .badge {
-    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important; /* Blue gradient to match background */
-    border: 2px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); /* Blue glow effect */
-    transition: all 0.3s ease; /* Smooth transitions */
-    backdrop-filter: blur(10px); /* Glass effect */
-}
-
-.score-badge .badge:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important; /* Slightly darker on hover */
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); /* Enhanced glow on hover */
-    transform: translateY(-1px); /* Subtle lift effect */
 }
