@@ -39,6 +39,25 @@ document.addEventListener("DOMContentLoaded", () => {
   if (resetButton) {
     resetButton.addEventListener('click', resetQuiz);
   }
+  
+  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  if (nextIcon) {
+    nextIcon.addEventListener('click', function handleNext() {
+      // Only allow advancing if the current question has been answered
+      const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
+      const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : [];
+      const answered = Array.from(radioButtons).some(rb => rb.checked);
+      if (answered) {
+        showNextQuestion();
+        // Optionally disable the next icon again until next answer
+        nextIcon.classList.add('disabled-label');
+        nextIcon.style.pointerEvents = 'none';
+      }
+    });
+    // Initially disable the next icon
+    nextIcon.classList.add('disabled-label');
+    nextIcon.style.pointerEvents = 'none';
+  }
 });
 
 /**
@@ -71,19 +90,19 @@ function createOptions() {
       <h4 class="quiz-question-title text-center">Question ${currentQuestionNumber}</h4>
       <p id="question-${currentQuestionNumber}-text" class="quiz-question-text text-center"></p>
       <div class="quiz-form-check">
-        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}a" style="display: none;">
+        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}a" style="opacity: 0;">
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}a"></label>
       </div>
       <div class="quiz-form-check">
-        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}b" style="display: none;">
+        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}b" style="opacity: 0;">
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}b"></label>
       </div>
       <div class="quiz-form-check">
-        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}c" style="display: none;">
+        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}c" style="opacity: 0;">
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}c"></label>
       </div>
       <div class="quiz-form-check">
-        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}d" style="display: none;">
+        <input class="form-check-input quiz-form-check-input" type="radio" name="question${currentQuestionNumber}" id="q${currentQuestionNumber}d" style="opacity: 0;">
         <label class="form-check-label quiz-form-check-label" for="q${currentQuestionNumber}d"></label>
       </div>
     </div>
@@ -104,48 +123,92 @@ function displayQuestion(questionNumbers) {
   const questionOptions = questionContainer.getElementsByTagName("label");
   //For all options available within the currently selected questions object, set the corresponding option on the page to be a letter and then the option (e.g. "A) Option 1, B) Option 2 ...").
   for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].innerText = currentQuestion.options[i];
+    questionOptions[i].innerText = optionLetters[i] + currentQuestion.options[i];
   }
   //Give all options on the page an event handler to allow for further testing on adding new questions.
   for (let i = 0; i < currentQuestion.options.length; i++) {
-    questionOptions[i].addEventListener("click", function() {
-      nextQuestion(currentQuestion, this.innerText);
-    });
+    questionOptions[i].addEventListener("click", disableOptions);
   }
 }
 
 /**
- * Processes the user's answer and generates more questions when called.
+ * Disables options once a user has chosen an answer so they can no longer interact with the question.
+ * @param {*} e 
  */
-function nextQuestion(questionObject, selectedAnswer) {
-  // Check if the answer is correct and update score
+function disableOptions(e) {
+  const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
+  const radioButtons = questionContainer.getElementsByTagName("input");
+  const labels = questionContainer.getElementsByTagName("label");
+  const questionIndex = questions.findIndex(obj => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText);
+  const label = e.target;
+  const forId = label.getAttribute('for');
+  const radio = document.getElementById(forId);
+  radio.checked = true;
+  for (let i = 0; i < radioButtons.length; i++) {
+    radioButtons[i].value = questions[questionIndex].options[i];
+    if (radioButtons[i].id === forId) {
+      radioButtons[i].disabled = false;
+    } else {
+      radioButtons[i].disabled = true;
+    }
+  }
+  for (let lbl of labels) {
+    const newLbl = lbl.cloneNode(true);
+    if (lbl.getAttribute('for') === forId) {
+      newLbl.classList.remove('disabled-label');
+      newLbl.removeAttribute('tabindex');
+    } else {
+      newLbl.classList.add('disabled-label');
+      newLbl.setAttribute('tabindex', '-1');
+      newLbl.blur && newLbl.blur();
+    }
+    lbl.parentNode.replaceChild(newLbl, lbl);
+  }
+  const currentQuestion = questions[questionIndex];
+  checkAnswer(currentQuestion, radio.value);
+}
+
+function checkAnswer(questionObject, selectedAnswer) {
   if (selectedAnswer === questionObject.answer) {
     currentScore++;
   }
-  
-  // Store the user's answer
   userAnswers.push({
     question: questionObject.question,
     selectedAnswer: selectedAnswer,
     correctAnswer: questionObject.answer,
     isCorrect: selectedAnswer === questionObject.answer
   });
-  
-  // Update displays
   updateScoreDisplay();
   updateProgressBar();
-  
+  // Do NOT call showNextQuestion here; wait for user to click next icon
+  // Instead, enable the next icon if it was disabled
+  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  if (nextIcon) {
+    nextIcon.classList.remove('disabled-label');
+    nextIcon.style.pointerEvents = 'auto';
+  }
+}
+
+/**
+ * Shows the next question in the quiz
+ */
+function showNextQuestion() {
   console.log(currentQuestionNumber, questionNumbers, `Score: ${currentScore}`);
-  
-  if (questionNumbers.length !== 0) {
-    document.getElementById(`question-${currentQuestionNumber}`).classList.remove("active");
+  if (Array.isArray(questionNumbers) && questionNumbers.length !== 0) {
+    const currentQ = document.getElementById(`question-${currentQuestionNumber}`);
+    if (currentQ) currentQ.classList.remove("active");
     currentQuestionNumber++;
-    createOptions();
-    displayQuestion(questionNumbers);
+    if (questionNumbers.length !== 0) {
+      createOptions();
+      displayQuestion(questionNumbers);
+    } else {
+      console.log("Quiz completed! Final score:", currentScore);
+      // Quiz is finished - could add completion logic here
+    }
   } else {
     console.log("Quiz completed! Final score:", currentScore);
     // Quiz is finished - could add completion logic here
-  }  
+  }
 }
 
 /**
