@@ -39,6 +39,25 @@ document.addEventListener("DOMContentLoaded", () => {
   if (resetButton) {
     resetButton.addEventListener('click', resetQuiz);
   }
+  
+  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  if (nextIcon) {
+    nextIcon.addEventListener('click', function handleNext() {
+      // Only allow advancing if the current question has been answered
+      const questionContainer = document.getElementById(`question-${currentQuestionNumber}`);
+      const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : [];
+      const answered = Array.from(radioButtons).some(rb => rb.checked);
+      if (answered) {
+        showNextQuestion();
+        // Optionally disable the next icon again until next answer
+        nextIcon.classList.add('disabled-label');
+        nextIcon.style.pointerEvents = 'none';
+      }
+    });
+    // Initially disable the next icon
+    nextIcon.classList.add('disabled-label');
+    nextIcon.style.pointerEvents = 'none';
+  }
 });
 
 /**
@@ -149,9 +168,6 @@ function disableOptions(e) {
   checkAnswer(currentQuestion, radio.value);
 }
 
-/**
- * Checks the user's answer with the correct answer and increments the score if correct.
- */
 function checkAnswer(questionObject, selectedAnswer) {
   if (selectedAnswer === questionObject.answer) {
     currentScore++;
@@ -164,7 +180,13 @@ function checkAnswer(questionObject, selectedAnswer) {
   });
   updateScoreDisplay();
   updateProgressBar();
-  showNextQuestion();
+  // Do NOT call showNextQuestion here; wait for user to click next icon
+  // Instead, enable the next icon if it was disabled
+  const nextIcon = document.querySelector('.carousel-control-next-icon');
+  if (nextIcon) {
+    nextIcon.classList.remove('disabled-label');
+    nextIcon.style.pointerEvents = 'auto';
+  }
 }
 
 /**
