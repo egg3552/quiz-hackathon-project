@@ -4,7 +4,7 @@ let currentQuestionNumber = 1; //Keeps track of which question number the user i
 let questionNumbers = []; //Keeps track of which questions are available from the questions array.
 let currentScore = 0; //Keeps track of the user's current score
 let userAnswers = []; //Stores user's answers for scoring
-let totalQuestions = 0; //Total number of questions in the quiz
+let totalQuestions = 10; //Total number of questions in the quiz
 let username = ''; //Stores the username from localStorage
 
 // --- Small helper utilities to make the main flow easier to read ---
@@ -107,16 +107,21 @@ function displayUsername() {
   }
 }
 
+function initialiseQuestionNumbers() {
+  for (let i = 0; i < questions.length; i++) { // Loop through all available questions
+    questionNumbers.push(i); // Add each question index to tracking array
+  }
+  questionNumbers = shuffleArray(questionNumbers);
+  questionNumbers.splice(totalQuestions);
+  console.log(questionNumbers);
+}
+
 /**
  * Initialises the first question for the quiz; creating an array to keep track of which questions have already been used.
  */
 function startQuiz() {
-  //Creates an array of indexes matching up to the number of questions available in the questions array.
-  for (let i = 0; i < questions.length; i++) { // Loop through all available questions
-    questionNumbers.push(i); // Add each question index to tracking array
-  }
-  // Set total questions count
-  totalQuestions = questions.length; // Store total for progress calculations
+  //Creates an array of indexes matching up to the number of questions set by the totalQuestions variable.
+  initialiseQuestionNumbers();
 
   // Initialize displays
   updateScoreDisplay(); // Set initial score display
@@ -424,7 +429,6 @@ function resetQuiz(event) {
   questionNumbers = []; // Clear question tracking array
   currentScore = 0; // Reset score to zero
   userAnswers = []; // Clear answer history
-  totalQuestions = 0; // Reset question count
 
   // Clear the carousel
   const carouselInner = document.querySelector(".carousel-inner"); // Find carousel container
