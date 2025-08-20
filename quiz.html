@@ -17,9 +17,9 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
-<body class="quiz-page-body">
+<body class="quiz-page-body" id="top">
   <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg quiz-navbar">
+  <nav class="navbar navbar-expand-lg quiz-navbar" role="navigation" aria-label="Main navigation">
     <div class="container">
       <a class="navbar-brand" href="index.html">
         <i class="fas fa-home me-2"></i>
@@ -49,8 +49,107 @@
     </div>
   </header>
 
+  <!-- Instructions Section -->
+  <section id="instructions" class="instructions-section bg-light py-5" role="main" aria-labelledby="instructions-title">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white text-center py-4">
+              <h2 id="instructions-title" class="mb-0"><i class="fas fa-info-circle me-2" aria-hidden="true"></i>How to Play Code Quest</h2>
+            </div>
+            <div class="card-body p-5" role="article" aria-labelledby="instructions-title">
+              
+              <!-- Welcome Message -->
+              <div class="text-center mb-4">
+                <h3 class="text-primary mb-3">Welcome, Developer!</h3>
+                <p class="lead text-muted">Get ready to test your coding knowledge across multiple programming languages and concepts.</p>
+              </div>
+
+              <!-- Condensed Game Rules - Merged similar content -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="instruction-card h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="instruction-icon bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        <i class="fas fa-question-circle"></i>
+                      </div>
+                      <h4 class="mb-0 text-primary">Question Format</h4>
+                    </div>
+                    <ul class="list-unstyled">
+                      <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Multiple choice format</li>
+                      <li class="mb-2"><i class="fas fa-check text-success me-2"></i>HTML, CSS, JavaScript topics</li>
+                      <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Progressive difficulty</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <div class="instruction-card h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="instruction-icon bg-success text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        <i class="fas fa-trophy"></i>
+                      </div>
+                      <h4 class="mb-0 text-success">Scoring & Leaderboard</h4>
+                    </div>
+                    <ul class="list-unstyled">
+                      <li class="mb-2"><i class="fas fa-check text-success me-2"></i>No time limit</li>
+                      <li class="mb-2"><i class="fas fa-check text-success me-2"></i>+1 point per correct answer</li>
+                      <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Compete with other players</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Condensed Tips Section -->
+              <div class="mt-4">
+                <h4 class="text-center text-primary mb-3"><i class="fas fa-lightbulb me-2"></i>Pro Tips</h4>
+                <div class="row">
+                  <div class="col-md-4 text-center mb-3">
+                    <div class="tip-card p-3 border rounded">
+                      <i class="fas fa-book-open fa-2x text-primary mb-2"></i>
+                      <h6 class="text-primary">Read Carefully</h6>
+                    </div>
+                  </div>
+                  <div class="col-md-4 text-center mb-3">
+                    <div class="tip-card p-3 border rounded">
+                      <i class="fas fa-code fa-2x text-success mb-2"></i>
+                      <h6 class="text-success">Think Logically</h6>
+                    </div>
+                  </div>
+                  <div class="col-md-4 text-center mb-3">
+                    <div class="tip-card p-3 border rounded">
+                      <i class="fas fa-graduation-cap fa-2x text-info mb-2"></i>
+                      <h6 class="text-info">Learn & Improve</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="text-center mt-4">
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                  <a href="#quiz-container" class="btn btn-primary btn-lg px-5 py-3 scroll-to-quiz" aria-label="Start the quiz now">
+                    <i class="fas fa-play me-2"></i>Start Quiz Now
+                  </a>
+                  <a href="leaderboard.html" class="btn btn-outline-primary btn-lg px-5 py-3" aria-label="View the leaderboard">
+                    <i class="fas fa-trophy me-2"></i>View Leaderboard
+                  </a>
+                </div>
+                <div class="mt-3">
+                  <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Ready to challenge yourself? Good luck!</small>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Main Content -->
-  <main class="quiz-main">
+  <main class="quiz-main" id="quiz-container">
     <div class="container">
       <form id="quizForm">
         <div class="quiz-card">

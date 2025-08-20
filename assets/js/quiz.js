@@ -465,3 +465,204 @@ function resetQuiz(event) {
 
   console.log("Quiz has been reset"); // Log reset action
 }
+
+/* Instructions Section JavaScript Functionality - Condensed */
+
+// Instructions Features - Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  initializeInstructionsFeatures(); // Set up instructions functionality
+});
+
+/**
+ * Initialize all interactive features for the instructions section
+ * Sets up smooth scrolling, hover effects, and user interactions
+ */
+function initializeInstructionsFeatures() {
+  setupSmoothScrolling(); // Configure smooth scroll to quiz section
+  setupHoverEffects();    // Add interactive hover animations
+  setupClickTracking();   // Track user interactions for analytics
+  setupNavbarInstructionsLink(); // Handle navbar instructions button clicks
+  showInstructionsIfTargeted(); // Show instructions if URL contains #instructions
+}
+
+/**
+ * Configure smooth scrolling from instructions to quiz section
+ * Handles the "Start Quiz Now" button click with fade animations
+ */
+function setupSmoothScrolling() {
+  const scrollBtn = document.querySelector('.scroll-to-quiz'); // Find "Start Quiz Now" button
+  if (!scrollBtn) return; // Exit if button doesn't exist
+  
+  scrollBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default link behavior
+    
+    const instructions = document.getElementById('instructions'); // Get instructions section
+    const quizContainer = document.getElementById('quiz-container'); // Get quiz section
+    
+    if (instructions && quizContainer) {
+      // Fade out instructions with smooth animation
+      instructions.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      instructions.style.opacity = '0'; // Make transparent
+      instructions.style.transform = 'translateY(-20px)'; // Slide up slightly
+      
+      // After fade completes, hide instructions and show quiz
+      setTimeout(() => {
+        instructions.style.display = 'none'; // Hide instructions completely
+        instructions.style.visibility = 'hidden'; // Remove from accessibility tree
+        quizContainer.style.display = 'block'; // Show quiz section
+        quizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smooth scroll to quiz
+      }, 500); // Wait for fade animation to complete
+    }
+  });
+}
+
+/**
+ * Add hover effects to instruction and tip cards
+ * Creates subtle lift and scale animations on mouse interaction
+ */
+function setupHoverEffects() {
+  // Instruction cards - lift and scale effect
+  document.querySelectorAll('.instruction-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-5px) scale(1.02)';
+      card.style.transition = 'transform 0.3s ease';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'translateY(0) scale(1)';
+    });
+  });
+  
+  // Tip cards - lift and rotate effect
+  document.querySelectorAll('.tip-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-3px) rotate(1deg)';
+      card.style.transition = 'transform 0.3s ease';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'translateY(0) rotate(0deg)';
+    });
+  });
+}
+
+/**
+ * Track user interactions with instructions for analytics
+ * Logs clicks on cards and buttons for usage analysis
+ */
+function setupClickTracking() {
+  // Track instruction card clicks
+  document.querySelectorAll('.instruction-card').forEach((card, index) => {
+    card.addEventListener('click', () => {
+      console.log(`Instruction card ${index + 1} clicked`);
+    });
+  });
+  
+  // Track tip card clicks  
+  document.querySelectorAll('.tip-card').forEach((card, index) => {
+    card.addEventListener('click', () => {
+      console.log(`Tip card ${index + 1} clicked`);
+    });
+  });
+}
+
+/**
+ * Setup navbar instructions link to toggle instructions visibility
+ * Handles the navbar "Instructions" button click to show/hide instructions overlay
+ */
+function setupNavbarInstructionsLink() {
+  const instructionsLink = document.querySelector('a[href="#instructions"]'); // Find navbar instructions link
+  if (!instructionsLink) return; // Exit if link doesn't exist
+  
+  instructionsLink.addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default anchor behavior
+    toggleInstructions(); // Show or hide instructions overlay
+  });
+}
+
+/**
+ * Show instructions with animation if URL contains #instructions hash
+ * Provides direct linking to instructions section
+ */
+function showInstructionsIfTargeted() {
+  if (window.location.hash === '#instructions') {
+    const instructions = document.getElementById('instructions');
+    if (instructions) {
+      instructions.style.display = 'block';
+      instructions.style.opacity = '1';
+      instructions.scrollIntoView({ behavior: 'smooth' });
+      
+      // Add entrance animation
+      instructions.style.transform = 'translateY(20px)';
+      instructions.style.transition = 'transform 0.6s ease';
+      setTimeout(() => instructions.style.transform = 'translateY(0)', 100);
+    }
+  }
+}
+
+/**
+ * Toggle instructions section visibility with smooth animations
+ * Can be called externally to show/hide instructions programmatically
+ */
+function toggleInstructions() {
+  const instructions = document.getElementById('instructions'); // Get instructions section
+  const quizContainer = document.getElementById('quiz-container'); // Get quiz section
+  if (!instructions) return; // Exit if instructions don't exist
+  
+  // Check if instructions are currently visible (accounting for empty display value)
+  const isVisible = instructions.style.display !== 'none' && instructions.style.display !== '';
+  
+  if (isVisible) {
+    // Hide instructions with fade out animation
+    instructions.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    instructions.style.opacity = '0'; // Make transparent
+    instructions.style.transform = 'translateY(-20px)'; // Slide up slightly
+    setTimeout(() => {
+      instructions.style.display = 'none'; // Hide completely
+      instructions.style.visibility = 'hidden'; // Remove from accessibility tree
+      // Show quiz container when instructions are hidden
+      if (quizContainer) {
+        quizContainer.style.display = 'block'; // Make quiz visible
+      }
+    }, 500); // Wait for fade animation
+  } else {
+    // Show instructions with fade in animation
+    instructions.style.display = 'block'; // Make visible in layout
+    instructions.style.visibility = 'visible'; // Make accessible to screen readers
+    instructions.style.opacity = '0'; // Start transparent
+    instructions.style.transform = 'translateY(20px)'; // Start slightly below
+    instructions.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    
+    // Hide quiz container when instructions are shown
+    if (quizContainer) {
+      quizContainer.style.display = 'none'; // Hide quiz section
+    }
+    
+    // Scroll to instructions and animate in
+    instructions.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smooth scroll to top
+    setTimeout(() => {
+      instructions.style.opacity = '1'; // Fade in
+      instructions.style.transform = 'translateY(0)'; // Slide into final position
+    }, 50); // Small delay for smooth effect
+  }
+}
+
+/**
+ * Check if username is set before starting quiz
+ * Prompts user to enter username for leaderboard functionality
+ */
+function checkUsernameBeforeQuiz() {
+  const username = localStorage.getItem('quizUsername');
+  if (!username || username === 'Guest') {
+    alert('💡 Pro tip: Enter your username on the home page to save your score!');
+    return false;
+  }
+  return true;
+}
+
+// Export functions for potential use in other scripts
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    toggleInstructions,
+    checkUsernameBeforeQuiz,
+    initializeInstructionsFeatures
+  };
+}

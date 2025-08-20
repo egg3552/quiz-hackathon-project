@@ -765,3 +765,120 @@ body {
         margin: 0 40px 2rem 40px; /* Smaller margins on mobile for navigation arrows */
     }
 }
+
+/* Instructions Section Styles */
+/* Instructions Section Styles - Condensed */
+.instructions-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
+  display: none;        /* Hidden by default - only show when navbar button clicked */
+  visibility: hidden;   /* Completely hidden from screen readers and layout */
+  opacity: 0;          /* Transparent for smooth fade animations */
+  transition: opacity 0.5s ease; /* Smooth fade in/out effect */
+}
+
+.instructions-section .card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instructions-section .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.instructions-section .card-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border: none;
+}
+
+.instruction-card {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  height: 100%;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.instruction-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.instruction-icon {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.instruction-card:hover .instruction-icon {
+  transform: scale(1.1);
+}
+
+.tip-card {
+  background: white;
+  transition: all 0.3s ease;
+  height: 100%;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.tip-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color) !important;
+}
+
+.scroll-to-quiz {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.scroll-to-quiz:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px -5px rgba(79, 70, 229, 0.4);
+  background: linear-gradient(135deg, #3730a3 0%, #0891b2 100%);
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .instructions-section .card-body {
+    padding: 2rem 1.5rem;
+  }
+  
+  .instruction-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .instruction-icon {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1rem;
+  }
+  
+  .instructions-section .d-flex.gap-3 {
+    flex-direction: column;
+    gap: 1rem !important;
+  }
+}
+
+/* Animation delays for staggered effect */
+.instruction-card:nth-child(1) { animation-delay: 0.1s; }
+.instruction-card:nth-child(2) { animation-delay: 0.2s; }
