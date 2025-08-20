@@ -11,15 +11,17 @@ let username = ''; //Stores the username from localStorage
 function disableNextControl() {
   const nextIcon = document.querySelector(".carousel-control-next-icon"); // Find the next navigation button
   if (!nextIcon) return; // Exit if button doesn't exist
-  nextIcon.classList.add("disabled-label"); // Add disabled styling
+  // Use project-specific class for the carousel next control so label
+  // styles aren't mixed up with option label styles.
+  nextIcon.classList.add("carousel-next-disabled"); // Add disabled styling for carousel next
   nextIcon.style.pointerEvents = "none"; // Prevent clicking
 }
 
 function enableNextControl() {
-  const nextIcon = document.querySelector(".carousel-control-next-icon"); // Find the next navigation button
-  if (!nextIcon) return; // Exit if button doesn't exist
-  nextIcon.classList.remove("disabled-label"); // Remove disabled styling
-  nextIcon.style.pointerEvents = "auto"; // Allow clicking
+  const nextIcon = document.querySelector(".carousel-control-next-icon");
+  if (!nextIcon) return;
+  nextIcon.classList.remove("carousel-next-disabled");
+  nextIcon.style.pointerEvents = "auto";
 }
 
 function getActiveSlideNumber() {
@@ -56,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Problems caused by bootstrap's built-in method of changing active class on carousel.
   // Fixed using AI help.
   if (nextIcon) {
-    nextIcon.addEventListener("click", function handleNext(evt) { // Add click handler for navigation
+    nextIcon.addEventListener("click", function handleNext(e) { // Add click handler for navigation
       // Only allow advancing if the current question has been answered
       const questionContainer = document.getElementById(`question-${currentQuestionNumber}`); // Get current question container
       const radioButtons = questionContainer ? questionContainer.getElementsByTagName("input") : []; // Get all radio inputs
@@ -67,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (slideNum === currentQuestionNumber) {
         // Prevent Bootstrap from doing a duplicate advance; we will create
         // the next slide and advance programmatically.
-        evt.preventDefault(); // Stop default Bootstrap behavior
-        evt.stopPropagation(); // Prevent event bubbling
+        e.preventDefault(); // Stop default Bootstrap behavior
+        e.stopPropagation(); // Prevent event bubbling
         showNextQuestion(); // Handle question advancement manually
         disableNextControl(); // Disable navigation until next question is answered
       }
@@ -76,6 +78,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     // Initially disable the next icon
     disableNextControl(); // Start with navigation disabled
+    // Ensure carousel navigation state stays in sync when the active slide changes
+    const carouselEl = document.getElementById("quizCarousel");
+    if (carouselEl) {
+      carouselEl.addEventListener('slid.bs.carousel', function () {
+        const slideNum = getActiveSlideNumber();
+        const qContainer = slideNum ? document.getElementById(`question-${slideNum}`) : null;
+        // If this slide has been answered, or it is the results slide, enable next.
+        const isAnswered = qContainer && qContainer.dataset.answered === 'true';
+        const isResults = qContainer && qContainer.querySelector && qContainer.querySelector('#see-results-btn');
+        if (isAnswered || isResults) {
+          enableNextControl();
+        } else {
+          disableNextControl();
+        }
+      });
+    }
   }
 });
 
@@ -288,11 +306,9 @@ function checkAnswer(questionObject, selectedAnswer, selectedLabel) {
   updateProgressBar(); // Update progress indicator
   // Do NOT call showNextQuestion here; wait for user to click next icon
   // Instead, enable the next icon if it was disabled
-  const nextIcon = document.querySelector(".carousel-control-next-icon"); // Find next navigation button
-  if (nextIcon) {
-    nextIcon.classList.remove("disabled-label"); // Remove disabled styling
-    nextIcon.style.pointerEvents = "auto"; // Allow clicking
-  }
+  // Instead, enable the carousel next control using the helper so we
+  // consistently toggle the project-specific class and pointer events.
+  enableNextControl();
 }
 
 /**
