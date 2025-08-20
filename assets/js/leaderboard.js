@@ -82,7 +82,7 @@ function displayLeaderboard() {
         const rankClass = getRankClass(index); // Get CSS class for rank styling
         const badge = getRankBadge(index); // Get badge icon for rank
         
-        return ` // Return HTML for table row
+        return ` 
             <tr class="${rankClass}">
                 <td class="text-center">
                     <span class="rank-badge ${badge.class}">${badge.icon}</span>
@@ -97,7 +97,7 @@ function displayLeaderboard() {
                 </td>
                 <td class="text-muted text-center">${score.date}</td>
             </tr>
-        `;
+        `; // Return HTML for table row
     }).join(''); // Join all table rows into single string
 }
 

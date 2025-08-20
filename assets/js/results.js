@@ -76,9 +76,9 @@ function updateResultsDisplay(results) {
     
     // Update score badge
     if (scoreBadge) { // Check if score badge exists
-        scoreBadge.innerHTML = ` // Set score display HTML
+        scoreBadge.innerHTML = ` 
             <i class="fas fa-star me-2"></i>Score: ${results.score}/${results.totalQuestions} (${results.percentage}%)
-        `;
+        `; // Set score display HTML
         
         // Add different colors based on performance
         scoreBadge.className = 'badge fs-3 px-4 py-3 mb-3 ' + getScoreBadgeClass(results.percentage); // Apply performance-based styling
