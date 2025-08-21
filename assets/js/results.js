@@ -9,19 +9,25 @@ document.addEventListener('DOMContentLoaded', function() {
         return; // Exit function
     }
     
-    const results = JSON.parse(quizResultsData); // Parse JSON results data
-    
-    // Save score to leaderboard if not already saved
-    if (!results.savedToLeaderboard) { // Check if not already saved to prevent duplicates
-        saveToLeaderboard(results); // Add score to leaderboard
+    try {
+        const results = JSON.parse(quizResultsData); // Parse JSON results data
         
-        // Mark as saved to prevent duplicate entries
-        results.savedToLeaderboard = true; // Flag as saved
-        localStorage.setItem('quizResults', JSON.stringify(results)); // Update stored results
+        // Save score to leaderboard if not already saved
+        if (!results.savedToLeaderboard) { // Check if not already saved to prevent duplicates
+            saveToLeaderboard(results); // Add score to leaderboard
+            
+            // Mark as saved to prevent duplicate entries
+            results.savedToLeaderboard = true; // Flag as saved
+            localStorage.setItem('quizResults', JSON.stringify(results)); // Update stored results
+        }
+        
+        // Update the results display
+        updateResultsDisplay(results); // Show results on page
+    } catch (error) {
+        console.error('Error parsing quiz results:', error);
+        // Redirect to home if data is corrupted
+        window.location.href = 'index.html';
     }
-    
-    // Update the results display
-    updateResultsDisplay(results); // Show results on page
 });
 
 /**

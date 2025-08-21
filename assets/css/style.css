@@ -24,6 +24,19 @@ Text: #1e293b (Slate-800)
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+/* Mobile Color Variables Override - Force loading on all devices */
+@media (max-width: 768px) {
+  :root {
+    --primary-color: #4ba3c3 !important;
+    --secondary-color: #ba324f !important;
+    --success-color: #10b981 !important;
+    --background-color: #cce6f4 !important;
+    --text-color: #1e293b !important;
+    --text-light: #64748b !important;
+    --white: #ffffff !important;
+  }
+}
+
 /* Reset default browser spacing and set consistent box model */
 * {
   margin: 0;
@@ -42,8 +55,10 @@ body {
 /* Landing Page Styles */
 .landing-page {
   min-height: 100vh; /* Full viewport height */
-  /* Diagonal gradient from primary to secondary color */
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  /* Webkit prefixes for better mobile support */
+  background: -webkit-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%);
+  background: -moz-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%);
+  background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%);
   position: relative; /* Allows positioning of child elements */
   overflow: hidden; /* Hide any content that flows outside */
   display: block; /* Show by default */
@@ -65,8 +80,9 @@ body {
 .landing-content {
   position: relative; /* Stack above the background pattern */
   z-index: 2; /* Higher than background (z-index 1) */
-  color: var(--white);
+  color: #ffffff !important; /* Force white text */
   animation: fadeInUp 1s ease-out; /* Smooth entrance animation */
+  -webkit-animation: fadeInUp 1s ease-out; /* Safari support */
 }
 
 .landing-content h1 {
@@ -84,29 +100,36 @@ body {
 
 /* Start Quiz Button */
 .btn-start-quiz {
-  background: var(--white);
-  color: var(--primary-color);
-  border: none;
-  border-radius: 50px; /* Fully rounded edges */
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease; /* Smooth animation for all properties */
-  box-shadow: var(--shadow);
-  text-transform: uppercase; /* ALL CAPS text */
-  letter-spacing: 0.5px; /* Space between letters */
-  position: relative; /* For pseudo-element positioning */
-  overflow: hidden; /* Hide shine effect overflow */
-  text-decoration: none; /* Remove link underline */
-  display: inline-block; /* Allow padding on inline element */
+  background: #ffffff !important; /* Force white background */
+  color: #4ba3c3 !important; /* Force primary color text */
+  border: none !important;
+  border-radius: 50px !important; /* Fully rounded edges */
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  transition: all 0.3s ease !important; /* Smooth animation for all properties */
+  -webkit-transition: all 0.3s ease !important; /* Safari support */
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  text-transform: uppercase !important; /* ALL CAPS text */
+  letter-spacing: 0.5px !important; /* Space between letters */
+  position: relative !important; /* For pseudo-element positioning */
+  overflow: hidden !important; /* Hide shine effect overflow */
+  text-decoration: none !important; /* Remove link underline */
+  display: inline-flex !important; /* Use flexbox for perfect centering */
+  align-items: center !important; /* Vertical centering */
+  justify-content: center !important; /* Horizontal centering */
+  text-align: center !important; /* Text alignment */
+  line-height: 1.2 !important; /* Proper line height */
+  vertical-align: middle !important; /* Baseline alignment */
 }
 
 /* Button hover effects */
 .btn-start-quiz:hover {
-  transform: translateY(-2px); /* Lift button slightly */
-  box-shadow: var(--shadow-lg); /* Larger shadow for depth */
-  color: var(--primary-color);
-  background: var(--white);
-  text-decoration: none; /* Keep underline removed */
+  transform: translateY(-2px) !important; /* Lift button slightly */
+  -webkit-transform: translateY(-2px) !important; /* Safari support */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important; /* Larger shadow for depth */
+  color: #4ba3c3 !important;
+  background: #ffffff !important;
+  text-decoration: none !important; /* Keep underline removed */
 }
 
 /* Button click effect */
@@ -130,6 +153,74 @@ body {
 /* Move shine effect across button on hover */
 .btn-start-quiz:hover::before {
   left: 100%; /* Move completely to the right */
+}
+
+/* Icon spacing for start quiz button */
+.btn-start-quiz i {
+  margin-right: 8px !important;
+  font-size: 0.9em !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+}
+
+/* Icon spacing for start quiz button */
+.btn-start-quiz i {
+  margin-right: 8px !important;
+  font-size: 0.9em !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+}
+
+/* Desktop-specific button optimization (ensure mobile styles don't interfere) */
+@media (min-width: 769px) {
+    /* Ensure buttons maintain desktop behavior */
+    .btn,
+    .btn-primary,
+    .btn-outline-primary,
+    .btn-secondary,
+    .btn-start-quiz {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        line-height: 1.2 !important;
+        vertical-align: middle !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Icon spacing for all buttons on desktop */
+    .btn i,
+    .btn-primary i,
+    .btn-outline-primary i,
+    .btn-secondary i,
+    .btn-start-quiz i {
+        margin-right: 6px !important;
+        vertical-align: middle !important;
+        font-size: 0.9em !important;
+        line-height: 1 !important;
+    }
+    
+    /* Maintain desktop navbar appearance */
+    .quiz-navbar .navbar-brand,
+    .quiz-navbar .nav-link {
+        /* Desktop styles will use the original design colors */
+        transition: color 0.3s ease;
+    }
+    
+    /* Desktop button consistency */
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline-primary {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        line-height: 1.2 !important;
+        vertical-align: middle !important;
+        text-decoration: none !important;
+    }
 }
 
 /* Quiz Section */
@@ -183,7 +274,12 @@ body {
   font-weight: 600;
   transition: all 0.3s ease; /* Smooth hover effects */
   text-decoration: none; /* Remove link underline */
-  display: inline-block; /* Allow padding on inline element */
+  display: inline-flex; /* Use flexbox for perfect centering */
+  align-items: center; /* Vertical centering */
+  justify-content: center; /* Horizontal centering */
+  text-align: center; /* Text alignment */
+  line-height: 1.2; /* Proper line height */
+  vertical-align: middle; /* Baseline alignment */
 }
 
 /* Back button hover effect */
@@ -354,121 +450,152 @@ body {
 
 /* Quiz Page Styling - Match Landing Page Theme */
 .quiz-page-body {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Consistent gradient */
-    min-height: 100vh; /* Full viewport height */
-    position: relative;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important; /* Force consistent gradient */
+    min-height: 100vh !important; /* Force full viewport height */
+    position: relative !important;
+    overflow-x: hidden !important; /* Prevent horizontal scroll */
+    color: #ffffff !important; /* Force white text */
 }
 
 /* Add pattern overlay like landing page */
 .quiz-page-body::before {
-    content: ''; /* Required for pseudo-elements */
-    position: fixed; /* Stay in place during scroll */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    content: '' !important; /* Required for pseudo-elements */
+    position: fixed !important; /* Stay in place during scroll */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     /* Same grain pattern as landing page */
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3; /* Semi-transparent overlay */
-    z-index: -1; /* Behind all content */
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') !important;
+    opacity: 0.3 !important; /* Semi-transparent overlay */
+    z-index: -1 !important; /* Behind all content */
 }
 
 /* Quiz Navigation Styling */
 .quiz-navbar {
     background: rgba(255, 255, 255, 0.1) !important; /* Semi-transparent white */
     backdrop-filter: blur(10px); /* Glass effect */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important; /* Subtle border */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* Add depth */
 }
 
 .quiz-navbar .navbar-brand {
-    color: var(--white) !important; /* White text */
-    font-weight: 600; /* Semi-bold */
-    text-decoration: none;
-    transition: all 0.3s ease; /* Smooth hover animation */
+    color: #ffffff !important; /* Force white text */
+    font-weight: 600 !important; /* Semi-bold */
+    text-decoration: none !important;
+    transition: all 0.3s ease !important; /* Smooth hover animation */
 }
 
 .quiz-navbar .navbar-brand:hover {
-    color: var(--white) !important; /* Maintain white on hover */
+    color: #ffffff !important; /* Maintain white on hover */
     transform: translateY(-1px); /* Subtle lift effect */
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .quiz-navbar .nav-link {
-    color: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent white */
-    font-weight: 500; /* Medium weight */
-    transition: all 0.3s ease; /* Smooth hover animation */
+    color: rgba(255, 255, 255, 0.9) !important; /* Force semi-transparent white */
+    font-weight: 500 !important; /* Medium weight */
+    transition: all 0.3s ease !important; /* Smooth hover animation */
 }
 
 .quiz-navbar .nav-link:hover {
-    color: var(--white) !important; /* Full white on hover */
+    color: #ffffff !important; /* Force full white on hover */
     transform: translateY(-1px); /* Subtle lift effect */
+}
+
+.quiz-navbar .nav-link.active {
+    color: #ffffff !important; /* Force white for active state */
+    font-weight: 600 !important; /* Bold for active */
 }
 
 /* Responsive Navbar Toggler - Burger Menu */
 .quiz-navbar .navbar-toggler {
-    border: 2px solid rgba(255, 255, 255, 0.3); /* Semi-transparent white border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 0.5rem 0.75rem; /* Comfortable padding */
-    transition: all 0.3s ease; /* Smooth hover animation */
+    border: 2px solid rgba(255, 255, 255, 0.5) !important; /* Force semi-transparent white border */
+    border-radius: 8px !important; /* Rounded corners */
+    padding: 0.5rem 0.75rem !important; /* Comfortable padding */
+    transition: all 0.3s ease !important; /* Smooth hover animation */
+    background: rgba(255, 255, 255, 0.1) !important; /* Light background */
 }
 
 .quiz-navbar .navbar-toggler:hover {
-    border-color: var(--white); /* Solid white border on hover */
-    background: rgba(255, 255, 255, 0.1); /* Light background on hover */
+    border-color: #ffffff !important; /* Force solid white border on hover */
+    background: rgba(255, 255, 255, 0.2) !important; /* Lighter background on hover */
 }
 
 .quiz-navbar .navbar-toggler:focus {
-    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.3); /* Focus outline */
-    border-color: var(--white); /* White border when focused */
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5) !important; /* Force focus outline */
+    border-color: #ffffff !important; /* Force white border when focused */
+    outline: none !important; /* Remove default outline */
 }
 
 /* Custom Burger Icon Styling */
 .quiz-navbar .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    width: 1.5em; /* Slightly larger icon */
-    height: 1.5em; /* Slightly larger icon */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    width: 1.5em !important; /* Force slightly larger icon */
+    height: 1.5em !important; /* Force slightly larger icon */
+    filter: brightness(0) invert(1) !important; /* Force white color */
 }
 
 /* Mobile Navigation Styling */
 @media (max-width: 991.98px) {
     .quiz-navbar .navbar-collapse {
-        background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-        backdrop-filter: blur(10px); /* Glass effect */
-        border-radius: 12px; /* Rounded corners */
-        margin-top: 1rem; /* Space from navbar */
-        padding: 1rem; /* Internal spacing */
-        border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+        background: rgba(255, 255, 255, 0.15) !important; /* Force semi-transparent background */
+        backdrop-filter: blur(15px) !important; /* Force glass effect */
+        border-radius: 12px !important; /* Rounded corners */
+        margin-top: 1rem !important; /* Space from navbar */
+        padding: 1rem !important; /* Internal spacing */
+        border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Force subtle border */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important; /* Add depth */
     }
     
     .quiz-navbar .nav-link {
-        padding: 0.75rem 1rem; /* More padding for touch targets */
-        border-radius: 8px; /* Rounded link backgrounds */
-        margin-bottom: 0.5rem; /* Space between links */
-        transition: all 0.3s ease; /* Smooth hover animation */
+        padding: 0.75rem 1rem !important; /* Force more padding for touch targets */
+        border-radius: 8px !important; /* Rounded link backgrounds */
+        margin-bottom: 0.5rem !important; /* Space between links */
+        transition: all 0.3s ease !important; /* Smooth hover animation */
+        color: rgba(255, 255, 255, 0.9) !important; /* Force white text */
+        font-weight: 500 !important;
     }
     
-    .quiz-navbar .nav-link:hover {
-        background: rgba(255, 255, 255, 0.2); /* Background on hover */
-        transform: translateX(5px); /* Slide effect on mobile */
+    .quiz-navbar .nav-link:hover,
+    .quiz-navbar .nav-link:focus {
+        background: rgba(255, 255, 255, 0.1) !important; /* Force light background on hover */
+        color: #ffffff !important; /* Force full white on hover */
+        transform: translateX(5px) !important; /* Slide effect for mobile */
+    }
+    
+    .quiz-navbar .nav-link.active {
+        background: rgba(255, 255, 255, 0.2) !important; /* Force active background */
+        color: #ffffff !important; /* Force white for active */
+        font-weight: 600 !important; /* Bold for active */
+    }
+
+    /* Force navbar background on mobile */
+    .quiz-navbar {
+        background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+        backdrop-filter: blur(10px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2) !important;
     }
 }
 
 /* Quiz Header Styling */
 .quiz-header {
-    background: transparent; /* No background - shows gradient */
-    color: var(--white); /* White text */
-    padding: 2rem 0; /* Vertical spacing */
-    text-align: center; /* Center align text */
+    background: transparent !important; /* Force no background - shows gradient */
+    color: #ffffff !important; /* Force white text */
+    padding: 2rem 0 !important; /* Vertical spacing */
+    text-align: center !important; /* Center align text */
 }
 
 .quiz-header h1 {
-    font-weight: 700; /* Bold heading */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for readability */
-    margin-bottom: 1rem; /* Space below heading */
+    font-weight: 700 !important; /* Bold heading */
+    color: #ffffff !important; /* Force white text */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important; /* Add text shadow for readability */
 }
 
 .quiz-header .lead {
+    color: rgba(255, 255, 255, 0.9) !important; /* Force semi-transparent white */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important; /* Subtle text shadow */
     opacity: 0.95; /* Slightly transparent */
     font-size: 1.2rem; /* Larger subtitle text */
 }
@@ -1156,11 +1283,39 @@ body {
 /* Universal Mobile Typography and Spacing */
 @media (max-width: 768px) {
     /* Ensure all text is readable and properly sized */
-    h1, .h1 { font-size: clamp(1.5rem, 6vw, 2.2rem) !important; }
-    h2, .h2 { font-size: clamp(1.3rem, 5vw, 1.8rem) !important; }
-    h3, .h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
-    h4, .h4 { font-size: clamp(1rem, 3vw, 1.3rem) !important; }
-    h5, .h5 { font-size: clamp(0.9rem, 3vw, 1.1rem) !important; }
+    h1, .h1 { 
+        font-size: clamp(1.5rem, 6vw, 2.2rem) !important; 
+        color: #ffffff !important; /* Force white text */
+    }
+    h2, .h2 { 
+        font-size: clamp(1.3rem, 5vw, 1.8rem) !important; 
+        color: #ffffff !important; /* Force white text */
+    }
+    h3, .h3 { 
+        font-size: clamp(1.1rem, 4vw, 1.5rem) !important; 
+        color: #ffffff !important; /* Force white text */
+    }
+    h4, .h4 { 
+        font-size: clamp(1rem, 3vw, 1.3rem) !important; 
+        color: #ffffff !important; /* Force white text */
+    }
+    h5, .h5 { 
+        font-size: clamp(0.9rem, 3vw, 1.1rem) !important; 
+        color: #ffffff !important; /* Force white text */
+    }
+    
+    /* Force colors for quiz page elements */
+    .quiz-page-body * {
+        color: inherit !important; /* Inherit white from parent */
+    }
+    
+    .quiz-page-body .text-center {
+        color: #ffffff !important; /* Force white for centered text */
+    }
+    
+    .quiz-page-body .lead {
+        color: rgba(255, 255, 255, 0.9) !important; /* Force semi-transparent white */
+    }
     
     /* Universal button improvements */
     .btn {
@@ -1229,5 +1384,760 @@ body {
     
     .landing-content {
         padding: 0.5rem !important; /* Minimal padding */
+    }
+}
+
+/* Mobile-Specific Color Fixes */
+@media (max-width: 768px) {
+    /* Force quiz page background elements to be white, but NOT content cards */
+    .quiz-page-body {
+        color: #ffffff !important;
+    }
+    
+    .quiz-page-body h1,
+    .quiz-page-body h2,
+    .quiz-page-body h3,
+    .quiz-page-body h4,
+    .quiz-page-body h5,
+    .quiz-page-body h6,
+    .quiz-page-body p,
+    .quiz-page-body .lead,
+    .quiz-page-body .navbar-brand,
+    .quiz-page-body .nav-link {
+        color: #ffffff !important;
+    }
+    
+    /* CRITICAL: Quiz card content must be dark text on light background */
+    .quiz-card,
+    .quiz-card *,
+    .quiz-card .quiz-question-text,
+    .quiz-card .quiz-question-title,
+    .quiz-card .quiz-form-check-label,
+    .quiz-card .badge,
+    .quiz-card h1,
+    .quiz-card h2,
+    .quiz-card h3,
+    .quiz-card h4,
+    .quiz-card h5,
+    .quiz-card h6,
+    .quiz-card p,
+    .quiz-card span,
+    .quiz-card div,
+    .quiz-card button {
+        color: #1e293b !important; /* Force dark text for readability */
+        -webkit-text-fill-color: #1e293b !important;
+    }
+    
+    /* Ensure quiz card backgrounds are light */
+    .quiz-card {
+        background: rgba(255, 255, 255, 0.98) !important; /* Nearly opaque white */
+    }
+    
+    .quiz-question-text {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #1e293b !important;
+        -webkit-text-fill-color: #1e293b !important;
+    }
+    
+    .quiz-form-check {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #1e293b !important;
+    }
+    
+    .quiz-form-check-label {
+        color: #1e293b !important;
+        -webkit-text-fill-color: #1e293b !important;
+    }
+    
+    /* Force score badge to be visible */
+    .score-badge .badge {
+        color: #ffffff !important; /* White text on colored badge */
+        -webkit-text-fill-color: #ffffff !important;
+        background: #4ba3c3 !important; /* Ensure colored background */
+    }
+    
+    /* Force progress bar to be visible */
+    .quiz-progress {
+        background: rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    /* Force carousel controls to be visible */
+    .carousel-control-prev,
+    .carousel-control-next {
+        background: #4ba3c3 !important;
+        opacity: 0.8 !important;
+    }
+    
+    /* Force navbar colors specifically */
+    .quiz-navbar,
+    .quiz-navbar * {
+        color: #ffffff !important;
+    }
+    
+    /* Force quiz header colors */
+    .quiz-header,
+    .quiz-header * {
+        color: #ffffff !important;
+    }
+    
+    /* Force instruction section colors */
+    .instructions-section .card {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #1e293b !important;
+    }
+    
+    .instructions-section .card * {
+        color: #1e293b !important;
+    }
+    
+    .instructions-section .card-header {
+        background: #4ba3c3 !important; /* Force primary color */
+        color: #ffffff !important;
+    }
+    
+    .instructions-section .card-header * {
+        color: #ffffff !important;
+    }
+    
+    /* Force quiz container colors */
+    .quiz-main {
+        color: #ffffff !important;
+    }
+    
+    .quiz-main * {
+        color: inherit !important;
+    }
+}
+
+/* 
+ * MOBILE CRITICAL FIXES - HIGHEST PRIORITY 
+ * This section ensures mobile colors and navbar work regardless of browser
+ */
+
+/* Force mobile background and colors for all devices */
+@media screen and (max-width: 768px), 
+       (-webkit-min-device-pixel-ratio: 1) and (max-width: 768px) {
+    
+    /* Force quiz page background with webkit prefixes */
+    .quiz-page-body {
+        background: #4ba3c3 !important;
+        background: -webkit-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+        background: -moz-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;  
+        background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+        color: #ffffff !important;
+        min-height: 100vh !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Force all text to be white on quiz pages EXCEPT quiz card content */
+    .quiz-page-body,
+    .quiz-navbar,
+    .quiz-navbar *,
+    .quiz-header,
+    .quiz-header * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* CRITICAL OVERRIDE: Quiz card content must remain dark for readability */
+    .quiz-card,
+    .quiz-card *,
+    .quiz-card .quiz-question-text,
+    .quiz-card .quiz-question-title,
+    .quiz-card .quiz-form-check-label,
+    .quiz-card .badge,
+    .quiz-card h1,
+    .quiz-card h2,
+    .quiz-card h3,
+    .quiz-card h4,
+    .quiz-card h5,
+    .quiz-card h6,
+    .quiz-card p,
+    .quiz-card span,
+    .quiz-card div,
+    .quiz-card button {
+        color: #1e293b !important; /* Dark text on light card background */
+        -webkit-text-fill-color: #1e293b !important;
+    }
+    
+    /* Ensure quiz card has light background for contrast */
+    .quiz-card {
+        background: rgba(255, 255, 255, 0.98) !important;
+    }
+    
+    /* Additional mobile text visibility fixes */
+    .quiz-question-text,
+    .quiz-form-check,
+    .quiz-form-check-label {
+        color: #1e293b !important;
+        -webkit-text-fill-color: #1e293b !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    /* Ensure buttons remain visible */
+    .btn-outline-primary {
+        color: #4ba3c3 !important;
+        border-color: #4ba3c3 !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+    }
+}
+
+/* 
+ * IOS SAFARI & MOBILE CHROME CRITICAL FIXES
+ * These fixes address real mobile browser issues that dev tools don't show
+ */
+
+/* Force text visibility on actual iOS devices */
+@media screen and (max-width: 768px) {
+    /* iOS Safari text rendering fix */
+    .quiz-card,
+    .quiz-card * {
+        color: #000000 !important; /* Pure black for maximum contrast */
+        -webkit-text-fill-color: #000000 !important;
+        -webkit-text-stroke: 0 !important; /* Remove any text stroke */
+        text-shadow: none !important; /* Remove shadows that might interfere */
+        font-weight: 500 !important; /* Ensure sufficient weight */
+    }
+    
+    /* Force quiz question text with iOS compatibility */
+    .quiz-question-text {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        background: #ffffff !important; /* Pure white background */
+        opacity: 1 !important; /* Force full opacity */
+        visibility: visible !important; /* Force visibility */
+        display: block !important; /* Force display */
+    }
+    
+    /* Force answer options visibility */
+    .quiz-form-check {
+        color: #000000 !important;
+        background: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    .quiz-form-check-label {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        -webkit-text-stroke: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+    
+    /* Force quiz card background to be solid white */
+    .quiz-card {
+        background: #ffffff !important; /* Solid white - no transparency */
+        background-color: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Force all text elements to render properly on iOS */
+    .quiz-card h1,
+    .quiz-card h2,
+    .quiz-card h3,
+    .quiz-card h4,
+    .quiz-card h5,
+    .quiz-card h6,
+    .quiz-card p,
+    .quiz-card span,
+    .quiz-card div,
+    .quiz-card label {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important; /* Standard property for compatibility */
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Remove any transforms or effects that might cause issues */
+    .quiz-card * {
+        transform: none !important;
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+    
+    /* Ensure proper z-index stacking */
+    .quiz-card {
+        z-index: 999 !important;
+        position: relative !important;
+    }
+}
+    
+    /* Force navbar background and styling */
+    .quiz-navbar {
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+    }
+
+/* Mobile-specific navbar and header fixes */
+@media (max-width: 768px) {
+    /* Force navbar links to be white on mobile only */
+    .quiz-navbar .navbar-brand,
+    .quiz-navbar .nav-link {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-decoration: none !important;
+    }
+    
+    /* Force navbar toggler to be visible on mobile only */
+    .quiz-navbar .navbar-toggler {
+        border: 2px solid #ffffff !important;
+        background: rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    .quiz-navbar .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        filter: brightness(0) invert(1) !important;
+        -webkit-filter: brightness(0) invert(1) !important;
+    }
+    
+    /* Force mobile dropdown menu styling */
+    .quiz-navbar .navbar-collapse {
+        background: rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 12px !important;
+        margin-top: 1rem !important;
+        padding: 1rem !important;
+    }
+    
+    /* Force quiz header visibility on mobile only */
+    .quiz-header h1,
+    .quiz-header .lead {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Force landing page colors on mobile only */
+    .landing-page {
+        background: #4ba3c3 !important;
+        background: -webkit-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+        background: -moz-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;  
+        background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+    }
+    
+    .landing-content,
+    .landing-content * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Force start quiz button colors on mobile only */
+    .btn-start-quiz {
+        background: #ffffff !important;
+        color: #4ba3c3 !important;
+        -webkit-text-fill-color: #4ba3c3 !important;
+    }
+}
+
+
+/* 
+ * COMPREHENSIVE IOS COMPATIBILITY FIXES
+ * Maintains original design colors while ensuring flawless iOS functionality
+ */
+
+/* Universal iOS Mobile Fixes - Preserve Design Colors */
+@media (max-width: 768px) {
+    /* Ensure all elements are visible but preserve design */
+    *, *::before, *::after {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Quiz card with original design colors */
+    .quiz-card {
+        background: rgba(255, 255, 255, 0.95) !important; /* Keep original semi-transparent white */
+        border-radius: 20px !important;
+        box-shadow: 0 8px 32px rgba(75, 163, 195, 0.2) !important; /* Brand color shadow */
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(75, 163, 195, 0.3) !important; /* Brand color border */
+        -webkit-backdrop-filter: blur(10px) !important; /* iOS Safari support */
+    }
+    
+    /* Quiz question text with brand colors */
+    .quiz-question-text {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #2d3748 !important; /* Dark readable text */
+        -webkit-text-fill-color: #2d3748 !important;
+        border: 2px solid rgba(75, 163, 195, 0.3) !important; /* Brand color border */
+        border-radius: 12px !important;
+        padding: 1.5rem !important;
+        font-size: 16px !important; /* Prevent iOS zoom */
+        font-weight: 500 !important;
+        line-height: 1.5 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Quiz answer options with brand colors */
+    .quiz-form-check {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 2px solid rgba(75, 163, 195, 0.4) !important; /* Brand color border */
+        border-radius: 12px !important;
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .quiz-form-check:hover,
+    .quiz-form-check:focus-within {
+        border-color: #4ba3c3 !important; /* Brand color on hover */
+        background: rgba(75, 163, 195, 0.1) !important;
+        box-shadow: 0 4px 12px rgba(75, 163, 195, 0.2) !important;
+    }
+    
+    .quiz-form-check-label {
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        cursor: pointer !important;
+    }
+    
+    /* Radio buttons visibility */
+    input[type="radio"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+        position: relative !important;
+        margin-right: 10px !important;
+        accent-color: #4ba3c3 !important; /* Brand color for radio buttons */
+    }
+    
+    /* Buttons with brand colors */
+    .btn {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        border-radius: 8px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn-start-quiz,
+    .btn-primary {
+        background: linear-gradient(135deg, #4ba3c3, #6bb6ff) !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 2px solid #4ba3c3 !important;
+        box-shadow: 0 4px 15px rgba(75, 163, 195, 0.3) !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1.2 !important;
+        font-weight: 600 !important;
+    }
+    
+    .btn-secondary {
+        background: linear-gradient(135deg, #6c757d, #868e96) !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 2px solid #6c757d !important;
+    }
+    
+    .btn-outline-primary {
+        background: transparent !important;
+        color: #4ba3c3 !important;
+        -webkit-text-fill-color: #4ba3c3 !important;
+        border: 2px solid #4ba3c3 !important;
+    }
+    
+    /* Navigation colors */
+    .quiz-navbar {
+        background: rgba(75, 163, 195, 0.95) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    .navbar-brand,
+    .nav-link {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Header colors */
+    .quiz-header h1 {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .quiz-header .lead {
+        color: rgba(255, 255, 255, 0.9) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    /* Progress bar colors */
+    .quiz-progress .progress-bar {
+        background: linear-gradient(45deg, #4ba3c3, #22c55e) !important;
+    }
+}
+
+/* iOS Safari Specific Fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Target iOS Safari specifically while preserving colors */
+    body {
+        -webkit-text-size-adjust: 100% !important; /* Prevent text scaling */
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+    
+    /* Ensure webkit rendering works properly */
+    .quiz-card,
+    .quiz-question-text,
+    .quiz-form-check-label {
+        -webkit-font-smoothing: antialiased !important;
+        -webkit-transform: translateZ(0) !important; /* Force hardware acceleration */
+        transform: translateZ(0) !important;
+    }
+    
+    /* iOS Safari button fixes */
+    .btn {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        -webkit-border-radius: 8px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* iOS Safari input fixes */
+    input[type="radio"] {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        width: 18px !important;
+        height: 18px !important;
+        border: 2px solid #4ba3c3 !important;
+        border-radius: 50% !important;
+        background: #ffffff !important;
+        position: relative !important;
+    }
+    
+    input[type="radio"]:checked {
+        background: #4ba3c3 !important;
+        border-color: #4ba3c3 !important;
+    }
+    
+    input[type="radio"]:checked::after {
+        content: '' !important;
+        width: 8px !important;
+        height: 8px !important;
+        border-radius: 50% !important;
+        background: #ffffff !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        -webkit-transform: translate(-50%, -50%) !important;
+    }
+}
+
+/* High DPI Mobile Devices (Retina displays) */
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 768px) {
+    /* Ensure crisp rendering on high DPI screens */
+    .quiz-card,
+    .quiz-question-text,
+    .quiz-form-check {
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+    }
+    
+    /* High DPI text rendering */
+    * {
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+}
+
+/* iOS Landing Page Color Fixes */
+@media (max-width: 768px) {
+    /* Landing page colors */
+    .landing-page {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        -webkit-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+    
+    .landing-content h1 {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .landing-content .lead {
+        color: rgba(255, 255, 255, 0.9) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    /* Username input styling */
+    .form-control {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+        border: 2px solid rgba(75, 163, 195, 0.3) !important;
+        font-size: 16px !important; /* Prevent iOS zoom */
+    }
+    
+    .form-control:focus {
+        border-color: #4ba3c3 !important;
+        box-shadow: 0 0 0 0.2rem rgba(75, 163, 195, 0.25) !important;
+    }
+    
+    /* Results page colors */
+    .badge {
+        background: linear-gradient(135deg, #4ba3c3, #6bb6ff) !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Leaderboard colors */
+    .table {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+    }
+    
+    .table th {
+        background: rgba(75, 163, 195, 0.1) !important;
+        color: #4ba3c3 !important;
+        -webkit-text-fill-color: #4ba3c3 !important;
+        border-bottom: 2px solid #4ba3c3 !important;
+    }
+    
+    .table td {
+        border-color: rgba(75, 163, 195, 0.2) !important;
+    }
+    
+    /* Card hover effects for iOS */
+    .card {
+        transition: all 0.3s ease !important;
+        -webkit-transition: all 0.3s ease !important;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px) !important;
+        -webkit-transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(75, 163, 195, 0.2) !important;
+    }
+}
+
+/* iOS Touch and Interaction Fixes */
+@media (max-width: 768px) {
+    /* Fix iOS touch targets */
+    .btn,
+    .nav-link,
+    .quiz-form-check,
+    .carousel-control-prev,
+    .carousel-control-next {
+        min-height: 44px !important; /* iOS minimum touch target */
+        min-width: 44px !important;
+        -webkit-tap-highlight-color: rgba(75, 163, 195, 0.3) !important;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+    }
+    
+    /* Navbar hamburger menu fix */
+    .navbar-toggler {
+        border: 2px solid rgba(255, 255, 255, 0.5) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        backdrop-filter: blur(5px) !important;
+    }
+    
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+    
+    /* Quiz navigation arrows */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(75, 163, 195, 0.8) !important;
+        border-radius: 50% !important;
+        width: 44px !important;
+        height: 44px !important;
+        background-size: 50% !important;
+    }
+    
+    /* Progress bar styling */
+    .progress {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-radius: 10px !important;
+        height: 20px !important;
+    }
+    
+    /* Footer and misc elements */
+    .text-muted {
+        color: rgba(255, 255, 255, 0.7) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    /* Alert styling */
+    .alert {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border: 2px solid #4ba3c3 !important;
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+    }
+    
+    /* Modal styling for iOS */
+    .modal-content {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(75, 163, 195, 0.3) !important;
+        border-radius: 15px !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    .modal-header {
+        border-bottom: 2px solid rgba(75, 163, 195, 0.2) !important;
+    }
+    
+    .modal-title {
+        color: #4ba3c3 !important;
+        -webkit-text-fill-color: #4ba3c3 !important;
+    }
+}
+
+/* iOS Safari specific button fixes */
+@supports (-webkit-touch-callout: none) {
+    /* This targets iOS Safari specifically */
+    .btn-start-quiz,
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline-primary {
+        display: -webkit-inline-flex !important;
+        display: inline-flex !important;
+        -webkit-align-items: center !important;
+        align-items: center !important;
+        -webkit-justify-content: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        -webkit-text-align: center !important;
+        line-height: 1.2 !important;
+        vertical-align: middle !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        box-sizing: border-box !important;
+        -webkit-box-sizing: border-box !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+    }
+    
+    /* iOS Safari icon alignment */
+    .btn i,
+    .btn-start-quiz i {
+        display: inline-block !important;
+        margin-right: 6px !important;
+        vertical-align: middle !important;
+        line-height: 1 !important;
     }
 }
