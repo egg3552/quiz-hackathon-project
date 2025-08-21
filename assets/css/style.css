@@ -12,10 +12,10 @@ Text: #1e293b (Slate-800)
 /* Global Styles */
 /* CSS Variables - reusable color values throughout the stylesheet */
 :root {
-  --primary-color: #4f46e5;
-  --secondary-color: #06b6d4;
+  --primary-color: #4ba3c3;
+  --secondary-color: #ba324f;
   --success-color: #10b981;
-  --background-color: #f8fafc;
+  --background-color: #cce6f4;
   --text-color: #1e293b;
   --text-light: #64748b;
   --white: #ffffff;
