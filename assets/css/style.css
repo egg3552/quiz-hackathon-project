@@ -24,6 +24,19 @@ Text: #1e293b (Slate-800)
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+/* Mobile Color Variables Override - Force loading on all devices */
+@media (max-width: 768px) {
+  :root {
+    --primary-color: #4ba3c3 !important;
+    --secondary-color: #ba324f !important;
+    --success-color: #10b981 !important;
+    --background-color: #cce6f4 !important;
+    --text-color: #1e293b !important;
+    --text-light: #64748b !important;
+    --white: #ffffff !important;
+  }
+}
+
 /* Reset default browser spacing and set consistent box model */
 * {
   margin: 0;
@@ -42,8 +55,10 @@ body {
 /* Landing Page Styles */
 .landing-page {
   min-height: 100vh; /* Full viewport height */
-  /* Diagonal gradient from primary to secondary color */
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  /* Webkit prefixes for better mobile support */
+  background: -webkit-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%);
+  background: -moz-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%);
+  background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%);
   position: relative; /* Allows positioning of child elements */
   overflow: hidden; /* Hide any content that flows outside */
   display: block; /* Show by default */
@@ -65,8 +80,9 @@ body {
 .landing-content {
   position: relative; /* Stack above the background pattern */
   z-index: 2; /* Higher than background (z-index 1) */
-  color: var(--white);
+  color: #ffffff !important; /* Force white text */
   animation: fadeInUp 1s ease-out; /* Smooth entrance animation */
+  -webkit-animation: fadeInUp 1s ease-out; /* Safari support */
 }
 
 .landing-content h1 {
@@ -84,29 +100,31 @@ body {
 
 /* Start Quiz Button */
 .btn-start-quiz {
-  background: var(--white);
-  color: var(--primary-color);
-  border: none;
-  border-radius: 50px; /* Fully rounded edges */
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease; /* Smooth animation for all properties */
-  box-shadow: var(--shadow);
-  text-transform: uppercase; /* ALL CAPS text */
-  letter-spacing: 0.5px; /* Space between letters */
-  position: relative; /* For pseudo-element positioning */
-  overflow: hidden; /* Hide shine effect overflow */
-  text-decoration: none; /* Remove link underline */
-  display: inline-block; /* Allow padding on inline element */
+  background: #ffffff !important; /* Force white background */
+  color: #4ba3c3 !important; /* Force primary color text */
+  border: none !important;
+  border-radius: 50px !important; /* Fully rounded edges */
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  transition: all 0.3s ease !important; /* Smooth animation for all properties */
+  -webkit-transition: all 0.3s ease !important; /* Safari support */
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  text-transform: uppercase !important; /* ALL CAPS text */
+  letter-spacing: 0.5px !important; /* Space between letters */
+  position: relative !important; /* For pseudo-element positioning */
+  overflow: hidden !important; /* Hide shine effect overflow */
+  text-decoration: none !important; /* Remove link underline */
+  display: inline-block !important; /* Allow padding on inline element */
 }
 
 /* Button hover effects */
 .btn-start-quiz:hover {
-  transform: translateY(-2px); /* Lift button slightly */
-  box-shadow: var(--shadow-lg); /* Larger shadow for depth */
-  color: var(--primary-color);
-  background: var(--white);
-  text-decoration: none; /* Keep underline removed */
+  transform: translateY(-2px) !important; /* Lift button slightly */
+  -webkit-transform: translateY(-2px) !important; /* Safari support */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important; /* Larger shadow for depth */
+  color: #4ba3c3 !important;
+  background: #ffffff !important;
+  text-decoration: none !important; /* Keep underline removed */
 }
 
 /* Button click effect */
@@ -1332,7 +1350,7 @@ body {
     }
     
     .instructions-section .card-header {
-        background: var(--primary-color) !important;
+        background: #4ba3c3 !important; /* Force primary color */
         color: #ffffff !important;
     }
     
@@ -1347,5 +1365,105 @@ body {
     
     .quiz-main * {
         color: inherit !important;
+    }
+}
+
+/* 
+ * MOBILE CRITICAL FIXES - HIGHEST PRIORITY 
+ * This section ensures mobile colors and navbar work regardless of browser
+ */
+
+/* Force mobile background and colors for all devices */
+@media screen and (max-width: 768px), 
+       (-webkit-min-device-pixel-ratio: 1) and (max-width: 768px) {
+    
+    /* Force quiz page background with webkit prefixes */
+    .quiz-page-body {
+        background: #4ba3c3 !important;
+        background: -webkit-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+        background: -moz-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;  
+        background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+        color: #ffffff !important;
+        min-height: 100vh !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Force all text to be white on quiz pages */
+    .quiz-page-body,
+    .quiz-page-body *,
+    .quiz-navbar,
+    .quiz-navbar *,
+    .quiz-header,
+    .quiz-header * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Force navbar background and styling */
+    .quiz-navbar {
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    /* Force navbar links to be white */
+    .quiz-navbar .navbar-brand,
+    .quiz-navbar .nav-link {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-decoration: none !important;
+    }
+    
+    /* Force navbar toggler to be visible */
+    .quiz-navbar .navbar-toggler {
+        border: 2px solid #ffffff !important;
+        background: rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    .quiz-navbar .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        filter: brightness(0) invert(1) !important;
+        -webkit-filter: brightness(0) invert(1) !important;
+    }
+    
+    /* Force mobile dropdown menu styling */
+    .quiz-navbar .navbar-collapse {
+        background: rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 12px !important;
+        margin-top: 1rem !important;
+        padding: 1rem !important;
+    }
+    
+    /* Force quiz header visibility */
+    .quiz-header h1,
+    .quiz-header .lead {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Force landing page colors on mobile too */
+    .landing-page {
+        background: #4ba3c3 !important;
+        background: -webkit-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+        background: -moz-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;  
+        background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
+    }
+    
+    .landing-content,
+    .landing-content * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Force start quiz button colors */
+    .btn-start-quiz {
+        background: #ffffff !important;
+        color: #4ba3c3 !important;
+        -webkit-text-fill-color: #4ba3c3 !important;
     }
 }
