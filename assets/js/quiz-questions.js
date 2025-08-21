@@ -19,8 +19,8 @@ const questions = [
   },
   {
     question: "Which JavaScript method is used to select an element by its ID?",
-    options: ["document.getElementById()", "document.getElementsByClassName()", "document.selectElement()", "document.querySelector()"],
-    answer: "document.getElementById()",
+    options: [".getElementById()", ".getElementsByClassName()", ".selectElement()", ".querySelector()"],
+    answer: ".getElementById()",
     explanation: "This method retrieves the first element in the DOM with the specified id attribute. It's fast, direct, and commonly used when you know the exact ID of the element you want to manipulate.",
   },
   {
@@ -147,12 +147,12 @@ const questions = [
 {
   question: "Which JavaScript method selects the first matching element?",
   options: [
-    "document.querySelector()",
-    "document.getElementsByClassName()",
-    "document.getElementById()",
-    "document.querySelectorAll()",
+    ".querySelector()",
+    ".getElementsByClassName()",
+    ".getElementById()",
+    ".querySelectorAll()",
   ],
-  answer: "document.querySelector()",
+  answer: ".querySelector()",
   explanation: "querySelector() returns the first element that matches a CSS selector, offering flexible targeting.",
 },
 {
