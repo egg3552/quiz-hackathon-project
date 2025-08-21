@@ -63,8 +63,15 @@
 ### Typography
 We decided to go for a futuristic aesthetic for the font as the topic of our quiz is coding related. Tektur was the selected font.
 
+- Tektur
+- Oswald
+- Macondo
+- Lato
+- Inter
+
 ### Colour Scheme
-Screenshoot of the colour scheme for your project
+![Color Palette](assets/images/{DCFE675F-2F65-4401-95AE-06E5BF13F7EB}.png)
+
 
 ## Features:
 The Quiz App includes several key features designed to provide an engaging and educational experience:
@@ -109,30 +116,44 @@ The Quiz App includes several key features designed to provide an engaging and e
 - **Mobile Responsive**: Optimized for all device sizes
 ## Technologies Used
 List of technologies used for your project...
-HTML
-CSS
-Bootstrap
-Github
+- HTML
+- CSS
+- Bootstrap
+- Github
+- Co-pilot
+
 ## Testing
-Important part of your README!!!
-### Google's Lighthouse Performance
-Screenshots of certain pages and scores (mobile and desktop)
+
+
+### Google's Lighthouse Performance : Mobile and desktop
+
+![Lighthouse Report](assets/images/{45E63788-B0E2-43F6-8F40-9C7D58E61CF1}.png)
+![Metrics](assets/images/{A443861C-D8BA-4AD1-84AA-DFB328F9436E}.png)
+
+![Lighthouse Report](assets/images/{CB943197-B593-4353-9AA5-1ACF467369C4}.png)
+![Metrics](assets/images/{ADACE1BD-01B3-4E42-B676-00A4B5797B1A}.png)
 ### Browser Compatibility
 Check compatability with different browsers
 ### Responsiveness
-Screenshots of the responsivness, pick few devices (from 320px top 1200px)
-### Code Validation
-Validate your code HTML, CSS (all pages/files need to be validated!!!), display screenshots
+![responsiveness](assets/images/{827F39D1-D0AF-453F-A7B1-651AFFC7C21E}.png)
+- Website is fully responsive on the different devices 
+### Code Validation!
+![index](assets/images/{0272C58F-E291-419C-8C1F-5752AA3F836A}.png)
+- Explanation warning :the navigation role is unnecessary for element nav.
+![css](assets/images/{FA0D8BD8-D5CC-4489-B259-250E5C5FE0DD}.png)
+-Errors do come up however everything works fine when we run the website
 ### Manual Testing user stories or/and features
-Test all your user stories, you an create table 
-User Story |  Test | Pass
---- | --- | :---:
-paste here you user story | what is visible to the user and what action they should perform | &check;
-- and attach screenshot
+- Responsive design: Used DevTools to test layouts on different screen sizes
+- Usernames: User can enter username and it appears throughout the quiz, including the results page
 
 ## Bugs
 List of bugs and how did you fix them
+- (Flintan) At the moment, radio button functionality is linked through interacting with the label, but the way I have set up my testing for creating new questions, a new question is created before the page has time to recognise the users choice. I'll work on fixing this tomorrow when I move onto implementing correct answer checking. Thinking that having a validation attached to the carousel controls (if the user is on  a question and hasn't answered it, then the right arrow won't be there. Once answered, it will appear, and clicking on it will generate the next question, rather than clicking on the radio labels themselves).
+- This bug later on was fixed and tested
+- (Flintan)I've had a few errors regarding bootstrap conflicts crop up, I've popped it in my comments but there are some areas I had to use AI to overwrite the bootstrap, so I'll add these to the readme when we go to update that. Just thought I'd post here for others to bear in mind if they encounter problems with the carousel and/or overwriting stylings.
+- The second bug later on was fixed.
 
+- bug tested by using "python  -m http.server --bind 127.0.0.1" to open a - local server to test the site, then used copilot to point out the exact lines that were causing the bugs and I fixed them 
 ## Deployment
 
 #### Creating Repository on GitHub
@@ -149,6 +170,8 @@ The site was deployed to Github Pages using the following method:
 - Navigate to the 'settings' tab.
 - Using the 'select branch' dropdown menu, choose 'main'.
 - Click 'save'.
+- This is the deployment link : https://egg3552.github.io/quiz-hackathon-project/index.html
+-This is the Github Link: https://github.com/egg3552/quiz-hackathon-project
 
 The deployment page can be found [here](https://egg3552.github.io/quiz-hackathon-project/).
 
@@ -160,9 +183,11 @@ The deployment page can be found [here](https://egg3552.github.io/quiz-hackathon
 
 ## Credits
 List of used resources for your website (text, images, snippets of code, projects....)
-  - Code & Text Content
+  - Co-pilot
+-   https://fonts.google.com/
+ -  https://coolors.co/
+  - https://jigsaw.w3.org/css-validator/validator#warnings
+-   https://validator.w3.org/
+- chatgbt ai 
   
-  - Media
-  
-  - Acknowledgment
 
