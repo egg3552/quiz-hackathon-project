@@ -1502,6 +1502,92 @@ body {
         border-color: #4ba3c3 !important;
         background: rgba(255, 255, 255, 0.9) !important;
     }
+}
+
+/* 
+ * IOS SAFARI & MOBILE CHROME CRITICAL FIXES
+ * These fixes address real mobile browser issues that dev tools don't show
+ */
+
+/* Force text visibility on actual iOS devices */
+@media screen and (max-width: 768px) {
+    /* iOS Safari text rendering fix */
+    .quiz-card,
+    .quiz-card * {
+        color: #000000 !important; /* Pure black for maximum contrast */
+        -webkit-text-fill-color: #000000 !important;
+        -webkit-text-stroke: 0 !important; /* Remove any text stroke */
+        text-shadow: none !important; /* Remove shadows that might interfere */
+        font-weight: 500 !important; /* Ensure sufficient weight */
+    }
+    
+    /* Force quiz question text with iOS compatibility */
+    .quiz-question-text {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        background: #ffffff !important; /* Pure white background */
+        opacity: 1 !important; /* Force full opacity */
+        visibility: visible !important; /* Force visibility */
+        display: block !important; /* Force display */
+    }
+    
+    /* Force answer options visibility */
+    .quiz-form-check {
+        color: #000000 !important;
+        background: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    .quiz-form-check-label {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        -webkit-text-stroke: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+    
+    /* Force quiz card background to be solid white */
+    .quiz-card {
+        background: #ffffff !important; /* Solid white - no transparency */
+        background-color: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Force all text elements to render properly on iOS */
+    .quiz-card h1,
+    .quiz-card h2,
+    .quiz-card h3,
+    .quiz-card h4,
+    .quiz-card h5,
+    .quiz-card h6,
+    .quiz-card p,
+    .quiz-card span,
+    .quiz-card div,
+    .quiz-card label {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important; /* Standard property for compatibility */
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Remove any transforms or effects that might cause issues */
+    .quiz-card * {
+        transform: none !important;
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+    
+    /* Ensure proper z-index stacking */
+    .quiz-card {
+        z-index: 999 !important;
+        position: relative !important;
+    }
+}
     
     /* Force navbar background and styling */
     .quiz-navbar {
@@ -1569,5 +1655,119 @@ body {
         background: #ffffff !important;
         color: #4ba3c3 !important;
         -webkit-text-fill-color: #4ba3c3 !important;
+    }
+
+
+/* UNIVERSAL MOBILE TEXT VISIBILITY FIXES */
+@media (max-width: 768px) {
+    /* Force all text to be visible on mobile */
+    *, *::before, *::after {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Ensure quiz content is always visible */
+    .quiz-card,
+    .quiz-card .card-body,
+    .quiz-question-text,
+    .quiz-form-check,
+    .quiz-form-check-label {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important; /* Ensure elements are displayed */
+        font-size: 16px !important; /* Prevent iOS zoom */
+        line-height: 1.5 !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        text-shadow: none !important;
+        border: 1px solid #cccccc !important; /* Add subtle borders */
+        margin: 5px 0 !important;
+        padding: 10px !important;
+    }
+    
+    /* Remove any problematic transitions or effects */
+    .quiz-card * {
+        transition: none !important;
+        transform: none !important;
+        filter: none !important;
+        backdrop-filter: none !important;
+    }
+    
+    /* Force radio buttons and labels to be visible */
+    input[type="radio"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+        position: relative !important;
+        margin-right: 10px !important;
+    }
+    
+    /* Make sure buttons are visible */
+    .btn {
+        background-color: #4ba3c3 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 2px solid #000000 !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+}
+
+/* 
+ * ULTIMATE IOS MOBILE CHROME/SAFARI FIX
+ * These rules target actual iOS devices and mobile browsers
+ */
+
+/* iOS Chrome and Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* This targets iOS Safari specifically */
+    .quiz-card,
+    .quiz-card * {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        background-color: #ffffff !important;
+        font-size: 16px !important; /* Prevent zoom on iOS */
+    }
+    
+    .quiz-question-text {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        background: #ffffff !important;
+        border: 1px solid #000000 !important; /* Add border for visibility */
+        padding: 15px !important;
+        margin: 10px 0 !important;
+        font-size: 16px !important;
+        line-height: 1.4 !important;
+    }
+    
+    .quiz-form-check-label {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        text-decoration: underline !important; /* Make text more visible */
+    }
+}
+
+/* Mobile Chrome specific targeting */
+@media screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 768px) {
+    .quiz-card {
+        background: #ffffff !important;
+        border: 2px solid #000000 !important; /* Strong border for visibility */
+        box-shadow: none !important; /* Remove effects that might interfere */
+    }
+    
+    .quiz-card *,
+    .quiz-question-text,
+    .quiz-form-check-label {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        text-shadow: 1px 1px 1px #ffffff !important; /* Add contrast shadow */
+        font-weight: bold !important;
+        font-size: 16px !important;
     }
 }
