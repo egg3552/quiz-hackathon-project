@@ -114,12 +114,7 @@ body {
   position: relative !important; /* For pseudo-element positioning */
   overflow: hidden !important; /* Hide shine effect overflow */
   text-decoration: none !important; /* Remove link underline */
-  display: inline-flex !important; /* Use flexbox for perfect centering */
-  align-items: center !important; /* Vertical centering */
-  justify-content: center !important; /* Horizontal centering */
-  text-align: center !important; /* Text alignment */
-  line-height: 1.2 !important; /* Proper line height */
-  vertical-align: middle !important; /* Baseline alignment */
+  display: inline-block !important; /* Allow padding on inline element */
 }
 
 /* Button hover effects */
@@ -153,73 +148,6 @@ body {
 /* Move shine effect across button on hover */
 .btn-start-quiz:hover::before {
   left: 100%; /* Move completely to the right */
-}
-
-/* Icon spacing for start quiz button */
-.btn-start-quiz i {
-  margin-right: 8px !important;
-  font-size: 0.9em !important;
-  vertical-align: middle !important;
-  line-height: 1 !important;
-}
-
-/* General button centering for all buttons */
-.btn,
-.btn-primary,
-.btn-outline-primary {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  line-height: 1.2 !important;
-  vertical-align: middle !important;
-  text-decoration: none !important;
-}
-
-/* Icon spacing for all buttons */
-.btn i,
-.btn-primary i,
-.btn-outline-primary i {
-  margin-right: 6px !important;
-  vertical-align: middle !important;
-  font-size: 0.9em !important;
-  line-height: 1 !important;
-}
-
-/* Desktop-specific button optimization (ensure mobile styles don't interfere) */
-@media (min-width: 769px) {
-    /* Ensure buttons maintain desktop behavior */
-    .btn-start-quiz {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        line-height: 1.2 !important;
-        vertical-align: middle !important;
-        text-decoration: none !important;
-        font-weight: 600 !important;
-    }
-    
-    /* Maintain desktop navbar appearance */
-    .quiz-navbar .navbar-brand,
-    .quiz-navbar .nav-link {
-        /* Desktop styles will use the original design colors */
-        transition: color 0.3s ease;
-    }
-    
-    /* Desktop button consistency */
-    .btn,
-    .btn-primary,
-    .btn-secondary,
-    .btn-outline-primary {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        line-height: 1.2 !important;
-        vertical-align: middle !important;
-        text-decoration: none !important;
-    }
 }
 
 /* Quiz Section */
@@ -273,12 +201,7 @@ body {
   font-weight: 600;
   transition: all 0.3s ease; /* Smooth hover effects */
   text-decoration: none; /* Remove link underline */
-  display: inline-flex; /* Use flexbox for perfect centering */
-  align-items: center; /* Vertical centering */
-  justify-content: center; /* Horizontal centering */
-  text-align: center; /* Text alignment */
-  line-height: 1.2; /* Proper line height */
-  vertical-align: middle; /* Baseline alignment */
+  display: inline-block; /* Allow padding on inline element */
 }
 
 /* Back button hover effect */
@@ -1673,10 +1596,8 @@ body {
         -webkit-backdrop-filter: blur(15px) !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
     }
-
-/* Mobile-specific navbar and header fixes */
-@media (max-width: 768px) {
-    /* Force navbar links to be white on mobile only */
+    
+    /* Force navbar links to be white */
     .quiz-navbar .navbar-brand,
     .quiz-navbar .nav-link {
         color: #ffffff !important;
@@ -1684,7 +1605,7 @@ body {
         text-decoration: none !important;
     }
     
-    /* Force navbar toggler to be visible on mobile only */
+    /* Force navbar toggler to be visible */
     .quiz-navbar .navbar-toggler {
         border: 2px solid #ffffff !important;
         background: rgba(255, 255, 255, 0.2) !important;
@@ -1707,7 +1628,7 @@ body {
         padding: 1rem !important;
     }
     
-    /* Force quiz header visibility on mobile only */
+    /* Force quiz header visibility */
     .quiz-header h1,
     .quiz-header .lead {
         color: #ffffff !important;
@@ -1715,7 +1636,7 @@ body {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
     }
     
-    /* Force landing page colors on mobile only */
+    /* Force landing page colors on mobile too */
     .landing-page {
         background: #4ba3c3 !important;
         background: -webkit-linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
@@ -1729,13 +1650,12 @@ body {
         -webkit-text-fill-color: #ffffff !important;
     }
     
-    /* Force start quiz button colors on mobile only */
+    /* Force start quiz button colors */
     .btn-start-quiz {
         background: #ffffff !important;
         color: #4ba3c3 !important;
         -webkit-text-fill-color: #4ba3c3 !important;
     }
-}
 
 
 /* 
@@ -1828,12 +1748,6 @@ body {
         -webkit-text-fill-color: #ffffff !important;
         border: 2px solid #4ba3c3 !important;
         box-shadow: 0 4px 15px rgba(75, 163, 195, 0.3) !important;
-        text-align: center !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        line-height: 1.2 !important;
-        font-weight: 600 !important;
     }
     
     .btn-secondary {
@@ -1984,32 +1898,6 @@ body {
         font-size: 16px !important; /* Prevent iOS zoom */
     }
     
-    /* All buttons text alignment fix for iOS */
-    .btn,
-    .btn-primary,
-    .btn-secondary,
-    .btn-outline-primary {
-        text-align: center !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        line-height: 1.2 !important;
-        font-weight: 600 !important;
-        -webkit-appearance: none !important;
-        appearance: none !important;
-        vertical-align: middle !important;
-    }
-    
-    /* Icon alignment in buttons */
-    .btn i,
-    .btn-primary i,
-    .btn-secondary i,
-    .btn-outline-primary i {
-        margin-right: 6px !important;
-        vertical-align: middle !important;
-        font-size: 0.9em !important;
-    }
-    
     .form-control:focus {
         border-color: #4ba3c3 !important;
         box-shadow: 0 0 0 0.2rem rgba(75, 163, 195, 0.25) !important;
@@ -2128,41 +2016,5 @@ body {
     .modal-title {
         color: #4ba3c3 !important;
         -webkit-text-fill-color: #4ba3c3 !important;
-    }
-}
-
-/* iOS Safari specific button fixes */
-@supports (-webkit-touch-callout: none) {
-    /* This targets iOS Safari specifically */
-    .btn-start-quiz,
-    .btn,
-    .btn-primary,
-    .btn-secondary,
-    .btn-outline-primary {
-        display: -webkit-inline-flex !important;
-        display: inline-flex !important;
-        -webkit-align-items: center !important;
-        align-items: center !important;
-        -webkit-justify-content: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        -webkit-text-align: center !important;
-        line-height: 1.2 !important;
-        vertical-align: middle !important;
-        -webkit-appearance: none !important;
-        appearance: none !important;
-        box-sizing: border-box !important;
-        -webkit-box-sizing: border-box !important;
-        text-decoration: none !important;
-        white-space: nowrap !important;
-    }
-    
-    /* iOS Safari icon alignment */
-    .btn i,
-    .btn-start-quiz i {
-        display: inline-block !important;
-        margin-right: 6px !important;
-        vertical-align: middle !important;
-        line-height: 1 !important;
     }
 }
