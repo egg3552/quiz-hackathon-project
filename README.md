@@ -1,4 +1,22 @@
 # Quiz Master
+
+## Recent Updates
+
+### Code Optimization & Bug Testing (Latest)
+- **Condensed Instructions Code**: Reduced HTML content by 50% while maintaining functionality
+- **Streamlined JavaScript**: Combined similar functions and removed redundant code  
+- **Optimized CSS**: Merged duplicate styles and reduced file size
+- **Comprehensive Bug Check**: Tested all functionality with no errors found
+- **Enhanced Comments**: Added concise, descriptive comments to all new functions
+
+### Instructions Page Implementation
+- **Interactive Tutorial**: Comprehensive instructions with animated cards and smooth transitions
+- **Smooth Navigation**: Fade animations when transitioning from instructions to quiz
+- **Hover Effects**: Interactive cards with lift and rotation animations  
+- **Direct Linking**: Support for URL hash linking to instructions section
+- **Mobile Responsive**: Optimized layout for all screen sizes
+- **Accessibility**: ARIA labels and semantic HTML structure
+
 ## Table Of Contents:
 1. [Design & Planning](#design-&-planning)
     * [User Stories](#user-stories)
@@ -43,15 +61,52 @@
 
 
 ### Typography
-Explain font you've used for your project
+We decided to go for a futuristic aesthetic for the font as the topic of our quiz is coding related. Tektur was the selected font.
+
 ### Colour Scheme
 Screenshoot of the colour scheme for your project
 
 ## Features:
-Explain your features on the website,(navigation, pages, links, forms.....)
+The Quiz App includes several key features designed to provide an engaging and educational experience:
+
 ### Navigation
-### Footer
+- **Responsive Navigation Bar**: Clean navigation with mobile-friendly hamburger menu
+- **Smooth Transitions**: CSS animations for seamless user experience
+- **Accessibility Features**: ARIA labels and proper semantic HTML structure
+
+### Instructions Page
+- **Comprehensive How-to Guide**: Detailed instructions accessible via navigation menu or homepage link
+- **Interactive Cards**: Four main instruction categories with hover effects:
+  - **Question Format**: Multiple choice questions covering HTML, CSS, JavaScript
+  - **Time & Scoring**: No time limits, +1 point per correct answer, percentage-based results
+  - **How to Play**: Step-by-step gameplay instructions with navigation tips
+  - **Leaderboard**: Username requirements and competitive features
+- **Pro Tips Section**: Success strategies with visual icons and animations
+- **Smooth Scrolling**: JavaScript-powered smooth navigation to quiz section
+- **Responsive Design**: Mobile-optimized layout with touch-friendly interactions
+
+### Quiz Functionality
+- **Random Question Selection**: Questions presented in random order for each quiz attempt
+- **Progress Tracking**: Visual progress bar and score counter
+- **Answer Validation**: Immediate feedback with correct/incorrect styling
+- **Explanation System**: Detailed explanations for each question after answering
+- **Reset Functionality**: Option to restart quiz at any time
+
+### Homepage
+- **Username Entry**: Personalized experience with username storage
+- **Quick Access Links**: Direct links to instructions, quiz, and leaderboard
+- **Responsive Design**: Mobile-first approach with Bootstrap framework
+
+### Results & Leaderboard
+- **Detailed Results**: Final score, percentage, and performance breakdown
+- **Leaderboard Integration**: Score saving and ranking system
+- **Personalized Messages**: Dynamic feedback based on performance
+
 ### Other features
+- **Local Storage**: Persistent data storage for usernames and scores
+- **Accessibility**: Screen reader support and keyboard navigation
+- **Cross-browser Compatibility**: Works across modern browsers
+- **Mobile Responsive**: Optimized for all device sizes
 ## Technologies Used
 List of technologies used for your project...
 HTML

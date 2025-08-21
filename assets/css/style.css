@@ -7,7 +7,7 @@ Text: #1e293b (Slate-800)
 */
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Macondo&family=Oswald:wght@200..700&family=Tektur:wght@400..900&display=swap');
 
 /* Global Styles */
 /* CSS Variables - reusable color values throughout the stylesheet */
@@ -32,7 +32,7 @@ Text: #1e293b (Slate-800)
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Tektur", sans-serif;
   /* Linear gradient background from top-left to bottom-right */
   background: linear-gradient(135deg, var(--background-color) 0%, #e2e8f0 100%);
   color: var(--text-color);
@@ -179,7 +179,7 @@ body {
 
 /* Button styling for back button */
 .btn-secondary {
-  border-radius: 50px; /* Rounded button */
+  border-radius: 8px; /* Rectangular with rounded edges */
   font-weight: 600;
   transition: all 0.3s ease; /* Smooth hover effects */
   text-decoration: none; /* Remove link underline */
@@ -284,6 +284,20 @@ body {
 /* Prevent carousel from interfering with form elements */
 .carousel-inner {
     pointer-events: none; /* Disable carousel touch/click events */
+    padding: 0 60px; /* Add horizontal padding to make room for navigation buttons */
+    position: relative; /* Ensure proper positioning */
+}
+
+.carousel-next-disabled {
+  background-color: grey !important;
+  border-color: grey !important;
+  opacity: 0.2 !important;
+}
+
+/* Quiz carousel container */
+#quizCarousel {
+    position: relative; /* Ensure proper positioning for navigation buttons */
+    margin: 1rem 0; /* Add vertical spacing */
 }
 
 .carousel-item.active {
@@ -343,6 +357,55 @@ body {
     transform: translateY(-1px); /* Subtle lift effect */
 }
 
+/* Responsive Navbar Toggler - Burger Menu */
+.quiz-navbar .navbar-toggler {
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Semi-transparent white border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 0.5rem 0.75rem; /* Comfortable padding */
+    transition: all 0.3s ease; /* Smooth hover animation */
+}
+
+.quiz-navbar .navbar-toggler:hover {
+    border-color: var(--white); /* Solid white border on hover */
+    background: rgba(255, 255, 255, 0.1); /* Light background on hover */
+}
+
+.quiz-navbar .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.3); /* Focus outline */
+    border-color: var(--white); /* White border when focused */
+}
+
+/* Custom Burger Icon Styling */
+.quiz-navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 1.5em; /* Slightly larger icon */
+    height: 1.5em; /* Slightly larger icon */
+}
+
+/* Mobile Navigation Styling */
+@media (max-width: 991.98px) {
+    .quiz-navbar .navbar-collapse {
+        background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+        backdrop-filter: blur(10px); /* Glass effect */
+        border-radius: 12px; /* Rounded corners */
+        margin-top: 1rem; /* Space from navbar */
+        padding: 1rem; /* Internal spacing */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+    }
+    
+    .quiz-navbar .nav-link {
+        padding: 0.75rem 1rem; /* More padding for touch targets */
+        border-radius: 8px; /* Rounded link backgrounds */
+        margin-bottom: 0.5rem; /* Space between links */
+        transition: all 0.3s ease; /* Smooth hover animation */
+    }
+    
+    .quiz-navbar .nav-link:hover {
+        background: rgba(255, 255, 255, 0.2); /* Background on hover */
+        transform: translateX(5px); /* Slide effect on mobile */
+    }
+}
+
 /* Quiz Header Styling */
 .quiz-header {
     background: transparent; /* No background - shows gradient */
@@ -378,6 +441,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
     overflow: hidden; /* Contain child elements */
     margin-bottom: 2rem; /* Space below card */
+    margin: 0 60px 2rem 60px; /* Horizontal margins to create space for navigation arrows */
 }
 
 /* Progress Bar Styling */
@@ -407,23 +471,31 @@ body {
     font-size: 1.1rem; /* Slightly larger text */
     font-weight: 500; /* Medium weight */
     margin-bottom: 2rem; /* Space below question */
+    background: rgba(255, 255, 255, 0.8); /* Light background for question area */
+    padding: 1.5rem; /* Padding around question text */
+    border-radius: 12px; /* Rounded corners */
+    border: 1px solid rgba(79, 70, 229, 0.1); /* Subtle border */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Soft shadow */
+    backdrop-filter: blur(5px); /* Light blur effect */
 }
 
 /* Form Check Styling - Quiz answer options */
 .quiz-form-check {
-    background: rgba(var(--primary-color), 0.02); /* Very light primary background */
-    border: 2px solid transparent; /* Invisible border by default */
+    background: rgba(255, 255, 255, 0.9); /* Light white background */
+    border: 2px solid rgba(79, 70, 229, 0.2); /* Visible primary color border */
     border-radius: 12px; /* Rounded corners */
     padding: 1rem; /* Internal spacing */
     margin-bottom: 1rem; /* Space between options */
     transition: all 0.3s ease; /* Smooth hover animation */
     cursor: pointer; /* Show clickable cursor */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Subtle shadow for depth */
 }
 
 .quiz-form-check:hover {
-    background: rgba(var(--primary-color), 0.05); /* Slightly darker on hover */
-    border-color: rgba(var(--primary-color), 0.2); /* Show border on hover */
-    transform: translateY(-1px); /* Subtle lift effect */
+    background: rgba(255, 255, 255, 1); /* Full white on hover */
+    border-color: rgba(79, 70, 229, 0.4); /* Stronger border on hover */
+    transform: translateY(-2px); /* More pronounced lift effect */
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15); /* Enhanced shadow on hover */
 }
 
 .quiz-form-check-input:checked + .quiz-form-check-label {
@@ -432,8 +504,10 @@ body {
 }
 
 .quiz-form-check:has(.quiz-form-check-input:checked) {
-    background: rgba(var(--primary-color), 0.1); /* Highlighted background when selected */
+    background: rgba(79, 70, 229, 0.08); /* Light primary background when selected */
     border-color: var(--primary-color); /* Primary border when selected */
+    border-width: 3px; /* Thicker border when selected */
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.2); /* Stronger shadow when selected */
 }
 
 .quiz-form-check-label {
@@ -447,28 +521,31 @@ body {
 /* Carousel Navigation Buttons */
 .carousel-control-prev,
 .carousel-control-next {
-    width: 50px; /* Fixed button size */
-    height: 50px; /* Fixed button size */
+    width: 45px; /* Slightly smaller button size */
+    height: 45px; /* Slightly smaller button size */
     background: var(--primary-color); /* Primary color background */
-    border-radius: 50%; /* Circular buttons */
+    border-radius: 8px; /* Square buttons with rounded corners */
     opacity: 0.8; /* Semi-transparent by default */
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Perfect vertical centering */
     transition: all 0.3s ease; /* Smooth hover animation */
+    z-index: 10; /* Ensure buttons stay above content */
+    border: 2px solid var(--white); /* White border for better visibility */
 }
 
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
     opacity: 1; /* Full opacity on hover */
-    transform: translateY(-50%) scale(1.1); /* Scale up on hover */
+    transform: translateY(-50%) scale(1.05); /* Smaller scale to avoid overlap */
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); /* Add shadow on hover for square buttons */
 }
 
 .carousel-control-prev {
-    left: -25px; /* Position left of carousel */
+    left: 10px; /* Position inside container to avoid overlap */
 }
 
 .carousel-control-next {
-    right: -25px; /* Position right of carousel */
+    right: 10px; /* Position inside container to avoid overlap */
 }
 
 /* Quiz Action Buttons - Base styling for all quiz buttons */
@@ -546,6 +623,72 @@ body {
     border-radius: 8px; /* Rounded corners */
 }
 
+/* Leaderboard Styling */
+.rank-badge {
+    font-size: 1.2rem; /* Larger emoji size */
+    margin-right: 0.5rem; /* Space between badge and number */
+}
+
+.rank-number {
+    font-weight: 600; /* Semi-bold rank numbers */
+    color: var(--primary-color); /* Primary color for rank */
+}
+
+.score-badge {
+    background: rgba(var(--primary-color), 0.1); /* Light primary background */
+    color: var(--primary-color); /* Primary color text */
+    padding: 0.25rem 0.75rem; /* Compact padding */
+    border-radius: 12px; /* Rounded badge */
+    font-weight: 600; /* Semi-bold */
+    font-size: 0.9rem; /* Slightly smaller text */
+}
+
+.percentage-badge {
+    color: white !important; /* White text for all percentage badges */
+    padding: 0.25rem 0.75rem; /* Compact padding */
+    border-radius: 12px; /* Rounded badge */
+    font-weight: 600; /* Semi-bold */
+    font-size: 0.9rem; /* Slightly smaller text */
+}
+
+/* Leaderboard table hover effects */
+.table-hover tbody tr:hover {
+    background-color: rgba(var(--primary-color), 0.05) !important; /* Light primary on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+    transition: all 0.2s ease; /* Smooth animation */
+}
+
+/* Trophy and medal styling for top 3 */
+.table-warning {
+    background-color: rgba(255, 193, 7, 0.2) !important; /* Gold background */
+}
+
+.table-secondary {
+    background-color: rgba(108, 117, 125, 0.2) !important; /* Silver background */
+}
+
+.table-info {
+    background-color: rgba(13, 202, 240, 0.2) !important; /* Bronze background */
+}
+
+/* Responsive leaderboard table */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.875rem; /* Smaller text on mobile */
+    }
+    
+    .rank-badge {
+        font-size: 1rem; /* Smaller emoji on mobile */
+    }
+    
+    .score-badge, .percentage-badge {
+        padding: 0.125rem 0.5rem; /* Smaller padding on mobile */
+        font-size: 0.8rem; /* Smaller text on mobile */
+    }
+}
+
+/* Mobile Responsiveness for Quiz - Tablet and phone optimizations */
+
 /* Disable labels once answer has been chosen */
 .disabled-label {
   pointer-events: none;
@@ -571,6 +714,21 @@ body {
   border: 2px solid red !important;
 }
 
+/* Custom Score Badge Styling - Matches gradient background */
+.score-badge .badge {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important; /* Blue gradient to match background */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); /* Blue glow effect */
+    transition: all 0.3s ease; /* Smooth transitions */
+    backdrop-filter: blur(10px); /* Glass effect */
+}
+
+.score-badge .badge:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important; /* Slightly darker on hover */
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); /* Enhanced glow on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+}
+
 /* Mobile Responsiveness for Quiz */
 @media (max-width: 768px) {
     .quiz-card {
@@ -593,15 +751,140 @@ body {
     
     .carousel-control-prev,
     .carousel-control-next {
-        width: 40px; /* Smaller navigation buttons */
-        height: 40px; /* Smaller navigation buttons */
+        width: 35px; /* Smaller navigation buttons on mobile */
+        height: 35px; /* Smaller navigation buttons on mobile */
     }
     
     .carousel-control-prev {
-        left: -20px; /* Closer to carousel on mobile */
+        left: 5px; /* Position closer to edge on mobile but still inside */
     }
     
     .carousel-control-next {
-        right: -20px; /* Closer to carousel on mobile */
+        right: 5px; /* Position closer to edge on mobile but still inside */
+    }
+    
+    .carousel-inner {
+        padding: 0 45px; /* Reduce padding on mobile to fit smaller screens */
+    }
+    
+    .quiz-card {
+        margin: 0 40px 2rem 40px; /* Smaller margins on mobile for navigation arrows */
     }
 }
+
+/* Instructions Section Styles */
+/* Instructions Section Styles - Condensed */
+.instructions-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
+  display: none;        /* Hidden by default - only show when navbar button clicked */
+  visibility: hidden;   /* Completely hidden from screen readers and layout */
+  opacity: 0;          /* Transparent for smooth fade animations */
+  transition: opacity 0.5s ease; /* Smooth fade in/out effect */
+}
+
+.instructions-section .card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instructions-section .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.instructions-section .card-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border: none;
+}
+
+.instruction-card {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  height: 100%;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.instruction-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.instruction-icon {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.instruction-card:hover .instruction-icon {
+  transform: scale(1.1);
+}
+
+.tip-card {
+  background: white;
+  transition: all 0.3s ease;
+  height: 100%;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.tip-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color) !important;
+}
+
+.scroll-to-quiz {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.scroll-to-quiz:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px -5px rgba(79, 70, 229, 0.4);
+  background: linear-gradient(135deg, #3730a3 0%, #0891b2 100%);
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .instructions-section .card-body {
+    padding: 2rem 1.5rem;
+  }
+  
+  .instruction-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .instruction-icon {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1rem;
+  }
+  
+  .instructions-section .d-flex.gap-3 {
+    flex-direction: column;
+    gap: 1rem !important;
+  }
+}
+
+/* Animation delays for staggered effect */
+.instruction-card:nth-child(1) { animation-delay: 0.1s; }
+.instruction-card:nth-child(2) { animation-delay: 0.2s; }

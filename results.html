@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View your Code Quest quiz results and performance">
+    <title>Code Quest - Quiz Results</title>
+      <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/code-game-favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/code-game-favicon.png">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+   <!-- Results page - Screen users see when they complete the quiz -->
+    <div id="results" class="landing-page">
+      <!-- Bootstrap container for responsive layout -->
+      <div class="container">
+        <!-- Bootstrap grid: center content vertically and horizontally -->
+        <div class="row justify-content-center align-items-center min-vh-100">
+          <!-- Responsive columns: medium screens 8/12, large screens 6/12 width -->
+          <div class="col-md-8 col-lg-6 text-center">
+            <div class="landing-content">
+              <!-- Main heading with Bootstrap display and font-weight classes -->
+              <h1 class="display-4 fw-bold mb-4" id="results-title">Your Results</h1>
+              <!-- Score display -->
+              <div class="mb-4">
+                <div class="badge bg-primary fs-3 px-4 py-3 mb-3" id="score-badge">
+                  <i class="fas fa-star me-2"></i>Score: 0/0 (0%)
+                </div>
+                <p class="lead" id="results-message">Loading your results...</p>
+              </div>
+              
+              <!-- Action buttons -->
+              <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="quiz.html" class="btn btn-start-quiz btn-lg px-5 py-3">
+                  <i class="fas fa-redo me-2"></i>Try Again
+                </a>
+                <a href="leaderboard.html" class="btn btn-secondary btn-lg px-5 py-3">
+                  <i class="fas fa-trophy me-2"></i>Leaderboard
+                </a>
+                <a href="index.html" class="btn btn-outline-primary btn-lg px-5 py-3">
+                  <i class="fas fa-home me-2"></i>Home
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <!-- Scripts -->
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/28c4feae7e.js" crossorigin="anonymous"></script>
+    <!-- Custom JS -->
+    <script src="assets/js/results.js"></script>
+</body>
+</html>
