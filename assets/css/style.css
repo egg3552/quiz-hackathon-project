@@ -1311,9 +1311,11 @@ body {
 
 /* Mobile-Specific Color Fixes */
 @media (max-width: 768px) {
-    /* Force all quiz page elements to be white */
-    .quiz-page-body,
-    .quiz-page-body *,
+    /* Force quiz page background elements to be white, but NOT content cards */
+    .quiz-page-body {
+        color: #ffffff !important;
+    }
+    
     .quiz-page-body h1,
     .quiz-page-body h2,
     .quiz-page-body h3,
@@ -1325,6 +1327,67 @@ body {
     .quiz-page-body .navbar-brand,
     .quiz-page-body .nav-link {
         color: #ffffff !important;
+    }
+    
+    /* CRITICAL: Quiz card content must be dark text on light background */
+    .quiz-card,
+    .quiz-card *,
+    .quiz-card .quiz-question-text,
+    .quiz-card .quiz-question-title,
+    .quiz-card .quiz-form-check-label,
+    .quiz-card .badge,
+    .quiz-card h1,
+    .quiz-card h2,
+    .quiz-card h3,
+    .quiz-card h4,
+    .quiz-card h5,
+    .quiz-card h6,
+    .quiz-card p,
+    .quiz-card span,
+    .quiz-card div,
+    .quiz-card button {
+        color: #1e293b !important; /* Force dark text for readability */
+        -webkit-text-fill-color: #1e293b !important;
+    }
+    
+    /* Ensure quiz card backgrounds are light */
+    .quiz-card {
+        background: rgba(255, 255, 255, 0.98) !important; /* Nearly opaque white */
+    }
+    
+    .quiz-question-text {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #1e293b !important;
+        -webkit-text-fill-color: #1e293b !important;
+    }
+    
+    .quiz-form-check {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #1e293b !important;
+    }
+    
+    .quiz-form-check-label {
+        color: #1e293b !important;
+        -webkit-text-fill-color: #1e293b !important;
+    }
+    
+    /* Force score badge to be visible */
+    .score-badge .badge {
+        color: #ffffff !important; /* White text on colored badge */
+        -webkit-text-fill-color: #ffffff !important;
+        background: #4ba3c3 !important; /* Ensure colored background */
+    }
+    
+    /* Force progress bar to be visible */
+    .quiz-progress {
+        background: rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    /* Force carousel controls to be visible */
+    .carousel-control-prev,
+    .carousel-control-next {
+        background: #4ba3c3 !important;
+        opacity: 0.8 !important;
     }
     
     /* Force navbar colors specifically */
@@ -1388,15 +1451,56 @@ body {
         -webkit-text-fill-color: #ffffff !important;
     }
     
-    /* Force all text to be white on quiz pages */
+    /* Force all text to be white on quiz pages EXCEPT quiz card content */
     .quiz-page-body,
-    .quiz-page-body *,
     .quiz-navbar,
     .quiz-navbar *,
     .quiz-header,
     .quiz-header * {
         color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* CRITICAL OVERRIDE: Quiz card content must remain dark for readability */
+    .quiz-card,
+    .quiz-card *,
+    .quiz-card .quiz-question-text,
+    .quiz-card .quiz-question-title,
+    .quiz-card .quiz-form-check-label,
+    .quiz-card .badge,
+    .quiz-card h1,
+    .quiz-card h2,
+    .quiz-card h3,
+    .quiz-card h4,
+    .quiz-card h5,
+    .quiz-card h6,
+    .quiz-card p,
+    .quiz-card span,
+    .quiz-card div,
+    .quiz-card button {
+        color: #1e293b !important; /* Dark text on light card background */
+        -webkit-text-fill-color: #1e293b !important;
+    }
+    
+    /* Ensure quiz card has light background for contrast */
+    .quiz-card {
+        background: rgba(255, 255, 255, 0.98) !important;
+    }
+    
+    /* Additional mobile text visibility fixes */
+    .quiz-question-text,
+    .quiz-form-check,
+    .quiz-form-check-label {
+        color: #1e293b !important;
+        -webkit-text-fill-color: #1e293b !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    /* Ensure buttons remain visible */
+    .btn-outline-primary {
+        color: #4ba3c3 !important;
+        border-color: #4ba3c3 !important;
+        background: rgba(255, 255, 255, 0.9) !important;
     }
     
     /* Force navbar background and styling */
