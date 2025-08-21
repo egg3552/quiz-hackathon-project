@@ -146,6 +146,12 @@ The site was deployed to Github Pages using the following method:
 - Using the 'select branch' dropdown menu, choose 'main'.
 - Click 'save'.
 
+## AI Use
+- Throughout the project, AI has been used to help with the creation of the site.
+- One of the main uses of AI for the site was to get around bootstrap's built in stylings and scripts, to get the site to respond in the way we had designed it (e.g. implementing custom scripts on the carousel controls.).
+- AI was also useful for restructuring the code when we realised that certain parts of one function had been written up in a different function, and so for clean code and readability reasons, we had it restructured.
+- When GitHub pages had trouble deploying our page, AI suggested to create the .nojekyll file to help prevent errors.
+
 ## Credits
 List of used resources for your website (text, images, snippets of code, projects....)
   - Code & Text Content
