@@ -354,152 +354,121 @@ body {
 
 /* Quiz Page Styling - Match Landing Page Theme */
 .quiz-page-body {
-    background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important; /* Force consistent gradient */
-    min-height: 100vh !important; /* Force full viewport height */
-    position: relative !important;
-    overflow-x: hidden !important; /* Prevent horizontal scroll */
-    color: #ffffff !important; /* Force white text */
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Consistent gradient */
+    min-height: 100vh; /* Full viewport height */
+    position: relative;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* Add pattern overlay like landing page */
 .quiz-page-body::before {
-    content: '' !important; /* Required for pseudo-elements */
-    position: fixed !important; /* Stay in place during scroll */
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
+    content: ''; /* Required for pseudo-elements */
+    position: fixed; /* Stay in place during scroll */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     /* Same grain pattern as landing page */
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') !important;
-    opacity: 0.3 !important; /* Semi-transparent overlay */
-    z-index: -1 !important; /* Behind all content */
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3; /* Semi-transparent overlay */
+    z-index: -1; /* Behind all content */
 }
 
 /* Quiz Navigation Styling */
 .quiz-navbar {
     background: rgba(255, 255, 255, 0.1) !important; /* Semi-transparent white */
     backdrop-filter: blur(10px); /* Glass effect */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important; /* Subtle border */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* Add depth */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
 }
 
 .quiz-navbar .navbar-brand {
-    color: #ffffff !important; /* Force white text */
-    font-weight: 600 !important; /* Semi-bold */
-    text-decoration: none !important;
-    transition: all 0.3s ease !important; /* Smooth hover animation */
+    color: var(--white) !important; /* White text */
+    font-weight: 600; /* Semi-bold */
+    text-decoration: none;
+    transition: all 0.3s ease; /* Smooth hover animation */
 }
 
 .quiz-navbar .navbar-brand:hover {
-    color: #ffffff !important; /* Maintain white on hover */
+    color: var(--white) !important; /* Maintain white on hover */
     transform: translateY(-1px); /* Subtle lift effect */
-    text-decoration: none !important;
+    text-decoration: none;
 }
 
 .quiz-navbar .nav-link {
-    color: rgba(255, 255, 255, 0.9) !important; /* Force semi-transparent white */
-    font-weight: 500 !important; /* Medium weight */
-    transition: all 0.3s ease !important; /* Smooth hover animation */
+    color: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent white */
+    font-weight: 500; /* Medium weight */
+    transition: all 0.3s ease; /* Smooth hover animation */
 }
 
 .quiz-navbar .nav-link:hover {
-    color: #ffffff !important; /* Force full white on hover */
+    color: var(--white) !important; /* Full white on hover */
     transform: translateY(-1px); /* Subtle lift effect */
-}
-
-.quiz-navbar .nav-link.active {
-    color: #ffffff !important; /* Force white for active state */
-    font-weight: 600 !important; /* Bold for active */
 }
 
 /* Responsive Navbar Toggler - Burger Menu */
 .quiz-navbar .navbar-toggler {
-    border: 2px solid rgba(255, 255, 255, 0.5) !important; /* Force semi-transparent white border */
-    border-radius: 8px !important; /* Rounded corners */
-    padding: 0.5rem 0.75rem !important; /* Comfortable padding */
-    transition: all 0.3s ease !important; /* Smooth hover animation */
-    background: rgba(255, 255, 255, 0.1) !important; /* Light background */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Semi-transparent white border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 0.5rem 0.75rem; /* Comfortable padding */
+    transition: all 0.3s ease; /* Smooth hover animation */
 }
 
 .quiz-navbar .navbar-toggler:hover {
-    border-color: #ffffff !important; /* Force solid white border on hover */
-    background: rgba(255, 255, 255, 0.2) !important; /* Lighter background on hover */
+    border-color: var(--white); /* Solid white border on hover */
+    background: rgba(255, 255, 255, 0.1); /* Light background on hover */
 }
 
 .quiz-navbar .navbar-toggler:focus {
-    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5) !important; /* Force focus outline */
-    border-color: #ffffff !important; /* Force white border when focused */
-    outline: none !important; /* Remove default outline */
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.3); /* Focus outline */
+    border-color: var(--white); /* White border when focused */
 }
 
 /* Custom Burger Icon Styling */
 .quiz-navbar .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
-    width: 1.5em !important; /* Force slightly larger icon */
-    height: 1.5em !important; /* Force slightly larger icon */
-    filter: brightness(0) invert(1) !important; /* Force white color */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 1.5em; /* Slightly larger icon */
+    height: 1.5em; /* Slightly larger icon */
 }
 
 /* Mobile Navigation Styling */
 @media (max-width: 991.98px) {
     .quiz-navbar .navbar-collapse {
-        background: rgba(255, 255, 255, 0.15) !important; /* Force semi-transparent background */
-        backdrop-filter: blur(15px) !important; /* Force glass effect */
-        border-radius: 12px !important; /* Rounded corners */
-        margin-top: 1rem !important; /* Space from navbar */
-        padding: 1rem !important; /* Internal spacing */
-        border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Force subtle border */
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important; /* Add depth */
+        background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+        backdrop-filter: blur(10px); /* Glass effect */
+        border-radius: 12px; /* Rounded corners */
+        margin-top: 1rem; /* Space from navbar */
+        padding: 1rem; /* Internal spacing */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
     }
     
     .quiz-navbar .nav-link {
-        padding: 0.75rem 1rem !important; /* Force more padding for touch targets */
-        border-radius: 8px !important; /* Rounded link backgrounds */
-        margin-bottom: 0.5rem !important; /* Space between links */
-        transition: all 0.3s ease !important; /* Smooth hover animation */
-        color: rgba(255, 255, 255, 0.9) !important; /* Force white text */
-        font-weight: 500 !important;
+        padding: 0.75rem 1rem; /* More padding for touch targets */
+        border-radius: 8px; /* Rounded link backgrounds */
+        margin-bottom: 0.5rem; /* Space between links */
+        transition: all 0.3s ease; /* Smooth hover animation */
     }
     
-    .quiz-navbar .nav-link:hover,
-    .quiz-navbar .nav-link:focus {
-        background: rgba(255, 255, 255, 0.1) !important; /* Force light background on hover */
-        color: #ffffff !important; /* Force full white on hover */
-        transform: translateX(5px) !important; /* Slide effect for mobile */
-    }
-    
-    .quiz-navbar .nav-link.active {
-        background: rgba(255, 255, 255, 0.2) !important; /* Force active background */
-        color: #ffffff !important; /* Force white for active */
-        font-weight: 600 !important; /* Bold for active */
-    }
-
-    /* Force navbar background on mobile */
-    .quiz-navbar {
-        background: linear-gradient(135deg, #4ba3c3 0%, #ba324f 100%) !important;
-        backdrop-filter: blur(10px) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2) !important;
+    .quiz-navbar .nav-link:hover {
+        background: rgba(255, 255, 255, 0.2); /* Background on hover */
+        transform: translateX(5px); /* Slide effect on mobile */
     }
 }
 
 /* Quiz Header Styling */
 .quiz-header {
-    background: transparent !important; /* Force no background - shows gradient */
-    color: #ffffff !important; /* Force white text */
-    padding: 2rem 0 !important; /* Vertical spacing */
-    text-align: center !important; /* Center align text */
+    background: transparent; /* No background - shows gradient */
+    color: var(--white); /* White text */
+    padding: 2rem 0; /* Vertical spacing */
+    text-align: center; /* Center align text */
 }
 
 .quiz-header h1 {
-    font-weight: 700 !important; /* Bold heading */
-    color: #ffffff !important; /* Force white text */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important; /* Add text shadow for readability */
+    font-weight: 700; /* Bold heading */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for readability */
+    margin-bottom: 1rem; /* Space below heading */
 }
 
 .quiz-header .lead {
-    color: rgba(255, 255, 255, 0.9) !important; /* Force semi-transparent white */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important; /* Subtle text shadow */
     opacity: 0.95; /* Slightly transparent */
     font-size: 1.2rem; /* Larger subtitle text */
 }
@@ -1187,39 +1156,11 @@ body {
 /* Universal Mobile Typography and Spacing */
 @media (max-width: 768px) {
     /* Ensure all text is readable and properly sized */
-    h1, .h1 { 
-        font-size: clamp(1.5rem, 6vw, 2.2rem) !important; 
-        color: #ffffff !important; /* Force white text */
-    }
-    h2, .h2 { 
-        font-size: clamp(1.3rem, 5vw, 1.8rem) !important; 
-        color: #ffffff !important; /* Force white text */
-    }
-    h3, .h3 { 
-        font-size: clamp(1.1rem, 4vw, 1.5rem) !important; 
-        color: #ffffff !important; /* Force white text */
-    }
-    h4, .h4 { 
-        font-size: clamp(1rem, 3vw, 1.3rem) !important; 
-        color: #ffffff !important; /* Force white text */
-    }
-    h5, .h5 { 
-        font-size: clamp(0.9rem, 3vw, 1.1rem) !important; 
-        color: #ffffff !important; /* Force white text */
-    }
-    
-    /* Force colors for quiz page elements */
-    .quiz-page-body * {
-        color: inherit !important; /* Inherit white from parent */
-    }
-    
-    .quiz-page-body .text-center {
-        color: #ffffff !important; /* Force white for centered text */
-    }
-    
-    .quiz-page-body .lead {
-        color: rgba(255, 255, 255, 0.9) !important; /* Force semi-transparent white */
-    }
+    h1, .h1 { font-size: clamp(1.5rem, 6vw, 2.2rem) !important; }
+    h2, .h2 { font-size: clamp(1.3rem, 5vw, 1.8rem) !important; }
+    h3, .h3 { font-size: clamp(1.1rem, 4vw, 1.5rem) !important; }
+    h4, .h4 { font-size: clamp(1rem, 3vw, 1.3rem) !important; }
+    h5, .h5 { font-size: clamp(0.9rem, 3vw, 1.1rem) !important; }
     
     /* Universal button improvements */
     .btn {
@@ -1288,64 +1229,5 @@ body {
     
     .landing-content {
         padding: 0.5rem !important; /* Minimal padding */
-    }
-}
-
-/* Mobile-Specific Color Fixes */
-@media (max-width: 768px) {
-    /* Force all quiz page elements to be white */
-    .quiz-page-body,
-    .quiz-page-body *,
-    .quiz-page-body h1,
-    .quiz-page-body h2,
-    .quiz-page-body h3,
-    .quiz-page-body h4,
-    .quiz-page-body h5,
-    .quiz-page-body h6,
-    .quiz-page-body p,
-    .quiz-page-body .lead,
-    .quiz-page-body .navbar-brand,
-    .quiz-page-body .nav-link {
-        color: #ffffff !important;
-    }
-    
-    /* Force navbar colors specifically */
-    .quiz-navbar,
-    .quiz-navbar * {
-        color: #ffffff !important;
-    }
-    
-    /* Force quiz header colors */
-    .quiz-header,
-    .quiz-header * {
-        color: #ffffff !important;
-    }
-    
-    /* Force instruction section colors */
-    .instructions-section .card {
-        background: rgba(255, 255, 255, 0.95) !important;
-        color: #1e293b !important;
-    }
-    
-    .instructions-section .card * {
-        color: #1e293b !important;
-    }
-    
-    .instructions-section .card-header {
-        background: var(--primary-color) !important;
-        color: #ffffff !important;
-    }
-    
-    .instructions-section .card-header * {
-        color: #ffffff !important;
-    }
-    
-    /* Force quiz container colors */
-    .quiz-main {
-        color: #ffffff !important;
-    }
-    
-    .quiz-main * {
-        color: inherit !important;
     }
 }
