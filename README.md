@@ -157,17 +157,29 @@ List of bugs and how did you fix them
 ## Deployment
 
 #### Creating Repository on GitHub
-- First make sure you are signed into [Github](https://github.com/) and go to the code institutes template, which can be found [here](https://github.com/Code-Institute-Org/gitpod-full-template).
-- Then click on **use this template** and select **Create a new repository** from the drop-down. Enter the name for the repository and click **Create repository from template**.
-- Once the repository was created, I clicked the green **gitpod** button to create a workspace in gitpod so that I could write the code for the site.
+
+- First make sure you are signed into [Github](https://github.com/).
+- Then click on **Create a new repository** from the drop-down. Enter the name for the repository and click **Create repository from template**.
+- Once the repository was created, I cloned the repository to my **VSCode** so that I could start working on it.
+
 #### Deloying on Github
+
 The site was deployed to Github Pages using the following method:
+
 - Go to the Github repository.
 - Navigate to the 'settings' tab.
 - Using the 'select branch' dropdown menu, choose 'main'.
 - Click 'save'.
 - This is the deployment link : https://egg3552.github.io/quiz-hackathon-project/index.html
 -This is the Github Link: https://github.com/egg3552/quiz-hackathon-project
+
+The deployment page can be found [here](https://egg3552.github.io/quiz-hackathon-project/).
+
+## AI Use
+- Throughout the project, AI has been used to help with the creation of the site.
+- One of the main uses of AI for the site was to get around bootstrap's built in stylings and scripts, to get the site to respond in the way we had designed it (e.g. implementing custom scripts on the carousel controls.).
+- AI was also useful for restructuring the code when we realised that certain parts of one function had been written up in a different function, and so for clean code and readability reasons, we had it restructured.
+- When GitHub pages had trouble deploying our page, AI suggested to create the .nojekyll file to help prevent errors.
 
 ## Credits
 List of used resources for your website (text, images, snippets of code, projects....)
