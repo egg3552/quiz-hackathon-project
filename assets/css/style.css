@@ -1658,116 +1658,363 @@ body {
     }
 
 
-/* UNIVERSAL MOBILE TEXT VISIBILITY FIXES */
+/* 
+ * COMPREHENSIVE IOS COMPATIBILITY FIXES
+ * Maintains original design colors while ensuring flawless iOS functionality
+ */
+
+/* Universal iOS Mobile Fixes - Preserve Design Colors */
 @media (max-width: 768px) {
-    /* Force all text to be visible on mobile */
+    /* Ensure all elements are visible but preserve design */
     *, *::before, *::after {
         opacity: 1 !important;
         visibility: visible !important;
     }
     
-    /* Ensure quiz content is always visible */
-    .quiz-card,
-    .quiz-card .card-body,
-    .quiz-question-text,
-    .quiz-form-check,
-    .quiz-form-check-label {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        display: block !important; /* Ensure elements are displayed */
+    /* Quiz card with original design colors */
+    .quiz-card {
+        background: rgba(255, 255, 255, 0.95) !important; /* Keep original semi-transparent white */
+        border-radius: 20px !important;
+        box-shadow: 0 8px 32px rgba(75, 163, 195, 0.2) !important; /* Brand color shadow */
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(75, 163, 195, 0.3) !important; /* Brand color border */
+        -webkit-backdrop-filter: blur(10px) !important; /* iOS Safari support */
+    }
+    
+    /* Quiz question text with brand colors */
+    .quiz-question-text {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #2d3748 !important; /* Dark readable text */
+        -webkit-text-fill-color: #2d3748 !important;
+        border: 2px solid rgba(75, 163, 195, 0.3) !important; /* Brand color border */
+        border-radius: 12px !important;
+        padding: 1.5rem !important;
         font-size: 16px !important; /* Prevent iOS zoom */
+        font-weight: 500 !important;
         line-height: 1.5 !important;
-        font-weight: 600 !important;
-        text-decoration: none !important;
-        text-shadow: none !important;
-        border: 1px solid #cccccc !important; /* Add subtle borders */
-        margin: 5px 0 !important;
-        padding: 10px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
     }
     
-    /* Remove any problematic transitions or effects */
-    .quiz-card * {
-        transition: none !important;
-        transform: none !important;
-        filter: none !important;
-        backdrop-filter: none !important;
+    /* Quiz answer options with brand colors */
+    .quiz-form-check {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 2px solid rgba(75, 163, 195, 0.4) !important; /* Brand color border */
+        border-radius: 12px !important;
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
     }
     
-    /* Force radio buttons and labels to be visible */
+    .quiz-form-check:hover,
+    .quiz-form-check:focus-within {
+        border-color: #4ba3c3 !important; /* Brand color on hover */
+        background: rgba(75, 163, 195, 0.1) !important;
+        box-shadow: 0 4px 12px rgba(75, 163, 195, 0.2) !important;
+    }
+    
+    .quiz-form-check-label {
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        cursor: pointer !important;
+    }
+    
+    /* Radio buttons visibility */
     input[type="radio"] {
         opacity: 1 !important;
         visibility: visible !important;
         position: relative !important;
         margin-right: 10px !important;
+        accent-color: #4ba3c3 !important; /* Brand color for radio buttons */
     }
     
-    /* Make sure buttons are visible */
+    /* Buttons with brand colors */
     .btn {
-        background-color: #4ba3c3 !important;
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        border: 2px solid #000000 !important;
-        font-size: 16px !important;
-        font-weight: bold !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
-}
-
-/* 
- * ULTIMATE IOS MOBILE CHROME/SAFARI FIX
- * These rules target actual iOS devices and mobile browsers
- */
-
-/* iOS Chrome and Safari specific fixes */
-@supports (-webkit-touch-callout: none) {
-    /* This targets iOS Safari specifically */
-    .quiz-card,
-    .quiz-card * {
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        background-color: #ffffff !important;
-        font-size: 16px !important; /* Prevent zoom on iOS */
-    }
-    
-    .quiz-question-text {
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        background: #ffffff !important;
-        border: 1px solid #000000 !important; /* Add border for visibility */
-        padding: 15px !important;
-        margin: 10px 0 !important;
-        font-size: 16px !important;
-        line-height: 1.4 !important;
-    }
-    
-    .quiz-form-check-label {
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
         font-size: 16px !important;
         font-weight: 600 !important;
-        text-decoration: underline !important; /* Make text more visible */
+        opacity: 1 !important;
+        visibility: visible !important;
+        border-radius: 8px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .btn-start-quiz,
+    .btn-primary {
+        background: linear-gradient(135deg, #4ba3c3, #6bb6ff) !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 2px solid #4ba3c3 !important;
+        box-shadow: 0 4px 15px rgba(75, 163, 195, 0.3) !important;
+    }
+    
+    .btn-secondary {
+        background: linear-gradient(135deg, #6c757d, #868e96) !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 2px solid #6c757d !important;
+    }
+    
+    .btn-outline-primary {
+        background: transparent !important;
+        color: #4ba3c3 !important;
+        -webkit-text-fill-color: #4ba3c3 !important;
+        border: 2px solid #4ba3c3 !important;
+    }
+    
+    /* Navigation colors */
+    .quiz-navbar {
+        background: rgba(75, 163, 195, 0.95) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    .navbar-brand,
+    .nav-link {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Header colors */
+    .quiz-header h1 {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .quiz-header .lead {
+        color: rgba(255, 255, 255, 0.9) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    /* Progress bar colors */
+    .quiz-progress .progress-bar {
+        background: linear-gradient(45deg, #4ba3c3, #22c55e) !important;
     }
 }
 
-/* Mobile Chrome specific targeting */
-@media screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 768px) {
-    .quiz-card {
-        background: #ffffff !important;
-        border: 2px solid #000000 !important; /* Strong border for visibility */
-        box-shadow: none !important; /* Remove effects that might interfere */
+/* iOS Safari Specific Fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Target iOS Safari specifically while preserving colors */
+    body {
+        -webkit-text-size-adjust: 100% !important; /* Prevent text scaling */
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
     }
     
-    .quiz-card *,
+    /* Ensure webkit rendering works properly */
+    .quiz-card,
     .quiz-question-text,
     .quiz-form-check-label {
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        text-shadow: 1px 1px 1px #ffffff !important; /* Add contrast shadow */
-        font-weight: bold !important;
-        font-size: 16px !important;
+        -webkit-font-smoothing: antialiased !important;
+        -webkit-transform: translateZ(0) !important; /* Force hardware acceleration */
+        transform: translateZ(0) !important;
+    }
+    
+    /* iOS Safari button fixes */
+    .btn {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        -webkit-border-radius: 8px !important;
+        border-radius: 8px !important;
+    }
+    
+    /* iOS Safari input fixes */
+    input[type="radio"] {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        width: 18px !important;
+        height: 18px !important;
+        border: 2px solid #4ba3c3 !important;
+        border-radius: 50% !important;
+        background: #ffffff !important;
+        position: relative !important;
+    }
+    
+    input[type="radio"]:checked {
+        background: #4ba3c3 !important;
+        border-color: #4ba3c3 !important;
+    }
+    
+    input[type="radio"]:checked::after {
+        content: '' !important;
+        width: 8px !important;
+        height: 8px !important;
+        border-radius: 50% !important;
+        background: #ffffff !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        -webkit-transform: translate(-50%, -50%) !important;
+    }
+}
+
+/* High DPI Mobile Devices (Retina displays) */
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 768px) {
+    /* Ensure crisp rendering on high DPI screens */
+    .quiz-card,
+    .quiz-question-text,
+    .quiz-form-check {
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+    }
+    
+    /* High DPI text rendering */
+    * {
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+}
+
+/* iOS Landing Page Color Fixes */
+@media (max-width: 768px) {
+    /* Landing page colors */
+    .landing-page {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        -webkit-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+    
+    .landing-content h1 {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .landing-content .lead {
+        color: rgba(255, 255, 255, 0.9) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    /* Username input styling */
+    .form-control {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+        border: 2px solid rgba(75, 163, 195, 0.3) !important;
+        font-size: 16px !important; /* Prevent iOS zoom */
+    }
+    
+    .form-control:focus {
+        border-color: #4ba3c3 !important;
+        box-shadow: 0 0 0 0.2rem rgba(75, 163, 195, 0.25) !important;
+    }
+    
+    /* Results page colors */
+    .badge {
+        background: linear-gradient(135deg, #4ba3c3, #6bb6ff) !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Leaderboard colors */
+    .table {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+    }
+    
+    .table th {
+        background: rgba(75, 163, 195, 0.1) !important;
+        color: #4ba3c3 !important;
+        -webkit-text-fill-color: #4ba3c3 !important;
+        border-bottom: 2px solid #4ba3c3 !important;
+    }
+    
+    .table td {
+        border-color: rgba(75, 163, 195, 0.2) !important;
+    }
+    
+    /* Card hover effects for iOS */
+    .card {
+        transition: all 0.3s ease !important;
+        -webkit-transition: all 0.3s ease !important;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px) !important;
+        -webkit-transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(75, 163, 195, 0.2) !important;
+    }
+}
+
+/* iOS Touch and Interaction Fixes */
+@media (max-width: 768px) {
+    /* Fix iOS touch targets */
+    .btn,
+    .nav-link,
+    .quiz-form-check,
+    .carousel-control-prev,
+    .carousel-control-next {
+        min-height: 44px !important; /* iOS minimum touch target */
+        min-width: 44px !important;
+        -webkit-tap-highlight-color: rgba(75, 163, 195, 0.3) !important;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+    }
+    
+    /* Navbar hamburger menu fix */
+    .navbar-toggler {
+        border: 2px solid rgba(255, 255, 255, 0.5) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        backdrop-filter: blur(5px) !important;
+    }
+    
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+    
+    /* Quiz navigation arrows */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(75, 163, 195, 0.8) !important;
+        border-radius: 50% !important;
+        width: 44px !important;
+        height: 44px !important;
+        background-size: 50% !important;
+    }
+    
+    /* Progress bar styling */
+    .progress {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-radius: 10px !important;
+        height: 20px !important;
+    }
+    
+    /* Footer and misc elements */
+    .text-muted {
+        color: rgba(255, 255, 255, 0.7) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    /* Alert styling */
+    .alert {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border: 2px solid #4ba3c3 !important;
+        color: #2d3748 !important;
+        -webkit-text-fill-color: #2d3748 !important;
+    }
+    
+    /* Modal styling for iOS */
+    .modal-content {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border: 1px solid rgba(75, 163, 195, 0.3) !important;
+        border-radius: 15px !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    .modal-header {
+        border-bottom: 2px solid rgba(75, 163, 195, 0.2) !important;
+    }
+    
+    .modal-title {
+        color: #4ba3c3 !important;
+        -webkit-text-fill-color: #4ba3c3 !important;
     }
 }
