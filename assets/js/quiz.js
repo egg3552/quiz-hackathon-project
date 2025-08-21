@@ -194,13 +194,7 @@ function displayQuestion(questionNumbers) {
   const rand = Math.floor(Math.random() * questionNumbers.length); //Generates a random number between 0 and one less than the number of questions left for the user to complete; to be used as an index number.
   const currentQuestion = questions[questionNumbers[rand]]; //Retrieves the corresponding question object from the questions array.
   questionNumbers.splice(rand, 1); //removes this index value from the questionNumbers array, so not to allow the question to appear again.
-  
-  // Add null check for question text element
-  const questionTextElement = document.getElementById(`question-${currentQuestionNumber}-text`);
-  if (questionTextElement) {
-    questionTextElement.innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
-  }
-  
+  document.getElementById(`question-${currentQuestionNumber}-text`).innerText = currentQuestion.question; //Sets the question on the page to the corresponding question from the questions array.
   const questionContainer = document.getElementById(`question-${currentQuestionNumber}`); // Get current question container
   const questionOptions = questionContainer.getElementsByTagName("label"); // Get all option labels
   // Shuffle options before displaying
@@ -241,34 +235,13 @@ function shuffleArray(unshuffled){
  */
 function enableExplainResults() {
   const explainBtn = document.querySelector(`button[data-bs-target='#results${currentQuestionNumber}']`); // Find explanation button
-  const explanationElement = document.getElementById(`explanation-${currentQuestionNumber}`);
-  
-  // Add null checks to prevent runtime errors
-  if (!explanationElement || !explanationElement.children.length) {
-    console.warn(`Explanation element not found for question ${currentQuestionNumber}`);
-    return;
-  }
-  
-  const explainText = explanationElement.children; // Get explanation text elements
-  const questionTextElement = document.getElementById(`question-${currentQuestionNumber}-text`);
-  
-  if (!questionTextElement) {
-    console.warn(`Question text element not found for question ${currentQuestionNumber}`);
-    return;
-  }
-  
+  const explainText = document.getElementById(`explanation-${currentQuestionNumber}`).children; // Get explanation text elements
   const questionIndex = questions.findIndex( // Find question in original array
-    (obj) => obj.question === questionTextElement.innerText
+    (obj) => obj.question === document.getElementById(`question-${currentQuestionNumber}-text`).innerText
   );
-  
-  if (questionIndex !== -1) {
-    explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`; // Set correct answer text
-    explainText[1].innerText = questions[questionIndex].explanation; // Set explanation text
-  }
-  
-  if (explainBtn) {
-    explainBtn.disabled = false; // Enable the explanation button
-  }
+  explainText[0].innerText = `Correct Answer: ${questions[questionIndex].answer}`; // Set correct answer text
+  explainText[1].innerText = questions[questionIndex].explanation; // Set explanation text
+  explainBtn.disabled = false; // Enable the explanation button
 }
 
 /**
