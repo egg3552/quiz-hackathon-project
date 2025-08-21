@@ -163,21 +163,32 @@ body {
   line-height: 1 !important;
 }
 
-/* Icon spacing for start quiz button */
-.btn-start-quiz i {
-  margin-right: 8px !important;
-  font-size: 0.9em !important;
+/* General button centering for all buttons */
+.btn,
+.btn-primary,
+.btn-outline-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1.2 !important;
   vertical-align: middle !important;
+  text-decoration: none !important;
+}
+
+/* Icon spacing for all buttons */
+.btn i,
+.btn-primary i,
+.btn-outline-primary i {
+  margin-right: 6px !important;
+  vertical-align: middle !important;
+  font-size: 0.9em !important;
   line-height: 1 !important;
 }
 
 /* Desktop-specific button optimization (ensure mobile styles don't interfere) */
 @media (min-width: 769px) {
     /* Ensure buttons maintain desktop behavior */
-    .btn,
-    .btn-primary,
-    .btn-outline-primary,
-    .btn-secondary,
     .btn-start-quiz {
         display: inline-flex !important;
         align-items: center !important;
@@ -187,18 +198,6 @@ body {
         vertical-align: middle !important;
         text-decoration: none !important;
         font-weight: 600 !important;
-    }
-    
-    /* Icon spacing for all buttons on desktop */
-    .btn i,
-    .btn-primary i,
-    .btn-outline-primary i,
-    .btn-secondary i,
-    .btn-start-quiz i {
-        margin-right: 6px !important;
-        vertical-align: middle !important;
-        font-size: 0.9em !important;
-        line-height: 1 !important;
     }
     
     /* Maintain desktop navbar appearance */
@@ -1983,6 +1982,32 @@ body {
         -webkit-text-fill-color: #2d3748 !important;
         border: 2px solid rgba(75, 163, 195, 0.3) !important;
         font-size: 16px !important; /* Prevent iOS zoom */
+    }
+    
+    /* All buttons text alignment fix for iOS */
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline-primary {
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1.2 !important;
+        font-weight: 600 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        vertical-align: middle !important;
+    }
+    
+    /* Icon alignment in buttons */
+    .btn i,
+    .btn-primary i,
+    .btn-secondary i,
+    .btn-outline-primary i {
+        margin-right: 6px !important;
+        vertical-align: middle !important;
+        font-size: 0.9em !important;
     }
     
     .form-control:focus {
